@@ -1,6 +1,7 @@
 ## 一个适合练手的react项目
 ##### 项目以及项目笔记会不断更新
 
+## 项目运行
  ### `npm install`
  ### `npm start`
  ##### 项目中用到的一些自定义types在common/js/typings目录下
