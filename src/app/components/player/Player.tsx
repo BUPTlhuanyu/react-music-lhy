@@ -1,0 +1,618 @@
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import {
+    setFullScreen,
+    setPlaying,
+    setCurrentIndex,
+    setPlayMode,
+    setPlaylist,
+    setSequenceList
+} from 'actions/player'
+import ProgressBar from 'reuse/progress-bar/ProgressBar'
+import ProgressCircle from 'reuse/progress-circle/ProgressCircle'
+import Scroll from 'reuse/scroll/Scroll'
+import {playMode} from 'common/js/config'
+import {shuffle} from 'common/js/util'
+import Lyric from 'lyric-parser'
+import {prefixStyle} from 'common/js/dom'
+import PlayList from 'components/playlist/PlayList'
+
+const transform = prefixStyle('transform')
+const transitionDuration = prefixStyle('transitionDuration')
+
+import './player.scss'
+
+interface PlayerPropType{
+    fullScreen : boolean,
+    playlist : Array<any>,
+    currentIndex : number,
+    setFullScreen:Function,
+    setPlaying:Function,
+    setCurrentIndex:Function,
+    setPlayMode:Function,
+    setPlaylist:Function,
+    setSequenceList:Function,
+    playing:boolean,
+    mode:number,
+    sequenceList:Array<any>
+}
+
+interface PlayerStateType{
+    songReady:boolean,
+    currentTime:number,
+    currentSong:any,
+    radius:number,
+    currentLyric:any,
+    playingLyric:string,
+    currentLineNum:number,
+    currentShow:string
+}
+
+let currentIndex:number;
+let currentId:number;
+
+class Player extends Component<PlayerPropType, PlayerStateType>{
+    static getDerivedStateFromProps(props:any){
+        const newId = props.playlist[props.currentIndex] && props.playlist[props.currentIndex].id;
+        if(newId !== currentId){
+            return {
+                songReady:false,
+                currentSong:props.playlist[props.currentIndex]
+            }
+        }
+        return {}
+    }
+    audio:any;
+    lyricList:any;
+    lyricLine:any;
+    touch:any;
+    middleL:any;
+    playlist:any;
+    constructor(props: PlayerPropType){
+        super(props)
+        this.audio = React.createRef();
+        this.lyricList = React.createRef();
+        this.lyricLine = React.createRef();
+        this.middleL = React.createRef();
+        this.playlist = React.createRef();
+        this.touch = {}
+        this.state ={
+            songReady: false,
+            currentTime:0,
+            currentSong:null,
+            radius:32,
+            currentLyric:null,
+            playingLyric:'',
+            currentLineNum:0,
+            currentShow:'cd'
+        }
+    }
+
+    componentDidMount(){
+        this.setState({
+            currentTime:this.audio.current.currentTime,
+            currentSong:this.props.playlist[this.props.currentIndex]
+        })
+    }
+
+    getLyric = () => {
+        if(this.state.currentLyric){
+            this.state.currentLyric.stop()
+        }
+        this.state.currentSong.getLyric().then((lyric:any) => {
+            if (this.state.currentSong.lyric !== lyric) {
+                return
+            }
+            this.setState({
+                currentLyric:new Lyric(lyric, this.handleLyric)
+            },() => {
+                if (!this.props.playing) {
+                    this.state.currentLyric.play()
+                }
+                // console.log(this.state.currentLyric)
+            })
+        }).catch(() => {
+            this.setState({
+                currentLyric : null,
+                playingLyric:'',
+                currentLineNum:0
+            })
+        })
+    }
+
+    handleLyric = ({lineNum, txt}:{lineNum:any, txt:any}) => {
+        // console.log("handleLyric run")
+        // console.log("lineNum",lineNum)
+        // console.log("txt",txt)
+        this.setState({
+            currentLineNum:lineNum,
+            playingLyric:txt
+        })
+        if (lineNum > 5) {
+            let lineEl = this.lyricLine.current.childNodes[lineNum - 5]
+            this.lyricList.current.scrollToElement(lineEl, 500)
+        } else {
+            this.lyricList.current.scrollTo(0, 0, 500)
+        }
+    }
+
+    back = () => {
+        this.props.setFullScreen(false)
+    }
+
+    //播放
+    open = () => {
+        this.props.setFullScreen(true)
+    }
+
+    prev = () => {
+        if (!this.state.songReady) {
+            return
+        }
+        if (this.props.playlist.length === 1) {
+            this.loop()
+            return
+        } else {
+            let index = this.props.currentIndex - 1
+            if (index === -1) {
+                index = this.props.playlist.length - 1
+            }
+            this.props.setCurrentIndex(index)
+            if (!this.props.playing) {
+                this.togglePlaying()
+            }
+        }
+    }
+
+    next = () => {
+        if (!this.state.songReady) {
+            return
+        }
+        if (this.props.playlist.length === 1) {
+            // console.log("this.props.playlist.length === 1")
+            this.loop()
+            return
+        } else {
+            let index = this.props.currentIndex + 1
+            if (index === this.props.playlist.length) {
+                index = 0
+            }
+            this.props.setCurrentIndex(index)
+            if (!this.props.playing) {
+                this.togglePlaying()
+            }
+        }
+    }
+
+    //时间
+    updateTime = (e: any) => {
+        this.setState({
+            currentTime:e.target.currentTime
+        })
+    }
+
+    format= (interval:number = 0) => {
+        //取整
+        interval = interval | 0
+        const minute = interval / 60 | 0
+        const second = this._pad(interval % 60)
+        return `${minute}:${second}`
+    }
+    _pad = (num:number, n:number = 2) =>{
+        let len = num.toString().length
+        let res = num + "";
+        while (len < n) {
+            res = '0' + res
+            len++
+        }
+        return res
+    }
+
+    percent = () => {
+        return this.state.currentTime / (this.state.currentSong && this.state.currentSong.duration)
+    }
+
+    //进度条
+    onProgressBarChange = (percent: number) => {
+        const currentTime = this.state.currentSong.duration * percent
+        // console.log("this.audio.current",this.audio.current.currentTime)
+        this.audio.current.currentTime = currentTime
+        if (this.props.playing) {
+            this.togglePlaying()
+        }
+        if (this.state.currentLyric) {
+            this.state.currentLyric.seek(currentTime * 1000)
+        }
+    }
+
+    //资源下载后自动播放
+    canPlayHandler = () => {
+        if(this.state.songReady){
+            return
+        }
+        // console.log("canPlayHandler")
+        currentId = this.state.currentSong.id;
+        this.getLyric()
+        this.setState({
+            songReady: true
+        },()=>{
+            this.playHandler()
+        })
+    }
+
+    disableCls = () => {
+        return this.state.songReady ? '' : 'disable'
+    }
+
+    playHandler = () => {
+        if(!this.state.songReady){
+            return
+        }
+        const audio = this.audio.current;
+        if(this.props.playing){
+            audio.play()
+        }else{
+            audio.pause()
+        }
+        this.props.setPlaying(!this.props.playing)
+    }
+
+    togglePlaying = () => {
+        this.playHandler()
+        if (this.state.currentLyric) {
+            this.state.currentLyric.togglePlay()
+        }
+    }
+
+    toggleMiniPlaying = (e: any) => {
+        e.stopPropagation();
+        this.togglePlaying()
+    }
+
+    cdCls = () => {
+        return this.props.playing ? 'play pause':'play'
+    }
+
+    playIcon = () => {
+        return this.props.playing ? 'icon-play' : 'icon-pause'
+    }
+
+    miniIcon = () => {
+        return this.props.playing ? 'icon-play-mini':'icon-pause-mini'
+    }
+
+    //mode
+    changeMode = () => {
+        const mode = (this.props.mode + 1) % 3
+        this.props.setPlayMode(mode)
+        let list = null
+        if (mode === playMode.random) {
+            list = shuffle(this.props.sequenceList)
+        } else {
+            list = this.props.sequenceList
+        }
+        this.resetCurrentIndex(list)
+        this.props.setPlaylist(list)
+    }
+
+    resetCurrentIndex = (list:Array<any>)=> {
+        let index = list.findIndex((item) => {
+            return item.id === this.state.currentSong.id
+        })
+        this.props.setCurrentIndex(index)
+    }
+
+    iconMode = () => {
+        return this.props.mode === playMode.sequence ? 'icon-sequence' : this.props.mode === playMode.loop ? 'icon-loop' : 'icon-random'
+    }
+
+    end = () => {
+        if (this.props.mode === playMode.loop) {
+            this.audio.current.play()
+            if (this.state.currentLyric) {
+                this.state.currentLyric.seek(0)
+            }
+        } else {
+            this.next()
+        }
+    }
+
+    loop = () => {
+        this.audio.current.currentTime = 0
+        this.playHandler()
+        if (this.state.currentLyric) {
+            this.state.currentLyric.seek(0)
+        }
+    }
+
+    middleTouchStart = (e:any) => {
+        this.touch.initiated = true
+        const touch = e.touches[0]
+        this.touch.startX = touch.pageX
+        this.touch.startY = touch.pageY
+    }
+
+    middleTouchMove = (e:any) => {
+        if (!this.touch.initiated) {
+            return
+        }
+        const touch = e.touches[0]
+        const deltaX = touch.pageX - this.touch.startX
+        const deltaY = touch.pageY - this.touch.startY
+        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+            return
+        }
+        const left = this.state.currentShow === 'cd' ? 0 : - window.innerWidth
+        const offsetWidth = Math.min(0, Math.max(-window.innerWidth, left + deltaX))
+        this.touch.percent = Math.abs(offsetWidth / window.innerWidth)
+        this.lyricList.current.wrapper.current.style[transform] = `translate3d(${offsetWidth}px,0,0)`
+        this.lyricList.current.wrapper.current.style[transitionDuration] = 0
+        this.middleL.current.style.opacity = 1 - this.touch.percent
+        this.middleL.current.style[transitionDuration] = 0
+    }
+
+    middleTouchEnd = () => {
+        let offsetWidth
+        let opacity
+        if (this.state.currentShow === 'cd') {
+            if (this.touch.percent > 0.1) {
+                offsetWidth = -window.innerWidth
+                opacity = 0
+                this.setState({
+                    currentShow:'lyric'
+                })
+            } else {
+                offsetWidth = 0
+                opacity = 1
+            }
+        } else {
+            if (this.touch.percent < 0.9) {
+                offsetWidth = 0
+                this.setState({
+                    currentShow:'cd'
+                })
+                opacity = 1
+            } else {
+                offsetWidth = -window.innerWidth
+                opacity = 0
+            }
+        }
+        const time = 300
+        this.lyricList.current.wrapper.current.style[transform] = `translate3d(${offsetWidth}px,0,0)`
+        this.lyricList.current.wrapper.current.style[transitionDuration] = `${time}ms`
+        this.middleL.current.style.opacity = opacity
+        this.middleL.current.style[transitionDuration] = `${time}ms`
+        this.touch.initiated = false
+    }
+
+    showPlaylist = () => {
+        this.playlist.current.show()
+    }
+
+    modeText = () => {
+        return this.props.mode === playMode.sequence ? '顺序播放' : this.props.mode === playMode.random ? '随机播放' : '单曲循环'
+    }
+
+    //playlist组件：歌曲列表删除，歌曲删除
+    deleteSongList = () => {
+        this.props.setCurrentIndex(-1)
+        this.props.setPlaylist([])
+        this.props.setSequenceList([])
+        this.props.setPlaying(false)
+    }
+
+    findIndex = (list:Array<any>, song:any) => {
+        return list.findIndex((item) => {
+            return item.id === song.id
+        })
+    }
+
+    deleteSong = (song:any) => {
+        let playlist = this.props.playlist.slice()
+        let sequenceList = this.props.sequenceList.slice()
+        let currentIndex = this.props.currentIndex
+        let pIndex = this.findIndex(playlist, song)
+        playlist.splice(pIndex, 1)
+        let sIndex = this.findIndex(sequenceList, song)
+        sequenceList.splice(sIndex, 1)
+        if (currentIndex > pIndex || currentIndex === playlist.length) {
+            currentIndex--
+        }
+
+        this.props.setCurrentIndex(currentIndex)
+        this.props.setPlaylist(playlist)
+        this.props.setSequenceList(sequenceList)
+
+        if (!playlist.length) {
+            this.props.setPlaying(false)
+        } else {
+            this.props.setPlaying(true)
+        }
+    }
+
+    selectItem = (item:any, index:number) => {
+        if (this.props.mode === playMode.random) {
+            index = this.props.playlist.findIndex((song) => {
+                return song.id === item.id
+            })
+        }
+        this.props.setCurrentIndex(index)
+        this.props.setPlaying(true)
+    }
+
+    getCurrentIcon = (item:any) => {
+        if (this.state.currentSong.id === item.id) {
+            return 'icon-play'
+        }
+        return ''
+    }
+
+    scrollToCurrent = (scroller:any, scrollSon:any,current:any = this.state.currentSong) => {
+        const index = this.props.sequenceList.findIndex((song) => {
+            return current.id === song.id
+        })
+        scroller.scrollToElement(scrollSon[index], 300)
+    }
+
+    render(){
+        const { fullScreen, playlist } = this.props;
+        const { currentTime, currentSong, radius, currentLyric, currentLineNum, playingLyric, currentShow } = this.state
+        const styleDisplay = playlist.length ? 'block' : 'none';
+        return (
+            <div className="player" style={{display: `${styleDisplay}`}}>
+                <div className="normal-player" style={{display: `${fullScreen? 'block' : 'none'}`}}>
+                    <div className="background">
+                        <img width="100%" height="100%" src={currentSong && currentSong.image}/>
+                    </div>
+                    <div className="top">
+                        <div className="back" onClick={this.back}>
+                            <i className="icon-back"/>
+                        </div>
+                        <h1 className="title" >{currentSong && currentSong.name}</h1>
+                        <h2 className="subtitle">{currentSong && currentSong.singer}</h2>
+                    </div>
+                    <div className="middle"
+                        onTouchStart={this.middleTouchStart}
+                         onTouchMove={this.middleTouchMove}
+                         onTouchEnd={this.middleTouchEnd}
+                    >
+                        <div className="middle-l" ref={this.middleL}>
+                            <div className="cd-wrapper">
+                                <div className={this.cdCls()+" cd"} >
+                                    <img className="image" src={currentSong && currentSong.image}/>
+                                </div>
+                            </div>
+                            <div className="playing-lyric-wrapper">
+                                <div className="playing-lyric">{playingLyric}</div>
+                            </div>
+                        </div>
+                        <Scroll className="middle-r" ref={this.lyricList} >
+                            <div className="lyric-wrapper">
+                                {
+                                    currentLyric &&
+                                    <div ref={this.lyricLine}>
+                                        {
+                                            currentLyric.lines.map((line:any,index:any) => (
+                                                    <p className={"text" + (currentLineNum === index ? " current":"")}
+                                                       key={index}
+                                                    >
+                                                        {line.txt}
+                                                    </p>
+                                                )
+                                            )
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </Scroll>
+                    </div>
+                    <div className="bottom">
+                        <div className="dot-wrapper">
+                            <span className={"dot" + (currentShow === 'cd' ? " active": "")}/>
+                            <span className={"dot" + (currentShow === 'lyric' ? " active": "")}/>
+                        </div>
+                        <div className="progress-wrapper">
+                            <span className="time time-l">{this.format(currentTime)}</span>
+                            <div className="progress-bar-wrapper">
+                                <ProgressBar percent={this.percent()} onProgressBarChange={this.onProgressBarChange}/>
+                            </div>
+                            <span className="time time-r">{this.format(currentSong && currentSong.duration)}</span>
+                        </div>
+                        <div className="operators">
+                            <div className="icon i-left" onClick={this.changeMode}>
+                                <i className={this.iconMode()}/>
+                            </div>
+                            <div className = {this.disableCls()+" icon i-left"}>
+                                <i className="icon-prev" onClick={this.prev}/>
+                            </div>
+                            <div className={this.disableCls()+" icon i-center"}>
+                                <i onClick={this.togglePlaying} className={this.playIcon()}/>
+                            </div>
+                            <div className={this.disableCls()+" icon i-right"}>
+                                <i className="icon-next" onClick={this.next}/>
+                            </div>
+                            <div className={this.disableCls()+" icon i-right"}>
+                                <i className="icon-not-favorite"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="mini-player" style={{display: `${!fullScreen? 'flex' : 'none'}`}} onClick={this.open}>
+                    <div className="icon">
+                        <img width="40" height="40" src={currentSong && currentSong.image} className={this.cdCls()}/>
+                    </div>
+                    <div className="text">
+                        <h2 className="name" >{currentSong && currentSong.name}</h2>
+                        <p className="desc">{currentSong && currentSong.singer}</p>
+                    </div>
+                    <div className="control" style={{position:"relative"}}>
+                        <ProgressCircle percent={this.percent()} radius={radius}>
+                            <i className= {this.miniIcon()+" icon-mini"} onClick={this.toggleMiniPlaying} />
+                        </ProgressCircle>
+                    </div>
+                    <div className="control"
+                         onClick={
+                             (e) => {
+                                 e.stopPropagation();
+                                 this.showPlaylist();
+                                }
+                         }
+                    >
+                        <i className="icon-playlist"/>
+                    </div>
+                </div>
+                <PlayList
+                    ref={this.playlist}
+                    changeMode={this.changeMode}
+                    iconMode={this.iconMode}
+                    modeText={this.modeText}
+                    deleteSongList={this.deleteSongList}
+                    deleteSong={this.deleteSong}
+                    sequenceList={this.props.sequenceList}
+                    getCurrentIcon={this.getCurrentIcon}
+                    selectItem={this.selectItem}
+                    scrollToCurrent={this.scrollToCurrent}
+                />
+                <audio
+                    ref={this.audio}
+                    src={currentSong && currentSong.url}
+                    onCanPlay={this.canPlayHandler}
+                    onTimeUpdate={this.updateTime}
+                    onEnded={this.end}
+                />
+            </div>
+        )
+    }
+}
+
+const mapStateToProp = (state:any) => ({
+    fullScreen : state.fullScreen,
+    playlist : state.playlist,
+    currentIndex : state.currentIndex,
+    playing:state.playing,
+    mode:state.mode,
+    sequenceList:state.sequenceList
+})
+
+const mapDispatchToProps = (dispatch:any) => ({
+    setFullScreen: (fullScreen: boolean) => {
+        dispatch(setFullScreen(fullScreen))
+    },
+    setPlaying: (playing: boolean) => {
+        dispatch(setPlaying(playing))
+    },
+    setCurrentIndex: (index: number) => {
+        dispatch(setCurrentIndex(index))
+    },
+    setPlayMode: (mode:number) => {
+        dispatch(setPlayMode(mode))
+    },
+    setPlaylist: (list:Array<any>) => {
+        dispatch(setPlaylist(list))
+    },
+    setSequenceList: (list:Array<any>) => {
+        dispatch(setSequenceList(list))
+    }
+})
+
+export default connect(mapStateToProp, mapDispatchToProps)(Player)

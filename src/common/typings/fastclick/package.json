@@ -1,0 +1,50 @@
+{
+  "_from": "@types/fastclick",
+  "_id": "@types/fastclick@1.0.28",
+  "_inBundle": false,
+  "_integrity": "sha1-20s/bweSNTJLJkM44in5zdmKbE4=",
+  "_location": "/@types/fastclick",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@types/fastclick",
+    "name": "@types/fastclick",
+    "escapedName": "@types%2ffastclick",
+    "scope": "@types",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/fastclick/-/fastclick-1.0.28.tgz",
+  "_shasum": "db4b3f6f079235324b264338e229f9cdd98a6c4e",
+  "_spec": "@types/fastclick",
+  "_where": "F:\\web学习路线\\项目\\music-lhy\\react-music-lhy",
+  "author": {
+    "name": "Shinnosuke Watanabe",
+    "email": "https://github.com/shinnn"
+  },
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "TypeScript definitions for FastClick v1.0.3",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/fastclick",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+  },
+  "scripts": {},
+  "typesPublisherContentHash": "aaa7f4e9f45064427361d90706e300e4f2a60e7511aaed89e83b026444d6ae7f",
+  "typings": "index.d.ts",
+  "version": "1.0.28"
+}

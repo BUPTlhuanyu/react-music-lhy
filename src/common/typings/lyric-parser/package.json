@@ -1,0 +1,40 @@
+{
+  "_from": "@types/lyric-parser",
+  "_id": "@types/lyric-parser@1.0.28",
+  "_inBundle": false,
+  "_location": "/@types/lyric-parser",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@types/lyric-parser",
+    "name": "@types/lyric-parser",
+    "escapedName": "@types%lyric-parser",
+    "scope": "@types",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/fastclick/-/fastclick-1.0.28.tgz",
+  "_shasum": "db4b3f6f079235324b264338e229f9cdd98a6c4e",
+  "_spec": "@types/fastclick",
+  "_where": "F:\\web学习路线\\项目\\music-lhy\\react-music-lhy",
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "TypeScript definitions for FastClick v1.0.3",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/lyric-parser",
+  "scripts": {},
+  "typings": "lyric-parser.d.ts",
+  "version": "1.0.28"
+}
