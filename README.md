@@ -23,9 +23,9 @@
 
 ### D3
 - [1、图片懒加载组件优化](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/1%E3%80%81%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD%E7%BB%84%E4%BB%B6%E4%BC%98%E5%8C%96.md)
-- [2、歌曲信息页%2Btypescript的用法](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/2%E3%80%81%E6%AD%8C%E6%9B%B2%E4%BF%A1%E6%81%AF%E9%A1%B5%2Btypescript%E7%9A%84%E7%94%A8%E6%B3%95.md)
+- [2、歌曲信息页&typescript的用法](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/2%E3%80%81%E6%AD%8C%E6%9B%B2%E4%BF%A1%E6%81%AF%E9%A1%B5%2Btypescript%E7%9A%84%E7%94%A8%E6%B3%95.md)
 - [3、滚动列表复用组件](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/3%E3%80%81%E6%BB%9A%E5%8A%A8%E5%88%97%E8%A1%A8%E5%A4%8D%E7%94%A8%E7%BB%84%E4%BB%B6.md)
-- [4、异步获取数据%26%26保存组件状态](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/4%E3%80%81%E5%BC%82%E6%AD%A5%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%26%26%E4%BF%9D%E5%AD%98%E7%BB%84%E4%BB%B6%E7%8A%B6%E6%80%81.md)
+- [4、异步获取数据&保存组件状态](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/4%E3%80%81%E5%BC%82%E6%AD%A5%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%26%26%E4%BF%9D%E5%AD%98%E7%BB%84%E4%BB%B6%E7%8A%B6%E6%80%81.md)
 - [5、除Link外控制路由跳转：withRouter%20%26%26%20typescript](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/5%E3%80%81%E9%99%A4Link%E5%A4%96%E6%8E%A7%E5%88%B6%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%EF%BC%9AwithRouter%20%26%26%20typescript.md)
 - [6、redux使用方法](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/6%E3%80%81redux%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.md)
 
