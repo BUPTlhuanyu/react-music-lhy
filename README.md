@@ -31,8 +31,13 @@
 - [6、redux使用方法](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/6%E3%80%81redux%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.md)
 
 
-
-
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic3.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic4.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic5.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic6.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic7.png)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
