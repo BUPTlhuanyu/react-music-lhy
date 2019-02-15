@@ -32,6 +32,9 @@
 - [5、除Link外控制路由跳转：withRouter & typescript](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/5%E3%80%81%E9%99%A4Link%E5%A4%96%E6%8E%A7%E5%88%B6%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%EF%BC%9AwithRouter%20%26%26%20typescript.md)
 - [6、redux使用方法](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D3/6%E3%80%81redux%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.md)
 
+### D4
+- [1、withRouter&connect&typescript的使用](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/withRouter%26connect%26typescript%E7%9A%84%E4%BD%BF%E7%94%A8.md)
+- [2、页面切换与异步数据请求bug](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/%E9%A1%B5%E9%9D%A2%E5%88%87%E6%8D%A2%E4%B8%8E%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82bug.md)
 
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)
