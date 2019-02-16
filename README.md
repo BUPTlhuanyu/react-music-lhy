@@ -36,6 +36,7 @@
 - [1、withRouter&connect&typescript的使用](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/withRouter%26connect%26typescript%E7%9A%84%E4%BD%BF%E7%94%A8.md)
 - [2、页面切换与异步数据请求bug](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/%E9%A1%B5%E9%9D%A2%E5%88%87%E6%8D%A2%E4%B8%8E%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82bug.md)
 - [3、getDerivedStateFromProps使用技巧](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/getDerivedStateFromProps%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7.md)
+- [4、基于react-transition-group的react过渡动画](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%E5%8A%A8%E7%94%BBCSSTransition.md)
 
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)
