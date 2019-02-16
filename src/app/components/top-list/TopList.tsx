@@ -25,7 +25,7 @@ class TopList extends Component<DiscBasePropType, DiscBaseStateType>{
         super(props)
         this.unmoutedFlag=false
         this.state  = {
-            showMusicList: false,
+            showMusicList: true,
             songs:[]
         }
     }
@@ -33,13 +33,10 @@ class TopList extends Component<DiscBasePropType, DiscBaseStateType>{
     back = () => {
         this.setState({
             showMusicList:false
-        },() => {this.props.history.goBack()})
+        })
     }
 
     componentDidMount(){
-        this.setState({
-            showMusicList:true
-        })
         this._getMusicList()
     }
 
@@ -81,10 +78,14 @@ class TopList extends Component<DiscBasePropType, DiscBaseStateType>{
         return(
             <CSSTransition
                 in={this.state.showMusicList}
-                timeout={300}
-                classNames="message"
+                timeout={500}
+                classNames="top-list-transition"
                 appear={true}
                 unmountOnExit
+                onExited = { () => {
+                    console.log("onExited")
+                     this.props.history.goBack()
+                } }
             >
                 <MusicList rank={true} singerName={topList.topTitle} bgImage={bgImage} songs={songs} back={this.back}/>
             </CSSTransition>

@@ -1,26 +1,22 @@
-@import "common/style/variable.scss";
-
-.singer-detail {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: $color-background;
-}
-
-.message-enter {
+.top-list-transition-appear {
   transform: translateX(100%);
 }
-.message-enter-active {
+.top-list-transition-appear-active {
   transform: translateX(0%);
-  transition: all 300ms ease-out;
+  transition: all 500ms ease-out;
 }
-.message-exit {
+
+.top-list-transition-enter {
+  transform: translateX(100%);
+}
+.top-list-transition-enter-active {
+  transform: translateX(0%);
+  transition: all 500ms ease-out;
+}
+.top-list-transition-exit {
   transform: translateX(0%) scale(0.5);
 }
-.message-exit-active {
+.top-list-transition-exit-active {
   transform: translateX(100%) scale(1);
-  transition: all 300ms ease-in;
+  transition: all 500ms ease-in;
 }

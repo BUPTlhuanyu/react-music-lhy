@@ -25,7 +25,7 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
         super(props)
         this.unmoutedFlag=false
         this.state  = {
-            showMusicList: false,
+            showMusicList: true,
             songs:[]
         }
     }
@@ -33,13 +33,10 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
     back = () => {
         this.setState({
             showMusicList:false
-        },() => {this.props.history.goBack()})
+        })
     }
 
     componentDidMount(){
-        this.setState({
-            showMusicList:true
-        })
         this._getSongList()
     }
 
@@ -74,15 +71,19 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
 
 
     render(){
+        console.log("1",new Date())
         const { disc } = this.props;
         const { songs } = this.state;
         return(
             <CSSTransition
                 in={this.state.showMusicList}
-                timeout={300}
-                classNames="message"
+                timeout={500}
+                classNames="disc-transition"
                 appear={true}
                 unmountOnExit
+                onExited = { () => {
+                    this.props.history.goBack()
+                } }
             >
                 <MusicList singerName={disc.name} bgImage={disc.imgurl} songs={songs} back={this.back}/>
             </CSSTransition>

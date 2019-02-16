@@ -28,7 +28,7 @@ class SingerDetailBase extends Component<singerDetailPropType, singerDetailState
         super(props)
         this.unmoutedFlag=false
         this.state  = {
-            showMusicList: false,
+            showMusicList: true,
             songs:[]
         }
     }
@@ -36,13 +36,10 @@ class SingerDetailBase extends Component<singerDetailPropType, singerDetailState
     back = () => {
         this.setState({
             showMusicList:false
-        },() => {console.log(this.state.showMusicList);this.props.history.goBack()})
+        })
     }
 
     componentDidMount(){
-        this.setState({
-            showMusicList:true
-        })
         this._getSingerDetail()
     }
 
@@ -78,10 +75,13 @@ class SingerDetailBase extends Component<singerDetailPropType, singerDetailState
         return(
             <CSSTransition
                 in={this.state.showMusicList}
-                timeout={300}
-                classNames="message"
+                timeout={500}
+                classNames="singer-detail-transition"
                 appear={true}
                 unmountOnExit
+                onExited = { () => {
+                    this.props.history.goBack()
+                } }
             >
                 <MusicList singerName={singer.name} bgImage={singer.avatar} songs={songs} back={this.back}/>
             </CSSTransition>

@@ -67,12 +67,17 @@ class MusicList extends Component<MusicListProps, MusicListState>{
 
 
     componentDidMount(){
+        console.log("musiclist componentDidMount")
         let listTop = this.bgImage.current.clientHeight;
         this.list.current.wrapper.current.style.top = `${listTop}px`;
         this.setState({
             imageHeight: listTop,
             minTransalteY: -listTop + RESERVED_HEIGHT
         })
+    }
+
+    componentWillUnmount(){
+        console.log("musiclist componentWillUnmount")
     }
 
     scrollHandler = (pos : {x:number,y:number}) => {
