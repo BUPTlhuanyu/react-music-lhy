@@ -1,6 +1,6 @@
 ## 基于react-transition-group的react过渡动画 ##
 
-[react-transition-group](https://github.com/reactjs/react-transition-group)是react官方提供的动画库，这个仓库(未完成)是供参考的源码浅析，本项目中目前实现了一种场景下的过渡动画:点击标签，路由跳转，挂载与卸载需要过渡动画的组件。
+[react-transition-group](https://github.com/reactjs/react-transition-group)是react官方提供的动画库，[Transition的源码浅析](https://github.com/BUPTlhuanyu/ReactNote/blob/master/react-transition-group/block/D1/react-transition-group%E6%BA%90%E7%A0%81%E6%B5%85%E6%9E%90(%E4%B8%80)%EF%BC%9ATransition.md#3-%E4%BB%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%88%86%E6%9E%90%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81)，本项目中目前实现了一种场景下的过渡动画:点击标签，路由跳转，挂载与卸载需要过渡动画的组件。
 
 项目中Disc.tsx、TopList.tsx、SingerDetail.tsx组件都属于这种场景下的需求，因此拿Disc.tsx来举例说明。
 
