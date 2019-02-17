@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import assign from 'lodash/assign'
 import originJsonp from 'jsonp'
 
 // const getFormData = params => {
@@ -106,7 +106,7 @@ async function wsGet(options) {
     options.method = "GET";
     options.credentials = "include";
     options.mode = 'cors';
-    options.headers = _.assign({
+    options.headers = assign({
         "Content-Type": "application/json"
     }, options.headers);
     if(options.data) {
@@ -119,7 +119,7 @@ async function wsPost(options) {
     options.method = "POST";
     options.credentials = "include";
     options.mode = 'cors';
-    options.headers = _.assign({
+    options.headers = assign({
         "Content-Type": "application/json"
     }, options.headers);
     if(options.data) {
@@ -132,7 +132,7 @@ async function wsDelete(options) {
     options.method = "DELETE";
     options.credentials = "include";
     options.mode = 'cors';
-    options.headers = _.assign({
+    options.headers = assign({
         "Content-Type": "application/json"
     }, options.headers);
     return await commonHandler(options);

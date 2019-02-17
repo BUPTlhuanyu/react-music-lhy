@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import './SearchBox.scss'
-import {debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 
 interface SearchBoxPropType{
     queryHandler:Function
