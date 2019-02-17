@@ -3,12 +3,13 @@ import { Switch, Route, Redirect } from 'react-router'
 
 import Header from 'components/header/Header'
 import Tab from 'components/tab/Tab'
-import Rank from 'components/rank/Rank'
 import Recommend from 'components/recommend/Recommend'
-import Search from 'components/search/Search'
-import Singer from 'components/singer/Singer'
 import Player from 'components/player/Player'
-import UserCenter from "./components/user-center/UserCenter";
+// import UserCenter from "components/user-center/UserCenter";
+// import Search from 'components/search/Search'
+// import Singer from 'components/singer/Singer'
+// import Rank from 'components/rank/Rank'
+
 
 class App extends Component {
   render() {
@@ -36,3 +37,25 @@ class App extends Component {
 }
 
 export default App;
+
+import Loadable from 'react-loadable';
+import Loading from 'reuse/loading/Loading'
+const Rank = Loadable({
+        loader: () => import('components/rank/Rank'),
+    loading: () => <Loading text={"按需加载"}/>
+    })
+
+const Search = Loadable({
+        loader: () => import('components/search/Search'),
+    loading: () => <Loading text={"按需加载"}/>
+})
+
+const Singer = Loadable({
+        loader: () => import('components/singer/Singer'),
+    loading: () => <Loading text={"按需加载"}/>
+})
+
+const UserCenter = Loadable({
+        loader: () => import('components/user-center/UserCenter'),
+    loading: () => <Loading text={"按需加载"}/>
+})
