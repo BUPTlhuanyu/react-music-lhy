@@ -4,8 +4,8 @@
 ##### 声明：本项目参考了滴滴大佬的vue项目，原vue项目请关注[ustbhuangyi](https://github.com/ustbhuangyi)
 
 ## 项目运行
- ### `npm install`
- ### `npm start`
+ ##### `npm install`
+ ##### `npm start`
  ##### 项目中用到的一些自定义types在common/js/typings目录下
  ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
 
