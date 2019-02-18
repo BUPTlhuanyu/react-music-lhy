@@ -9,11 +9,6 @@
  ##### 项目中用到的一些自定义types在common/js/typings目录下
  ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
 
-## ToDo
-- [ ] 完善项目中typescript类型
-- [ ] create-react-app优化打包
-- [ ] 项目部署
-
 ## 项目笔记
 ### D1
 - [1、搭建项目](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D1/1%E3%80%81%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE.md)
@@ -45,6 +40,10 @@
 - [5、react-lodable组件动态导入](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react-lodable%e7%bb%84%e4%bb%b6%e5%8a%a8%e6%80%81%e5%af%bc%e5%85%a5)
 - [6、react中输入框防抖debounce](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%e4%b8%ad%e8%be%93%e5%85%a5%e6%a1%86%e9%98%b2%e6%8a%96debounce)
 
+## ToDo
+- [ ] 完善项目中typescript类型
+- [ ] create-react-app优化打包
+- [ ] 项目部署
 
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)
