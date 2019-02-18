@@ -45,6 +45,7 @@
 - [ ] create-react-app优化打包
 - [ ] 项目部署
 
+## 页面展示
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic3.png)
