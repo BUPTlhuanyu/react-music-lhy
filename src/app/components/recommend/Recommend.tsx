@@ -10,6 +10,8 @@ import Loading from 'reuse/loading/Loading'
 import LazyImage from 'reuse/lazyimg/Lazy-img'
 import Disc from 'components/disc/Disc'
 import { setDisc } from 'actions/disc'
+import { IDisc } from 'store/stateTypes'
+import { Dispatch } from 'redux';
 
 
 interface Props{
@@ -154,9 +156,9 @@ class Recommend extends Component<Props,State>{
     }
 }
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch:Dispatch) => {
     return {
-        setDisc : (disc:any) => {
+        setDisc : (disc:IDisc) => {
             dispatch(setDisc(disc))
         }
     }

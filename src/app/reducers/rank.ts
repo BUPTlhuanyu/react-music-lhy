@@ -1,6 +1,11 @@
 import * as types from 'actions/actionsTypes'
+import {
+    ITopList,
+    defaultState,
+    IAction
+} from 'store/stateTypes'
 
-const topList = (state:any={}, action:any) => {
+const topList = (state:ITopList=defaultState.toplist, action:IAction) => {
     switch(action.type){
         case types.SET_TOP_LIST:
             return action.topList

@@ -1,13 +1,7 @@
 import * as types from './actionsTypes'
+import { IDisc, IActionCreator } from 'store/stateTypes'
 
-//     playing:player.playing,
-//     fullScreen:player.fullScreen,
-//     playlist:player.playlist,
-//     sequenceList:player.sequenceList,
-//     mode:player.mode,
-//     currentIndex:player.currentIndex
-
-export const setDisc = (disc:any) => {
+export const setDisc : IActionCreator= (disc:IDisc) => {
     return {
         type: types.SET_DISC,
         disc

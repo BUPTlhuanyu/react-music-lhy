@@ -1,7 +1,7 @@
 import * as types from './actionsTypes'
-import SingerClass from 'common/js/singer.js'
+import { ISinger, IActionCreator } from 'store/stateTypes'
 
-export const setSinger = (singer:SingerClass) => {
+export const setSinger : IActionCreator = (singer:ISinger) => {
     return {
         type: types.SET_SINGER,
         singer

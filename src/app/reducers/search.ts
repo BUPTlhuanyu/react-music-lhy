@@ -1,7 +1,11 @@
 import * as types from 'actions/actionsTypes'
-import { loadSearch } from 'common/js/cache'
+import {
+    ISearchHistory,
+    defaultState,
+    IAction
+} from 'store/stateTypes'
 
-const searchHistory = (state:Array<any> = loadSearch(), action:any) => {
+const searchHistory = (state:ISearchHistory = defaultState.searchHistory, action:IAction) => {
     switch(action.type){
         case types.SET_SEARCH_HISTORY:
             return action.searchHistory

@@ -69,7 +69,7 @@ class Search extends Component<SearchPropType, SearchStateType>{
     }
 
     addQuery = (query:string) => {
-        console.log("this",this)
+        // console.log("this",this)
         this.searchBox.current.setQuery(query)
         this.setState({
             query
@@ -223,7 +223,7 @@ const mapStateToProps = (state:any) => ({
 
 const mapDispatchToProps = (dispatch:any) => {
     return {
-        setSearchHistory : (searchHistory:string) => {
+        setSearchHistory : (searchHistory:Array<any>) => {
             dispatch(setSearchHistory(searchHistory))
         }
     }

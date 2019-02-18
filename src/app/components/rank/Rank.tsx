@@ -105,7 +105,7 @@ const mapStateToProps = (state:any,ownProps:any) => ({
 
 const mapDispatchToProps = (dispatch:any) => {
     return {
-        setTopList : (topList:any) => {
+        setTopList : (topList:Array<any>) => {
             dispatch(setTopList(topList))
         }
     }

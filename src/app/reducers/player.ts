@@ -1,7 +1,17 @@
-import {playMode} from 'common/js/config'
 import * as types from 'actions/actionsTypes'
+import {
+    IPlaying,
+    IFullScreen,
+    IPlaylist,
+    ISequenceList,
+    IMode,
+    ICurrentIndex,
+    defaultState,
+    IAction
+}
+from 'store/stateTypes'
 
-export const playing = (state:boolean = false, action:any) => {
+export const playing = (state:IPlaying = defaultState.playing, action:IAction) => {
     switch(action.type){
         case types.SET_PLAYING_STATE:
             return action.playing
@@ -10,7 +20,7 @@ export const playing = (state:boolean = false, action:any) => {
     }
 }
 
-export const fullScreen = (state:boolean = false, action:any) => {
+export const fullScreen = (state:IFullScreen = defaultState.fullScreen, action:IAction) => {
     switch(action.type){
         case types.SET_FULL_SCREEN:
             return action.fullScreen
@@ -19,7 +29,7 @@ export const fullScreen = (state:boolean = false, action:any) => {
     }
 }
 
-export const playlist = (state:Array<any> = [], action:any) => {
+export const playlist = (state:IPlaylist = defaultState.playlist, action:IAction) => {
     switch(action.type){
         case types.SET_PLAYLIST:
             return action.playlist
@@ -28,7 +38,7 @@ export const playlist = (state:Array<any> = [], action:any) => {
     }
 }
 
-export const sequenceList = (state:Array<any> = [], action:any) => {
+export const sequenceList = (state:ISequenceList = defaultState.sequenceList, action:IAction) => {
     switch(action.type){
         case types.SET_SEQUENCE_LIST:
             return action.sequenceList
@@ -37,7 +47,7 @@ export const sequenceList = (state:Array<any> = [], action:any) => {
     }
 }
 
-export const mode = (state:number = playMode.sequence, action:any) => {
+export const mode = (state:IMode = defaultState.mode, action:IAction) => {
     switch(action.type){
         case types.SET_PLAY_MODE:
             return action.mode
@@ -46,7 +56,7 @@ export const mode = (state:number = playMode.sequence, action:any) => {
     }
 }
 
-export const currentIndex = (state:number = -1, action:any) => {
+export const currentIndex = (state:ICurrentIndex = defaultState.currentIndex, action:IAction) => {
     switch(action.type){
         case types.SET_CURRENT_INDEX:
             return action.currentIndex

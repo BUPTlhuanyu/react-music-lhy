@@ -71,9 +71,9 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
 
 
     render(){
-        console.log("1",new Date())
         const { disc } = this.props;
         const { songs } = this.state;
+        console.log("disc",disc)
         return(
             <CSSTransition
                 in={this.state.showMusicList}
@@ -91,7 +91,7 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
     }
 }
 
-const mapStateToProps = (state:any,ownProps:any) => (
+const mapStateToProps = (state:{disc:any},ownProps:any) => (
     {
         disc:state.disc,
         ...ownProps

@@ -83,7 +83,6 @@ class TopList extends Component<DiscBasePropType, DiscBaseStateType>{
                 appear={true}
                 unmountOnExit
                 onExited = { () => {
-                    console.log("onExited")
                      this.props.history.goBack()
                 } }
             >

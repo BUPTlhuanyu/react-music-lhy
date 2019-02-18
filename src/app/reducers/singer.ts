@@ -1,10 +1,11 @@
 import * as types from 'actions/actionsTypes'
-import SingerClass from 'common/js/singer.js'
+import {
+    ISinger,
+    defaultState,
+    IAction
+} from 'store/stateTypes'
 
-const singer = (state:any=new SingerClass({
-    id : undefined,
-    name: ""
-}), action:any) => {
+const singer = (state:ISinger=defaultState.singer, action:IAction) => {
     switch(action.type){
         case types.SET_SINGER:
             return action.singer

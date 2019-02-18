@@ -441,7 +441,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     getCurrentIcon = (item:any) => {
-        if (this.state.currentSong.id === item.id) {
+        if (this.state.currentSong && this.state.currentSong.id === item.id) {
             return 'icon-play'
         }
         return ''

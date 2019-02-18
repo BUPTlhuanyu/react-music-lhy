@@ -63,7 +63,7 @@ class Suggest extends Component<SuggestPropType, SuggestStateType>{
     }
 
     findIndex = (list:Array<any>, song:any) => {
-        return list.findIndex((item) => {
+        return song && list.findIndex((item) => {
             return item.id === song.id
         })
     }
