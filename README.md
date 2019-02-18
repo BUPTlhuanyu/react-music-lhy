@@ -9,6 +9,11 @@
  ##### 项目中用到的一些自定义types在common/js/typings目录下
  ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
 
+## ToDo
+- [ ] 完善项目中typescript类型
+- [ ] create-react-app优化打包
+- [ ] 项目部署
+
 ## 项目笔记
 ### D1
 - [1、搭建项目](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D1/1%E3%80%81%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE.md)
@@ -37,6 +42,9 @@
 - [2、页面切换与异步数据请求bug](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/%E9%A1%B5%E9%9D%A2%E5%88%87%E6%8D%A2%E4%B8%8E%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82bug.md)
 - [3、getDerivedStateFromProps使用技巧](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/getDerivedStateFromProps%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7.md)
 - [4、基于react-transition-group的react过渡动画](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%E5%8A%A8%E7%94%BBCSSTransition.md)
+- [5、react-lodable组件动态导入](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react-lodable%e7%bb%84%e4%bb%b6%e5%8a%a8%e6%80%81%e5%af%bc%e5%85%a5)
+
+
 
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)

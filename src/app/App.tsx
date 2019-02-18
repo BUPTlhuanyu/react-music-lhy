@@ -10,7 +10,6 @@ import Player from 'components/player/Player'
 // import Singer from 'components/singer/Singer'
 // import Rank from 'components/rank/Rank'
 
-
 class App extends Component {
   render() {
     return (
@@ -39,23 +38,23 @@ class App extends Component {
 export default App;
 
 import Loadable from 'react-loadable';
-import Loading from 'reuse/loading/Loading'
+import Loading from 'reuse/loading/Loading';
 const Rank = Loadable({
-        loader: () => import('components/rank/Rank'),
-    loading: () => <Loading text={"按需加载"}/>
-    })
+        loader: () => {return import(/* webpackChunkName: "Rank" */ 'components/rank/Rank')},
+        loading: () => <Loading text={"按需加载"}/>
+    });
 
 const Search = Loadable({
-        loader: () => import('components/search/Search'),
-    loading: () => <Loading text={"按需加载"}/>
-})
+        loader: () => {return import(/* webpackChunkName: "Search" */ 'components/search/Search')},
+        loading: () => <Loading text={"按需加载"}/>
+});
 
 const Singer = Loadable({
-        loader: () => import('components/singer/Singer'),
-    loading: () => <Loading text={"按需加载"}/>
-})
+        loader: () => {return import(/* webpackChunkName: "Singer" */ 'components/singer/Singer')},
+        loading: () => <Loading text={"按需加载"}/>
+});
 
 const UserCenter = Loadable({
-        loader: () => import('components/user-center/UserCenter'),
-    loading: () => <Loading text={"按需加载"}/>
-})
+        loader: () => {return import(/* webpackChunkName: "UserCenter" */ 'components/user-center/UserCenter')},
+        loading: () => <Loading text={"按需加载"}/>
+});
