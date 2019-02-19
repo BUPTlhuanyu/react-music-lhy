@@ -41,15 +41,15 @@
 - [6、react中输入框防抖debounce](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%e4%b8%ad%e8%be%93%e5%85%a5%e6%a1%86%e9%98%b2%e6%8a%96debounce)
 - [7、typescript约束输入数据结构编写listView可复用组件](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/typescript%e7%ba%a6%e6%9d%9f%e8%be%93%e5%85%a5%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e7%bc%96%e5%86%99listView%e5%8f%af%e5%a4%8d%e7%94%a8%e7%bb%84%e4%bb%b6)
 - [8、typescript在react项目中的实践](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5)
-- [ ][9、typescript在react项目中的实践之ref]
+- [9、typescript在react项目中的实践之ref]
 
 ## ToDo
 - [ ] 完善项目中typescript类型
     - [x] store，action类型
     - [x] 数据类型
     - [x] 无状态组件 `React.SFC`
-    - [x] ~~有状态组件
-        `多此一举的写法：readonly state : Readonly<IState>，react已经对props与state作了只读处理`
+    - [x] 有状态组件
+        `readonly state : Readonly<IState>，react已经对props与state作了只读处理`
     - [x] react事件类型
     - [ ] ref类型 `React.RefObject<Scroll> --> <Scroll ref={this.toplist}></Scroll>`
     - [x] 媒体事件类型 `const { currentTime } : { currentTime: number } = e.target as HTMLMediaElement`
