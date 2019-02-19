@@ -46,6 +46,10 @@ class SingerDetailBase extends Component<singerDetailPropType, singerDetailState
     }
 
     componentDidMount(){
+        if(this.props.singer && this.props.singer.id < 0){
+            this.props.history.push('/singer')
+            return
+        }
         this._getSingerDetail()
     }
 

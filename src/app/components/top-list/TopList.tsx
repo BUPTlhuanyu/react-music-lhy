@@ -43,6 +43,10 @@ class TopList extends Component<DiscBasePropType, DiscBaseStateType>{
     }
 
     componentDidMount(){
+        if(this.props.topList && this.props.topList.id < 0){
+            this.props.history.push('/rank')
+            return
+        }
         this._getMusicList()
     }
 

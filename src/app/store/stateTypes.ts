@@ -115,8 +115,8 @@ export const defaultState: IStoreState = {
     mode : playMode.sequence,
     playing : false,
     playlist : [],
-    searchHistory : [],
-    sequenceList : loadSearch(),
+    searchHistory : loadSearch(),
+    sequenceList : [],
     singer : {
         id : -1,
         name : '',
