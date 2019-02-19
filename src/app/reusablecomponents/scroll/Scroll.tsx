@@ -9,11 +9,11 @@ import BScroll from 'better-scroll'
 
 interface scrollProps{
     children?:any,
-    className?:any,
+    className?:string,
     data?:any,
     scrollHandler?:Function,
     probeType?:number,
-    pullUp?:any,
+    pullUp?:boolean,
     pullUpHandler?:Function
 }
 

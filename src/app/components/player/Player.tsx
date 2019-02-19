@@ -17,30 +17,43 @@ import Lyric from 'lyric-parser'
 import {prefixStyle} from 'common/js/dom'
 import PlayList from 'components/playlist/PlayList'
 
+import {
+    ISong ,
+    IPlaying,
+    ICurrentIndex,
+    IMode,
+    IPlaylist,
+    ISequenceList,
+    IFullScreen,
+    IStoreState
+} from 'store/stateTypes'
+import { Dispatch } from 'redux'
+
 const transform = prefixStyle('transform')
 const transitionDuration = prefixStyle('transitionDuration')
 
 import './player.scss'
 
+
 interface PlayerPropType{
-    fullScreen : boolean,
-    playlist : Array<any>,
-    currentIndex : number,
+    fullScreen : IFullScreen,
+    playlist : IPlaylist,
+    currentIndex : ICurrentIndex,
     setFullScreen:Function,
     setPlaying:Function,
     setCurrentIndex:Function,
     setPlayMode:Function,
     setPlaylist:Function,
     setSequenceList:Function,
-    playing:boolean,
-    mode:number,
-    sequenceList:Array<any>
+    playing:IPlaying,
+    mode:IMode,
+    sequenceList:ISequenceList
 }
 
 interface PlayerStateType{
     songReady:boolean,
     currentTime:number,
-    currentSong:any,
+    currentSong:ISong,
     radius:number,
     currentLyric:any,
     playingLyric:string,
@@ -79,7 +92,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.state ={
             songReady: false,
             currentTime:0,
-            currentSong:null,
+            currentSong: props.playlist[props.currentIndex],
             radius:32,
             currentLyric:null,
             playingLyric:'',
@@ -89,17 +102,18 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     componentDidMount(){
-        this.setState({
-            currentTime:this.audio.current.currentTime,
-            currentSong:this.props.playlist[this.props.currentIndex]
-        })
+        // this.setState({
+        //     currentTime:this.audio.current.currentTime,
+        //     currentSong:this.props.playlist[this.props.currentIndex]
+        // })
     }
 
     getLyric = () => {
         if(this.state.currentLyric){
             this.state.currentLyric.stop()
         }
-        this.state.currentSong.getLyric().then((lyric:any) => {
+
+        this.state.currentSong.getLyric().then((lyric:string) => {
             if (this.state.currentSong.lyric !== lyric) {
                 return
             }
@@ -113,14 +127,14 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
             })
         }).catch(() => {
             this.setState({
-                currentLyric : null,
+                currentLyric : null ,
                 playingLyric:'',
                 currentLineNum:0
             })
         })
     }
 
-    handleLyric = ({lineNum, txt}:{lineNum:any, txt:any}) => {
+    handleLyric = ({lineNum, txt}:{lineNum:number, txt:string}) => {
         // console.log("handleLyric run")
         // console.log("lineNum",lineNum)
         // console.log("txt",txt)
@@ -264,7 +278,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         }
     }
 
-    toggleMiniPlaying = (e: any) => {
+    toggleMiniPlaying : React.MouseEventHandler<HTMLElement>= (e) => {
         e.stopPropagation();
         this.togglePlaying()
     }
@@ -401,13 +415,13 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.props.setPlaying(false)
     }
 
-    findIndex = (list:Array<any>, song:any) => {
+    findIndex = (list:ISequenceList, song:ISong) => {
         return list.findIndex((item) => {
             return item.id === song.id
         })
     }
 
-    deleteSong = (song:any) => {
+    deleteSong = (song:ISong) => {
         let playlist = this.props.playlist.slice()
         let sequenceList = this.props.sequenceList.slice()
         let currentIndex = this.props.currentIndex
@@ -430,7 +444,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         }
     }
 
-    selectItem = (item:any, index:number) => {
+    selectItem = (item:ISong, index:number) => {
         if (this.props.mode === playMode.random) {
             index = this.props.playlist.findIndex((song) => {
                 return song.id === item.id
@@ -440,14 +454,16 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.props.setPlaying(true)
     }
 
-    getCurrentIcon = (item:any) => {
+    getCurrentIcon = (item:ISong) => {
         if (this.state.currentSong && this.state.currentSong.id === item.id) {
             return 'icon-play'
         }
         return ''
     }
 
-    scrollToCurrent = (scroller:any, scrollSon:any,current:any = this.state.currentSong) => {
+    scrollToCurrent = (scroller:any, scrollSon:NodeList,current:ISong = this.state.currentSong) => {
+        console.log("scroller",scroller)
+        console.log("scrollSon",scrollSon)
         const index = this.props.sequenceList.findIndex((song) => {
             return current.id === song.id
         })
@@ -585,7 +601,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 }
 
-const mapStateToProp = (state:any) => ({
+const mapStateToProp = (state:IStoreState) => ({
     fullScreen : state.fullScreen,
     playlist : state.playlist,
     currentIndex : state.currentIndex,
@@ -594,23 +610,23 @@ const mapStateToProp = (state:any) => ({
     sequenceList:state.sequenceList
 })
 
-const mapDispatchToProps = (dispatch:any) => ({
-    setFullScreen: (fullScreen: boolean) => {
+const mapDispatchToProps = (dispatch:Dispatch) => ({
+    setFullScreen: (fullScreen: IFullScreen) => {
         dispatch(setFullScreen(fullScreen))
     },
-    setPlaying: (playing: boolean) => {
+    setPlaying: (playing: IPlaying) => {
         dispatch(setPlaying(playing))
     },
-    setCurrentIndex: (index: number) => {
+    setCurrentIndex: (index: ICurrentIndex) => {
         dispatch(setCurrentIndex(index))
     },
-    setPlayMode: (mode:number) => {
+    setPlayMode: (mode:IMode) => {
         dispatch(setPlayMode(mode))
     },
-    setPlaylist: (list:Array<any>) => {
+    setPlaylist: (list:IPlaylist) => {
         dispatch(setPlaylist(list))
     },
-    setSequenceList: (list:Array<any>) => {
+    setSequenceList: (list:ISequenceList) => {
         dispatch(setSequenceList(list))
     }
 })

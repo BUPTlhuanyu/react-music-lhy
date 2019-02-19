@@ -3,13 +3,16 @@ import './PlayList.scss'
 import Scroll from 'reuse/scroll/Scroll'
 import Confirm from 'reuse/confirm/Confirm'
 
+import {
+    ISequenceList
+} from 'store/stateTypes'
 
 interface PlayListProps{
     changeMode:Function,
     iconMode:Function,
     modeText:Function,
     deleteSongList:Function,
-    sequenceList:Array<any>,
+    sequenceList:ISequenceList,
     deleteSong:Function,
     getCurrentIcon:Function,
     selectItem:Function,

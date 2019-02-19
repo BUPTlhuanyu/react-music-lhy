@@ -15,6 +15,17 @@ import {
 import {playMode} from 'common/js/config'
 import {shuffle} from 'common/js/util'
 
+import { Dispatch } from 'redux'
+import {
+    ISong ,
+    IPlaying,
+    ICurrentIndex,
+    IMode,
+    IPlaylist,
+    ISequenceList,
+    IFullScreen,
+    IStoreState
+} from 'store/stateTypes'
 
 import {prefixStyle} from 'common/js/dom.js'
 const transform = prefixStyle('transform')
@@ -24,7 +35,7 @@ const RESERVED_HEIGHT = 40
 
 interface MusicListProps{
     singerName: string,
-    songs:Array<any>,
+    songs:Array<ISong>,
     bgImage:string,
     back:Function,
     setPlaying:Function,
@@ -34,7 +45,7 @@ interface MusicListProps{
     setCurrentIndex:Function,
     setPlayMode:Function,
     mode:number,
-    playlist:any,
+    playlist:IPlaylist,
     rank?:boolean
 }
 
@@ -120,19 +131,19 @@ class MusicList extends Component<MusicListProps, MusicListState>{
         this.handlePlaylist(this.props.playlist)
     }
 
-    handlePlaylist= (playlist:any) => {
+    handlePlaylist= (playlist:IPlaylist) => {
         const bottom = playlist.length > 0 ? '60px' : ''
         this.list.current.wrapper.current.style.bottom = bottom
         this.list.current.refresh()
     }
 
-    findIndex = (list:Array<any>, song:any) => {
+    findIndex = (list:ISequenceList, song:ISong) => {
         return list.findIndex((item) => {
             return item.id === song.id
         })
     }
 
-    selectSong = (song: any, index: number) => {
+    selectSong = (song: ISong, index: number) => {
         this.props.setSequenceList(this.props.songs)
         if (this.props.mode === playMode.random) {
             let randomList = shuffle(this.props.songs)
@@ -196,29 +207,29 @@ class MusicList extends Component<MusicListProps, MusicListState>{
     }
 }
 
-const mapStateToProps = (state:any) => ({
+const mapStateToProps = (state:IStoreState) => ({
     mode:state.mode,
     playlist:state.playlist
 })
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch:Dispatch) => {
     return {
-        setPlaying: (playing:boolean) => (
+        setPlaying: (playing:IPlaying) => (
             dispatch(setPlaying(playing))
         ),
-        setFullScreen: (fullScreen:boolean) => (
+        setFullScreen: (fullScreen:IFullScreen) => (
             dispatch(setFullScreen(fullScreen))
         ),
-        setSequenceList: (list:Array<any>) => (
+        setSequenceList: (list:ISequenceList) => (
             dispatch(setSequenceList(list))
         ),
-        setPlaylist: (list:Array<any>) => (
+        setPlaylist: (list:IPlaylist) => (
             dispatch(setPlaylist(list))
         ),
-        setCurrentIndex: (index:number) => (
+        setCurrentIndex: (index:ICurrentIndex) => (
             dispatch(setCurrentIndex(index))
         ),
-        setPlayMode: (mode:number) => {
+        setPlayMode: (mode:IMode) => {
             dispatch(setPlayMode(mode))
         }
     }

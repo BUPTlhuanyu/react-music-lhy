@@ -7,14 +7,15 @@ import {ERR_OK} from 'api/config'
 import MusicList from 'components/music-list/MusicList'
 import {createSong} from 'common/js/song.js'
 import { withRouter } from 'react-router'
+import { IDisc, ISong } from 'store/stateTypes'
 
 interface DiscBaseStateType{
     showMusicList: boolean,
-    songs:Array<any>
+    songs:Array<ISong>
 }
 
 interface DiscBasePropType{
-    disc:any,
+    disc:IDisc,
     history:any
 }
 
@@ -73,7 +74,7 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
     render(){
         const { disc } = this.props;
         const { songs } = this.state;
-        console.log("disc",disc)
+        console.log("songs",songs)
         return(
             <CSSTransition
                 in={this.state.showMusicList}
@@ -85,13 +86,13 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
                     this.props.history.goBack()
                 } }
             >
-                <MusicList singerName={disc.name} bgImage={disc.imgurl} songs={songs} back={this.back}/>
+                <MusicList singerName={disc.dissname} bgImage={disc.imgurl} songs={songs} back={this.back}/>
             </CSSTransition>
         )
     }
 }
 
-const mapStateToProps = (state:{disc:any},ownProps:any) => (
+const mapStateToProps = (state:{disc:IDisc},ownProps:any) => (
     {
         disc:state.disc,
         ...ownProps

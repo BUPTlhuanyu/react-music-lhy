@@ -9,13 +9,19 @@ import MusicList from 'components/music-list/MusicList'
 import {createSong} from 'common/js/song.js'
 import { withRouter } from 'react-router'
 
+import {
+    ISong,
+    IStoreState,
+    ISinger
+} from 'store/stateTypes'
+
 interface singerDetailStateType{
     showMusicList: boolean,
-    songs:Array<any>
+    songs:Array<ISong>
 }
 
 interface singerDetailPropType{
-    singer:SingerClass,
+    singer:ISinger,
     history:any,
     location:any,
     match:any
@@ -89,7 +95,7 @@ class SingerDetailBase extends Component<singerDetailPropType, singerDetailState
     }
 }
 
-const mapStateToProps = (state:any) => (
+const mapStateToProps = (state:IStoreState) => (
     {
         singer:state.singer
     }

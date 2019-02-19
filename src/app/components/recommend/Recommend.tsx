@@ -23,12 +23,12 @@ interface Props{
 
 interface State{
     recommends: Array<any>,
-    discList:Array<any>
+    discList:Array<IDisc>
 }
 
 let cacheData:{
     recommends: Array<any>,
-    discList:Array<any>
+    discList:Array<IDisc>
 };
 
 class Recommend extends Component<Props,State>{

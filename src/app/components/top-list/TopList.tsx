@@ -8,13 +8,19 @@ import MusicList from 'components/music-list/MusicList'
 import { createSong } from 'common/js/song.js'
 import { withRouter } from 'react-router'
 
+import {
+    ISong,
+    IStoreState,
+    ITopList
+} from 'store/stateTypes'
+
 interface DiscBaseStateType{
     showMusicList: boolean,
     songs:Array<any>
 }
 
 interface DiscBasePropType{
-    topList:any,
+    topList:ITopList,
     history:any
 }
 
@@ -92,7 +98,7 @@ class TopList extends Component<DiscBasePropType, DiscBaseStateType>{
     }
 }
 
-const mapStateToProps = (state:any,ownProps:any) => (
+const mapStateToProps = (state:IStoreState,ownProps:any) => (
     {
         topList:state.topList,
         ...ownProps

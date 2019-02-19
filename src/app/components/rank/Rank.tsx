@@ -10,8 +10,15 @@ import LazyImage from 'reuse/lazyimg/Lazy-img'
 import { connect } from 'react-redux'
 import { setTopList } from 'actions/rank'
 
+
+import {
+    IStoreState,
+    ITopList
+} from 'store/stateTypes'
+import { Dispatch } from 'redux'
+
 interface RankStateType{
-    topList:any
+    topListArr:Array<ITopList>
 }
 
 interface RankPropType{
@@ -29,7 +36,7 @@ class Rank extends Component<RankPropType,RankStateType>{
         this.unmoutedFlag=false
         this.toplist = React.createRef()
         this.state = {
-            topList:[]
+            topListArr:[]
         }
     }
 
@@ -46,20 +53,20 @@ class Rank extends Component<RankPropType,RankStateType>{
         getTopList().then((res) => {
             if (res.code === ERR_OK && !this.unmoutedFlag) {
                 this.setState({
-                    topList:res.data.topList
+                    topListArr:res.data.topList
                 })
             }
         })
     }
 
     render(){
-        const { topList } = this.state
+        const { topListArr } = this.state
         return(
             <div className="rank" ref="rank">
                 <Scroll className="toplist" ref={this.toplist}>
                     <ul>
                         {
-                            !!topList.length && topList.map((item:any, index:number) =>(
+                            !!topListArr.length && topListArr.map((item:any, index:number) =>(
                                 <li className="item" key={index} onClick={() => {this.selectItem(item)}}>
                                     <div className="icon">
                                         <LazyImage
@@ -87,7 +94,7 @@ class Rank extends Component<RankPropType,RankStateType>{
                         }
                     </ul>
                     {
-                        !topList.length &&
+                        !topListArr.length &&
                         <div className="loading-container">
                             <Loading/>
                         </div>
@@ -99,13 +106,13 @@ class Rank extends Component<RankPropType,RankStateType>{
     }
 }
 
-const mapStateToProps = (state:any,ownProps:any) => ({
+const mapStateToProps = (state:IStoreState,ownProps:any) => ({
     ...ownProps
 })
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch:Dispatch) => {
     return {
-        setTopList : (topList:Array<any>) => {
+        setTopList : (topList:ITopList) => {
             dispatch(setTopList(topList))
         }
     }

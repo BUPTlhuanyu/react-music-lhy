@@ -25,7 +25,7 @@ export type IMode = playMode
 
 export type IPlaying = boolean
 
-export type IPlaylistItem = {
+export type ISong = {
     id : number
     mid : string
     singer: string
@@ -34,13 +34,15 @@ export type IPlaylistItem = {
     duration : number
     image : string
     url : string
+    getLyric : Function
+    lyric : string
 }
 
-export type IPlaylist = Array<IPlaylistItem>
+export type IPlaylist = Array<ISong>
 
 export type ISearchHistory = Array<string>
 
-export type ISequenceList = Array<IPlaylistItem>
+export type ISequenceList = Array<ISong>
 
 export type ISinger = {
     id : number
@@ -74,7 +76,7 @@ export type IStoreState = {
     searchHistory : ISearchHistory
     sequenceList : ISequenceList
     singer : ISinger
-    toplist : ITopList
+    topList : ITopList
 }
 
 
@@ -120,7 +122,7 @@ export const defaultState: IStoreState = {
         name : '',
         avatar : ''
     },
-    toplist : {
+    topList : {
         id : -1,
         listenCount : -1,
         picUrl : '',

@@ -15,6 +15,18 @@ import {
 } from 'actions/player'
 import SingerClass from 'common/js/singer.js'
 
+import {
+    ISong,
+    IPlaying,
+    ICurrentIndex,
+    IMode,
+    IPlaylist,
+    ISequenceList,
+    IFullScreen,
+    IStoreState, ISinger
+} from 'store/stateTypes'
+import { Dispatch } from 'redux'
+
 const TYPE_SINGER = 'singer'
 
 interface SuggestPropType{
@@ -29,11 +41,11 @@ interface SuggestPropType{
     setSequenceList:Function,
     setPlaylist:Function,
     setCurrentIndex:Function,
-    fullScreen : boolean,
-    playlist : Array<any>,
-    currentIndex : number,
-    playing:boolean,
-    sequenceList:Array<any>,
+    fullScreen : IFullScreen,
+    playlist : IPlaylist,
+    currentIndex : ICurrentIndex,
+    playing:IPlaying,
+    sequenceList:IPlaylist,
     saveSearch:Function
 }
 
@@ -62,13 +74,13 @@ class Suggest extends Component<SuggestPropType, SuggestStateType>{
         }
     }
 
-    findIndex = (list:Array<any>, song:any) => {
+    findIndex = (list:ISequenceList, song:ISong) => {
         return song && list.findIndex((item) => {
             return item.id === song.id
         })
     }
 
-    insertSong = (song:any) => {
+    insertSong = (song:ISong) => {
         let playlist = this.props.playlist.slice()
         let sequenceList = this.props.sequenceList.slice()
         let currentIndex = this.props.currentIndex
@@ -177,7 +189,7 @@ class Suggest extends Component<SuggestPropType, SuggestStateType>{
     }
 }
 
-const mapStateToProps = (state:any) => ({
+const mapStateToProps = (state:IStoreState) => ({
     fullScreen : state.fullScreen,
     playlist : state.playlist,
     currentIndex : state.currentIndex,
@@ -185,25 +197,25 @@ const mapStateToProps = (state:any) => ({
     sequenceList:state.sequenceList
 })
 
-const mapDispatchToProps = (dispatch:any, ownProps:any) => {
+const mapDispatchToProps = (dispatch:Dispatch, ownProps:any) => {
     return {
         ...ownProps,
-        setSinger: (singer:SingerClass) => (
+        setSinger: (singer:ISinger) => (
             dispatch(setSinger(singer))
         ),
-        setPlaying: (playing:boolean) => (
+        setPlaying: (playing:IPlaying) => (
             dispatch(setPlaying(playing))
         ),
-        setFullScreen: (fullScreen:boolean) => (
+        setFullScreen: (fullScreen:IFullScreen) => (
             dispatch(setFullScreen(fullScreen))
         ),
-        setSequenceList: (list:Array<any>) => (
+        setSequenceList: (list:ISequenceList) => (
             dispatch(setSequenceList(list))
         ),
-        setPlaylist: (list:Array<any>) => (
+        setPlaylist: (list:IPlaylist) => (
             dispatch(setPlaylist(list))
         ),
-        setCurrentIndex: (index:number) => (
+        setCurrentIndex: (index:ICurrentIndex) => (
             dispatch(setCurrentIndex(index))
         )
     }

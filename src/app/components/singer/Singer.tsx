@@ -9,10 +9,15 @@ import SingerDetail from '../singer-detail/SingerDetail'
 import { connect } from 'react-redux'
 import {setSinger} from 'actions/singer'
 
+import {
+    ISinger
+} from 'store/stateTypes'
+import { Dispatch } from 'redux'
+
 
 interface hotType{
     title:string,
-    items:Array<any>
+    items:Array<ISinger>
 }
 
 class mapType {
@@ -35,11 +40,11 @@ interface singerProps{
 }
 
 interface singerState{
-    singers: Array<any>
+    singers: Array<hotType>
 }
 
 let cacheData:{
-    singers: Array<any>
+    singers: Array<hotType>
 };
 
 class SingerBase extends Component<singerProps, singerState>{
@@ -73,6 +78,7 @@ class SingerBase extends Component<singerProps, singerState>{
     _getSingerList() {
         getSingerList().then((res) => {
             if (res.code === ERR_OK && !this.unmoutedFlag) {
+                console.log("this._normalizeSinger(res.data.list)",this._normalizeSinger(res.data.list))
                 this.setState({
                     singers: this._normalizeSinger(res.data.list)
                 })
@@ -133,9 +139,9 @@ class SingerBase extends Component<singerProps, singerState>{
     }
 }
 
-const mapDispatchToProps = (dispatch:any, ownProps:any) => {
+const mapDispatchToProps = (dispatch:Dispatch, ownProps:any) => {
     return {
-        setSinger: (singer:SingerClass) => (
+        setSinger: (singer:ISinger) => (
             dispatch(setSinger(singer))
         )
     }

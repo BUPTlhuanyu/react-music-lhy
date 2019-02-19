@@ -42,6 +42,11 @@
 
 ## ToDo
 - [ ] 完善项目中typescript类型
+    - [x] store，action类型
+    - [x] 数据类型
+    - [ ] react事件类型
+    - [ ] ref类型
+    - [ ] 媒体事件类型
 - [ ] create-react-app优化打包
 - [ ] 项目部署
 

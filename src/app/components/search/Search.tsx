@@ -13,12 +13,18 @@ import { saveSearch, deleteSearch, clearSearch } from 'common/js/cache'
 import SearchList from 'reuse/search-list/SearchList'
 import Confirm from 'reuse/confirm/Confirm'
 
+import {
+    IStoreState,
+    ISearchHistory
+} from 'store/stateTypes'
+import { Dispatch } from 'redux'
+
 const TYPE_SINGER = 'singer'
 const perpage = 20
 
 interface SearchPropType{
     setSearchHistory:Function,
-    searchHistory:Array<any>
+    searchHistory:ISearchHistory
 }
 
 interface SearchStateType{
@@ -217,13 +223,13 @@ class Search extends Component<SearchPropType, SearchStateType>{
     }
 }
 
-const mapStateToProps = (state:any) => ({
+const mapStateToProps = (state:IStoreState) => ({
     searchHistory:state.searchHistory
 })
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch:Dispatch) => {
     return {
-        setSearchHistory : (searchHistory:Array<any>) => {
+        setSearchHistory : (searchHistory:ISearchHistory) => {
             dispatch(setSearchHistory(searchHistory))
         }
     }
