@@ -166,7 +166,6 @@ class Search extends Component<SearchPropType, SearchStateType>{
     render(){
         const { hotKey, query, result, hasMore, page } = this.state
         const { searchHistory } = this.props
-        console.log("searchHistory",searchHistory)
         return(
             <div className="search">
                 <div className="search-box-wrapper">

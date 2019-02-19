@@ -74,7 +74,6 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
     render(){
         const { disc } = this.props;
         const { songs } = this.state;
-        console.log("songs",songs)
         return(
             <CSSTransition
                 in={this.state.showMusicList}

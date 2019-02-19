@@ -7,46 +7,32 @@ interface SearchListProps{
     deleteItem:Function
 }
 
-interface SearchListState{
 
+
+const SearchList : React.SFC<SearchListProps> = ({searches,selectItem,deleteItem}) => {
+    return(
+        <div className="search-list" style={{display:searches.length?"":"none"}}>
+            <ul>
+                {
+                    !!searches.length && searches.map((item, index)=>(
+                        <li key={index}
+                            className="search-item"
+                            onClick={()=>{selectItem(item)}}
+                        >
+                            <span className="text">{item}</span>
+                            <span className="icon"
+                                  onClick={(e) => {
+                                     e.stopPropagation()
+                                     deleteItem(item)
+                                  }}>
+                        <i className="icon-delete"/>
+                    </span>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    )
 }
 
-
-
-export default class SearchList extends Component<SearchListProps,SearchListState>{
-    constructor(props:SearchListProps){
-        super(props);
-        this.state={
-
-        }
-    }
-
-
-
-    render(){
-        const {searches,selectItem,deleteItem} = this.props
-        return(
-            <div className="search-list" style={{display:searches.length?"":"none"}}>
-                <ul>
-                    {
-                        !!searches.length && searches.map((item, index)=>(
-                            <li key={index}
-                                className="search-item"
-                                onClick={()=>{selectItem(item)}}
-                            >
-                                <span className="text">{item}</span>
-                                <span className="icon"
-                                      onClick={(e) => {
-                                         e.stopPropagation()
-                                         deleteItem(item)
-                                      }}>
-                            <i className="icon-delete"/>
-                        </span>
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
-        )
-    }
-}
+export default SearchList

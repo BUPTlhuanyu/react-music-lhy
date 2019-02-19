@@ -44,6 +44,7 @@
 - [ ] 完善项目中typescript类型
     - [x] store，action类型
     - [x] 数据类型
+    - [x] 无状态组件
     - [ ] react事件类型
     - [ ] ref类型
     - [ ] 媒体事件类型

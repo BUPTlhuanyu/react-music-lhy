@@ -462,8 +462,6 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     scrollToCurrent = (scroller:any, scrollSon:NodeList,current:ISong = this.state.currentSong) => {
-        console.log("scroller",scroller)
-        console.log("scrollSon",scrollSon)
         const index = this.props.sequenceList.findIndex((song) => {
             return current.id === song.id
         })

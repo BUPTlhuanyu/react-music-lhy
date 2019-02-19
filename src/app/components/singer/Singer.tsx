@@ -78,7 +78,6 @@ class SingerBase extends Component<singerProps, singerState>{
     _getSingerList() {
         getSingerList().then((res) => {
             if (res.code === ERR_OK && !this.unmoutedFlag) {
-                console.log("this._normalizeSinger(res.data.list)",this._normalizeSinger(res.data.list))
                 this.setState({
                     singers: this._normalizeSinger(res.data.list)
                 })
