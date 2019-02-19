@@ -1,8 +1,16 @@
 import React, {Component} from 'react'
 import './SongList.scss'
 
+type itemType = {
+    singer: string
+    name : string
+    album : string
+    [index:number]:any
+    [key:string]:any
+}
+
 interface SongListProps{
-    songs:Array<any>,
+    songs:Array<itemType>,
     rank:boolean,
     selectItem:Function
 }

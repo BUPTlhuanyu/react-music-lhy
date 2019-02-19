@@ -1,3 +1,9 @@
+/**
+ * @Description: 输入数据： NoResultProps
+ * @author: liaohuanyu
+ * @date 2019/2/19
+*/
+
 import React from 'react'
 import './NoResult.scss'
 

@@ -2,7 +2,7 @@ import React,{ Component } from 'react'
 import './SearchList.scss'
 
 interface SearchListProps{
-    searches:Array<any>,
+    searches:Array<string>,
     selectItem:Function,
     deleteItem:Function
 }

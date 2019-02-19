@@ -22,10 +22,11 @@ interface DiscBasePropType{
 
 class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
     unmoutedFlag:boolean;
+    // readonly state : Readonly<DiscBaseStateType>
     constructor(props:DiscBasePropType){
         super(props)
         this.unmoutedFlag=false
-        this.state  = {
+        this.state = {
             showMusicList: true,
             songs:[]
         }

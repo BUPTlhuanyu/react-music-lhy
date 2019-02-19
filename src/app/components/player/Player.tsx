@@ -150,16 +150,16 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         }
     }
 
-    back = () => {
+    back : React.MouseEventHandler<HTMLDivElement> = () => {
         this.props.setFullScreen(false)
     }
 
     //播放
-    open = () => {
+    open : React.MouseEventHandler<HTMLDivElement>= () => {
         this.props.setFullScreen(true)
     }
 
-    prev = () => {
+    prev : React.MouseEventHandler<HTMLElement>= () => {
         if (!this.state.songReady) {
             return
         }
@@ -199,9 +199,10 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     //时间
-    updateTime = (e: any) => {
+    updateTime : React.ReactEventHandler<HTMLAudioElement>= (e) => {
+        const { currentTime } : { currentTime: number } = e.target as HTMLMediaElement;
         this.setState({
-            currentTime:e.target.currentTime
+            currentTime : currentTime
         })
     }
 
@@ -240,7 +241,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     //资源下载后自动播放
-    canPlayHandler = () => {
+    canPlayHandler : React.ReactEventHandler<HTMLAudioElement> = () => {
         if(this.state.songReady){
             return
         }
@@ -271,7 +272,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.props.setPlaying(!this.props.playing)
     }
 
-    togglePlaying = () => {
+    togglePlaying  = () => {
         this.playHandler()
         if (this.state.currentLyric) {
             this.state.currentLyric.togglePlay()
@@ -320,7 +321,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         return this.props.mode === playMode.sequence ? 'icon-sequence' : this.props.mode === playMode.loop ? 'icon-loop' : 'icon-random'
     }
 
-    end = () => {
+    end  = () => {
         if (this.props.mode === playMode.loop) {
             this.audio.current.play()
             if (this.state.currentLyric) {
@@ -339,14 +340,14 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         }
     }
 
-    middleTouchStart = (e:any) => {
+    middleTouchStart:React.TouchEventHandler<HTMLDivElement> = (e) => {
         this.touch.initiated = true
         const touch = e.touches[0]
         this.touch.startX = touch.pageX
         this.touch.startY = touch.pageY
     }
 
-    middleTouchMove = (e:any) => {
+    middleTouchMove :React.TouchEventHandler<HTMLDivElement> = (e) => {
         if (!this.touch.initiated) {
             return
         }
@@ -365,7 +366,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.middleL.current.style[transitionDuration] = 0
     }
 
-    middleTouchEnd = () => {
+    middleTouchEnd  = () => {
         let offsetWidth
         let opacity
         if (this.state.currentShow === 'cd') {
@@ -399,7 +400,8 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.touch.initiated = false
     }
 
-    showPlaylist = () => {
+    showPlaylist : React.MouseEventHandler<HTMLDivElement> = (e) => {
+        e.stopPropagation();
         this.playlist.current.show()
     }
 
@@ -506,7 +508,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                                     currentLyric &&
                                     <div ref={this.lyricLine}>
                                         {
-                                            currentLyric.lines.map((line:any,index:any) => (
+                                            currentLyric.lines.map((line:{txt:string},index:number) => (
                                                     <p className={"text" + (currentLineNum === index ? " current":"")}
                                                        key={index}
                                                     >
@@ -565,12 +567,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                         </ProgressCircle>
                     </div>
                     <div className="control"
-                         onClick={
-                             (e) => {
-                                 e.stopPropagation();
-                                 this.showPlaylist();
-                                }
-                         }
+                         onClick={this.showPlaylist}
                     >
                         <i className="icon-playlist"/>
                     </div>

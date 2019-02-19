@@ -30,7 +30,7 @@ class SearchBox extends Component<SearchBoxPropType, SearchBoxStateType>{
         })
     }
 
-    onChangeHandler = (e:any) => {
+    onChangeHandler : React.ChangeEventHandler<HTMLInputElement> = (e) => {
         this.setState({
             query: e.target.value
         })

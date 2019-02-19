@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, {Component, ReactNode} from 'react'
 import './ProgressCircle.scss'
 
 interface ProgressCirclePropType{
     percent:number,
     radius:number,
-    children:any
+    children:ReactNode
 }
 
 interface ProgressCircleStateType{

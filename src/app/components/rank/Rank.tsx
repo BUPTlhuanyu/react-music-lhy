@@ -13,7 +13,8 @@ import { setTopList } from 'actions/rank'
 
 import {
     IStoreState,
-    ITopList
+    ITopList,
+    ISongListItem
 } from 'store/stateTypes'
 import { Dispatch } from 'redux'
 
@@ -30,7 +31,7 @@ interface RankPropType{
 
 class Rank extends Component<RankPropType,RankStateType>{
     unmoutedFlag:boolean;
-    toplist:any;
+    toplist:React.RefObject<Scroll>;
     constructor(props:RankPropType){
         super(props)
         this.unmoutedFlag=false
@@ -44,7 +45,7 @@ class Rank extends Component<RankPropType,RankStateType>{
         this._getTopList()
     }
 
-    selectItem = (item:any) => {
+    selectItem = (item:ITopList) => {
         this.props.history.push(`/rank/${item.id}`)
         this.props.setTopList(item)
     }
@@ -66,7 +67,7 @@ class Rank extends Component<RankPropType,RankStateType>{
                 <Scroll className="toplist" ref={this.toplist}>
                     <ul>
                         {
-                            !!topListArr.length && topListArr.map((item:any, index:number) =>(
+                            !!topListArr.length && topListArr.map((item:ITopList, index:number) =>(
                                 <li className="item" key={index} onClick={() => {this.selectItem(item)}}>
                                     <div className="icon">
                                         <LazyImage
@@ -81,7 +82,7 @@ class Rank extends Component<RankPropType,RankStateType>{
                                     </div>
                                     <ul className="songlist">
                                         {
-                                            item.songList && item.songList.map((song:any, index:number) => (
+                                            item.songList && item.songList.map((song:ISongListItem, index:number) => (
                                                 <li className="song" key={index}>
                                                     <span>{index + 1}</span>
                                                     <span>{song.songname}-{song.singername}</span>

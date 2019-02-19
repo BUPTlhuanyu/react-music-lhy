@@ -4,13 +4,12 @@
  * @author: liaohuanyu
  * @date 2019/2/1
 */
-import React, {Component} from 'react'
+import React, {Component, ReactNode} from 'react'
 import BScroll from 'better-scroll'
 
 interface scrollProps{
-    children?:any,
+    children?:ReactNode,
     className?:string,
-    data?:any,
     scrollHandler?:Function,
     probeType?:number,
     pullUp?:boolean,

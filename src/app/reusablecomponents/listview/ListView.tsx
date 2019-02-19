@@ -1,3 +1,9 @@
+/**
+ * @Description:  组件数据类型： Array<dataType>
+ * @author: liaohuanyu
+ * @date 2019/2/19
+*/
+
 import React,{ Component, TouchEvent } from 'react'
 import Loading from 'reuse/loading/Loading'
 import './ListView.scss'
@@ -10,8 +16,23 @@ const ANCHOR_HEIGHT = 18;
 //title高度
 const TITLE_HEIGHT = 30;
 
+type IItem = {
+    id : number
+    name : string
+    avatar : string
+    [index:number]:any
+    [key:string]:any
+}
+
+interface dataType {
+    title:string,
+    items:Array<IItem>
+    [index:number]:any
+    [key:string]:any
+}
+
 interface ListViewProps{
-    data : Array<any>,
+    data : Array<dataType>,
     getItem: Function
 }
 
@@ -114,7 +135,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
         })
     }
 
-    onTouchStartHandler = (e: TouchEvent<Element>) => {
+    onTouchStartHandler : React.TouchEventHandler<HTMLDivElement>= (e) => {
         let anchorIndex = getData(e.target, 'index')
         if(anchorIndex){
             let firstTouch = e.touches[0]
@@ -167,7 +188,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
             <Scroll className="listview" ref={this.listview} scrollHandler={this.scrollHandler} probeType={3}>
                 <ul ref={this.listGroup}>
                     {
-                        !! data.length && data.map((group, index)=>(
+                        !! data.length && data.map((group:{title:string,items:Array<any>}, index)=>(
                             <li className="list-group" key={index} >
                                 <h2 className="list-group-title">{group.title}</h2>
                                 <ul>

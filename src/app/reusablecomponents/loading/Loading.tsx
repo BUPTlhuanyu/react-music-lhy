@@ -1,3 +1,8 @@
+/**
+ * @Description: 输入数据： loadingProps
+ * @author: liaohuanyu
+ * @date 2019/2/19
+*/
 import React, {Component} from 'react'
 import './loading.scss'
 import loadingGif from './loading.gif';
