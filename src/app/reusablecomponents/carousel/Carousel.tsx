@@ -25,8 +25,8 @@ interface componentsState{
 // let timer:any=null;
 
 export default class Carousel extends Component<componentsProps, componentsState>{
-    carousel:any;
-    carouselGroup:any;
+    carousel:React.RefObject<HTMLDivElement>;
+    carouselGroup:React.RefObject<HTMLDivElement>;
     children:any;
     resizeTimer:any;
     carouselBS:any;
@@ -105,6 +105,7 @@ export default class Carousel extends Component<componentsProps, componentsState
         })
     }
     _initSlide() {
+        if(!this.carousel.current)return
         this.carouselBS = new BScroll(this.carousel.current, {
             scrollX: true,
             scrollY: false,
@@ -131,6 +132,7 @@ export default class Carousel extends Component<componentsProps, componentsState
         })
     }
     _setSlideWidth(isResize:boolean=false) {
+        if(!this.carouselGroup.current || !this.carousel.current)return
         this.children = this.carouselGroup.current.children
         // console.log(this.children.length,this.children[0])
         let width = 0

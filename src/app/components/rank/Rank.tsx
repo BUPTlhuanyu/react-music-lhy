@@ -31,11 +31,9 @@ interface RankPropType{
 
 class Rank extends Component<RankPropType,RankStateType>{
     unmoutedFlag:boolean;
-    toplist:React.RefObject<Scroll>;
     constructor(props:RankPropType){
         super(props)
         this.unmoutedFlag=false
-        this.toplist = React.createRef()
         this.state = {
             topListArr:[]
         }
@@ -64,7 +62,7 @@ class Rank extends Component<RankPropType,RankStateType>{
         const { topListArr } = this.state
         return(
             <div className="rank" ref="rank">
-                <Scroll className="toplist" ref={this.toplist}>
+                <Scroll className="toplist">
                     <ul>
                         {
                             !!topListArr.length && topListArr.map((item:ITopList, index:number) =>(

@@ -49,10 +49,10 @@ interface ListViewState{
 }
 
 class ListView extends Component<ListViewProps, ListViewState>{
-    listview:any;
-    listGroup:any;
-    fixed:any;
-    timer:any;
+    listview:React.RefObject<Scroll>;
+    listGroup:React.RefObject<HTMLUListElement>;
+    fixed:React.RefObject<HTMLDivElement>;
+    timer:any
     constructor(props: ListViewProps){
         super(props);
         this.listview = React.createRef();
@@ -79,7 +79,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
     }
 
     refresh = () => {
-        this.listview.current.refresh()
+        this.listview.current && this.listview.current.refresh()
     }
 
     _calculateHeight() {
@@ -87,7 +87,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
             return
         }
         let listHeight = []
-        const list = this.listGroup.current.childNodes
+        const list = this.listGroup.current.children
         let height = 0
         listHeight.push(height)
         for (let i = 0; i < list.length; i++) {
@@ -103,7 +103,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
 
     scrollHandler = (pos : {x:number,y:number}) => {
         // console.log("this",this)
-        if(Object.is(pos.y,NaN)){
+        if(Object.is(pos.y,NaN) || !this.fixed.current){
             return
         }
         let newY = pos.y;
@@ -136,6 +136,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
     }
 
     onTouchStartHandler : React.TouchEventHandler<HTMLDivElement>= (e) => {
+        if(!this.listGroup.current)return
         let anchorIndex = getData(e.target, 'index')
         if(anchorIndex){
             let firstTouch = e.touches[0]
@@ -147,7 +148,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
                 currentIndex:anchorIndex,
                 touch
             })
-            this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
+            this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
         }else{
             return
         }
@@ -160,6 +161,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
             y2: firstTouch.pageY
         })
         this.setState({touch},()=>{
+            if(!this.listGroup.current)return
             let delta = (this.state.touch.y2 - this.state.touch.y1) / ANCHOR_HEIGHT | 0
             let anchorIndex = parseInt(this.state.touch.anchorIndex) + delta
             if(anchorIndex<0){
@@ -170,7 +172,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
                 return
             }
             this.setState({currentIndex:anchorIndex})
-            this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
+            this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
         })
     }
 

@@ -33,10 +33,8 @@ let cacheData:{
 
 class Recommend extends Component<Props,State>{
     unmoutedFlag:boolean;
-    recommend:any;
     constructor(props:Props){
         super(props);
-        this.recommend = React.createRef()
         this.unmoutedFlag=false
         this.state = {
             recommends: [],
@@ -97,7 +95,7 @@ class Recommend extends Component<Props,State>{
         const {recommends, discList} = this.state;
         return(
             <div className="recommend">
-                    <Scroll className="recommend-content" ref={this.recommend}>
+                    <Scroll className="recommend-content">
                         <div>
                             <div className="slider-wrapper">
                                 {

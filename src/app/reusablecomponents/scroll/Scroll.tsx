@@ -23,7 +23,7 @@ interface scrollState{
 }
 
 export default class Scroll extends Component<scrollProps, scrollState>{
-    wrapper:any;
+    wrapper:React.RefObject<HTMLDivElement>;
     wrapperBs:any;
     constructor(props: scrollProps){
         super(props);
@@ -90,11 +90,11 @@ export default class Scroll extends Component<scrollProps, scrollState>{
     refresh = () => {
         this.wrapperBs && this.wrapperBs.refresh()
     }
-    scrollTo(){
-        this.wrapperBs && this.wrapperBs.scrollTo.apply(this.wrapperBs, arguments)
+    scrollTo(...args:any){
+        this.wrapperBs && this.wrapperBs.scrollTo.apply(this.wrapperBs, args)
     }
-    scrollToElement(){
-        this.wrapperBs && this.wrapperBs.scrollToElement.apply(this.wrapperBs, arguments)
+    scrollToElement(...args:any){
+        this.wrapperBs && this.wrapperBs.scrollToElement.apply(this.wrapperBs, args)
     }
     render(){
         return (

@@ -75,12 +75,17 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         }
         return {}
     }
-    audio:any;
-    lyricList:any;
-    lyricLine:any;
-    touch:any;
-    middleL:any;
-    playlist:any;
+    audio:React.RefObject<HTMLAudioElement>;
+    lyricList:React.RefObject<Scroll>;
+    lyricLine:React.RefObject<HTMLDivElement>;
+    middleL:React.RefObject<HTMLDivElement>;
+    playlist:React.RefObject<PlayList>;
+    touch:{
+        initiated:boolean,
+        startX:number,
+        startY:number,
+        percent:number
+    };
     constructor(props: PlayerPropType){
         super(props)
         this.audio = React.createRef();
@@ -88,7 +93,12 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         this.lyricLine = React.createRef();
         this.middleL = React.createRef();
         this.playlist = React.createRef();
-        this.touch = {}
+        this.touch = {
+            initiated:false,
+            startX:0,
+            startY:0,
+            percent:0
+        }
         this.state ={
             songReady: false,
             currentTime:0,
@@ -138,6 +148,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         // console.log("handleLyric run")
         // console.log("lineNum",lineNum)
         // console.log("txt",txt)
+        if(!this.lyricList.current || !this.lyricLine.current)return
         this.setState({
             currentLineNum:lineNum,
             playingLyric:txt
@@ -229,6 +240,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
 
     //进度条
     onProgressBarChange = (percent: number) => {
+        if(!this.audio.current){return}
         const currentTime = this.state.currentSong.duration * percent
         // console.log("this.audio.current",this.audio.current.currentTime)
         this.audio.current.currentTime = currentTime
@@ -260,7 +272,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     playHandler = () => {
-        if(!this.state.songReady){
+        if(!this.state.songReady || !this.audio.current){
             return
         }
         const audio = this.audio.current;
@@ -322,6 +334,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     end  = () => {
+        if(!this.audio.current)return
         if (this.props.mode === playMode.loop) {
             this.audio.current.play()
             if (this.state.currentLyric) {
@@ -333,6 +346,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     loop = () => {
+        if(!this.audio.current)return
         this.audio.current.currentTime = 0
         this.playHandler()
         if (this.state.currentLyric) {
@@ -348,7 +362,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     middleTouchMove :React.TouchEventHandler<HTMLDivElement> = (e) => {
-        if (!this.touch.initiated) {
+        if (!this.touch.initiated || !this.lyricList.current || !this.middleL.current || !this.lyricList.current.wrapper.current) {
             return
         }
         const touch = e.touches[0]
@@ -361,12 +375,15 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         const offsetWidth = Math.min(0, Math.max(-window.innerWidth, left + deltaX))
         this.touch.percent = Math.abs(offsetWidth / window.innerWidth)
         this.lyricList.current.wrapper.current.style[transform] = `translate3d(${offsetWidth}px,0,0)`
-        this.lyricList.current.wrapper.current.style[transitionDuration] = 0
-        this.middleL.current.style.opacity = 1 - this.touch.percent
-        this.middleL.current.style[transitionDuration] = 0
+        this.lyricList.current.wrapper.current.style[transitionDuration] = '0'
+        this.middleL.current.style.opacity = 1 - this.touch.percent + ""
+        this.middleL.current.style[transitionDuration] = '0'
     }
 
     middleTouchEnd  = () => {
+        if (!this.lyricList.current || !this.middleL.current || !this.lyricList.current.wrapper.current) {
+            return
+        }
         let offsetWidth
         let opacity
         if (this.state.currentShow === 'cd') {
@@ -395,12 +412,13 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         const time = 300
         this.lyricList.current.wrapper.current.style[transform] = `translate3d(${offsetWidth}px,0,0)`
         this.lyricList.current.wrapper.current.style[transitionDuration] = `${time}ms`
-        this.middleL.current.style.opacity = opacity
+        this.middleL.current.style.opacity = opacity + ""
         this.middleL.current.style[transitionDuration] = `${time}ms`
         this.touch.initiated = false
     }
 
     showPlaylist : React.MouseEventHandler<HTMLDivElement> = (e) => {
+        if(!this.playlist.current)return
         e.stopPropagation();
         this.playlist.current.show()
     }

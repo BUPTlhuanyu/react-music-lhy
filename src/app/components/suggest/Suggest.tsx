@@ -54,7 +54,7 @@ interface SuggestStateType{
 }
 
 class Suggest extends Component<SuggestPropType, SuggestStateType>{
-    suggest:any;
+    suggest:React.RefObject<Scroll>;
     constructor(props:SuggestPropType){
         super(props)
         this.suggest = React.createRef()
@@ -69,7 +69,7 @@ class Suggest extends Component<SuggestPropType, SuggestStateType>{
     }
 
     componentDidUpdate(){
-        if(this.props.page === 1){
+        if(this.props.page === 1 && this.suggest.current){
             this.suggest.current.scrollTo(0, 0)
         }
     }

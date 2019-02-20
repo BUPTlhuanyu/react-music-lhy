@@ -36,9 +36,9 @@ interface SearchStateType{
 }
 
 class Search extends Component<SearchPropType, SearchStateType>{
-    searchBox:any;
+    searchBox:React.RefObject<SearchBox>;
     unmoutedFlag:boolean;
-    confirm:any;
+    confirm:React.RefObject<Confirm>;
     constructor(props:SearchPropType){
         super(props)
         this.unmoutedFlag = false
@@ -76,6 +76,7 @@ class Search extends Component<SearchPropType, SearchStateType>{
     }
 
     addQuery = (query:string) => {
+        if(!this.searchBox.current)return
         // console.log("this",this)
         this.searchBox.current.setQuery(query)
         this.setState({
@@ -160,6 +161,7 @@ class Search extends Component<SearchPropType, SearchStateType>{
     }
 
     showConfirm = () => {
+        if(!this.confirm.current)return
         this.confirm.current.show()
     }
 

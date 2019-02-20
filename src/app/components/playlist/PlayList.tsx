@@ -24,9 +24,9 @@ interface PlayListState{
 }
 
 class PlayList extends Component<PlayListProps,PlayListState>{
-    confirm:any;
-    listContent:any;
-    scrollSon:any;
+    confirm:React.RefObject<Confirm>;
+    listContent:React.RefObject<Scroll>;
+    scrollSon:React.RefObject<HTMLUListElement>;
     constructor(props:PlayListProps){
         super(props);
         this.confirm = React.createRef()
@@ -42,6 +42,7 @@ class PlayList extends Component<PlayListProps,PlayListState>{
             {
                 showFlag:true
             },()=>{
+                if(!this.listContent.current || !this.scrollSon.current)return
                 this.listContent.current.refresh()
                 this.props.scrollToCurrent(
                     this.listContent.current,
@@ -60,6 +61,7 @@ class PlayList extends Component<PlayListProps,PlayListState>{
     }
 
     showConfirm = () => {
+        if(!this.confirm.current)return
         this.confirm.current.show()
     }
 

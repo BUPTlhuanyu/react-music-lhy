@@ -57,11 +57,11 @@ interface MusicListState{
 
 
 class MusicList extends Component<MusicListProps, MusicListState>{
-    bgImage:any;
-    list:any;
-    layer:any;
-    filter:any;
-    playBtn:any;
+    bgImage : React.RefObject<HTMLDivElement>;
+    list : React.RefObject<Scroll>;
+    layer : React.RefObject<HTMLDivElement>;
+    filter : React.RefObject<HTMLDivElement>;
+    playBtn : React.RefObject<HTMLDivElement>;
     constructor(props:MusicListProps){
         super(props)
         this.bgImage = React.createRef();
@@ -78,8 +78,9 @@ class MusicList extends Component<MusicListProps, MusicListState>{
 
 
     componentDidMount(){
-        // console.log("musiclist componentDidMount")
-        // console.log("this.bgImage",this.bgImage)
+        if(!this.bgImage.current || !this.list.current || !this.list.current.wrapper.current){
+            return
+        }
         let listTop = this.bgImage.current.clientHeight;
         this.list.current.wrapper.current.style.top = `${listTop}px`;
         this.setState({
@@ -93,9 +94,15 @@ class MusicList extends Component<MusicListProps, MusicListState>{
     }
 
     scrollHandler = (pos : {x:number,y:number}) => {
+        if(!this.bgImage.current || !this.layer.current || !this.playBtn.current || !this.filter.current){
+            return
+        }
         if(Object.is(pos.y,NaN)){
             return
         }
+        let layer = this.layer.current;
+        let bgImage = this.bgImage.current;
+        let playBtn = this.playBtn.current;
         let newY = pos.y;
         let translateY = Math.max(this.state.minTransalteY, newY)
         let scale = 1
@@ -108,20 +115,20 @@ class MusicList extends Component<MusicListProps, MusicListState>{
         } else {
             blur = Math.min(20, percent * 20)
         }
-        this.layer.current.style[transform] = `translate3d(0,${translateY}px,0)`
+        layer.style[transform] = `translate3d(0,${translateY}px,0)`
         this.filter.current.style[backdrop] = `blur(${blur}px)`
         if (newY < this.state.minTransalteY) {
             zIndex = 10
-            this.bgImage.current.style.paddingTop = 0
-            this.bgImage.current.style.height = `${RESERVED_HEIGHT}px`
-            this.playBtn.current.style.display = 'none'
+            bgImage.style.paddingTop = '0'
+            bgImage.style.height = `${RESERVED_HEIGHT}px`
+            playBtn.style.display = 'none'
         } else {
-            this.bgImage.current.style.paddingTop = '70%'
-            this.bgImage.current.style.height = 0
-            this.playBtn.current.style.display = ''
+            bgImage.style.paddingTop = '70%'
+            bgImage.style.height = '0'
+            playBtn.style.display = ''
         }
-        this.bgImage.current.style[transform] = `scale(${scale})`
-        this.bgImage.current.style.zIndex = zIndex
+        bgImage.style[transform] = `scale(${scale})`
+        bgImage.style.zIndex = zIndex + ""
     }
 
     back = () => {
@@ -133,9 +140,13 @@ class MusicList extends Component<MusicListProps, MusicListState>{
     }
 
     handlePlaylist= (playlist:IPlaylist) => {
+        let list =this.list.current
+        if(!list){
+            return
+        }
         const bottom = playlist.length > 0 ? '60px' : ''
-        this.list.current.wrapper.current.style.bottom = bottom
-        this.list.current.refresh()
+        list.wrapper.current && (list.wrapper.current.style.bottom = bottom)
+        list.refresh()
     }
 
     findIndex = (list:ISequenceList, song:ISong) => {

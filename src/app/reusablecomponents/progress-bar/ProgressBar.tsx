@@ -15,16 +15,24 @@ interface ProgressBarStateType{
 }
 
 class ProgressBar extends Component<ProgressBarPropType, ProgressBarStateType>{
-    progressBar : any;
-    progress:any;
-    progressBtn:any;
-    touch:any;
+    progressBar : React.RefObject<HTMLDivElement>;
+    progress:React.RefObject<HTMLDivElement>;
+    progressBtn:React.RefObject<HTMLDivElement>;
+    touch:{
+        initiated:boolean,
+        startX:number,
+        left:number
+    };
     constructor(props:ProgressBarPropType){
         super(props)
         this.progressBar = React.createRef();
         this.progress = React.createRef();
         this.progressBtn = React.createRef();
-        this.touch = {}
+        this.touch = {
+            initiated:false,
+            startX:0,
+            left:0
+        }
     }
 
     componentDidUpdate(){
@@ -32,6 +40,7 @@ class ProgressBar extends Component<ProgressBarPropType, ProgressBarStateType>{
     }
 
     progressClick = (e:any) => {
+        if(!this.progressBar.current)return
         const rect = this.progressBar.current.getBoundingClientRect()
         const offsetWidth = e.pageX - rect.left
         this._offset(offsetWidth)
@@ -41,6 +50,7 @@ class ProgressBar extends Component<ProgressBarPropType, ProgressBarStateType>{
     }
 
     progressTouchStart = (e:any)=> {
+        if(!this.progress.current)return
         e.preventDefault();
         this.touch.initiated = true
         this.touch.startX = e.touches[0].pageX
@@ -48,6 +58,7 @@ class ProgressBar extends Component<ProgressBarPropType, ProgressBarStateType>{
     }
 
     progressTouchMove= (e:any)=> {
+        if(!this.progressBar.current)return
         e.preventDefault();
         if (!this.touch.initiated) {
             return
@@ -64,17 +75,20 @@ class ProgressBar extends Component<ProgressBarPropType, ProgressBarStateType>{
     }
 
     _triggerPercent= ()=> {
+        if(!this.progressBar.current || !this.progress.current)return
         const barWidth = this.progressBar.current.clientWidth - progressBtnWidth
         const percent = this.progress.current.clientWidth / barWidth
         this.props.onProgressBarChange(percent)
     }
 
     _offset= (offsetWidth:number)=> {
+        if(!this.progressBtn.current || !this.progress.current)return
         this.progress.current.style.width = `${offsetWidth}px`
         this.progressBtn.current.style[transform] = `translate3d(${offsetWidth}px,0,0)`
     }
 
     percent = (percent: number) => {
+        if(!this.progressBar.current )return
         if (percent >= 0 && !this.touch.initiated) {
             const barWidth = this.progressBar.current.clientWidth - progressBtnWidth
             const offsetWidth = percent * barWidth
