@@ -46,7 +46,7 @@
 - [3、typescript在react项目中的实践之ref](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5%e4%b9%8bref)
 
 ## ToDo
-- [ ] 完善项目中typescript类型
+- [x] 完善项目中typescript类型
     - [x] store，action类型
     - [x] 数据类型
     - [x] 无状态组件 `React.SFC`
