@@ -75,6 +75,10 @@ apiRoutes.get('/lyric', function (req, res) {
     })
 })
 
+apiRoutes.get('/test',function (req, res) {
+    res.send('hello world')
+})
+
 app.use('/api', apiRoutes)
 
 

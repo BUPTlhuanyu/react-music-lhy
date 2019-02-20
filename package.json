@@ -28,7 +28,7 @@
   },
   "scripts": {
     "dev": "node scripts/start.js",
-    "server": "node scripts/server.js &",
+    "server": "node scripts/server.js",
     "start": "concurrently \"npm run server\" \"npm run dev\" --prefix \"{time}-{pid}\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
