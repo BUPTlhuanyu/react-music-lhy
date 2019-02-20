@@ -45,6 +45,9 @@
 - [2、typescript在react项目中的实践](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5)
 - [3、typescript在react项目中的实践之ref](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5%e4%b9%8bref)
 
+### 部署
+- [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%e9%83%a8%e7%bd%b2/react%e9%a1%b9%e7%9b%ae%e6%9c%ac%e5%9c%b0%e9%83%a8%e7%bd%b2%e5%88%b0nginx)
+
 ## ToDo
 - [x] 完善项目中typescript类型
     - [x] store，action类型
@@ -55,8 +58,9 @@
     - [x] react事件类型
     - [x] ref类型 `React.RefObject<Scroll> --> <Scroll ref={this.toplist}></Scroll>`
     - [x] 媒体事件类型 `const { currentTime } : { currentTime: number } = e.target as HTMLMediaElement`
+- [x] 项目本地部署
 - [ ] create-react-app优化打包
-- [ ] 项目部署
+
 
 ## 页面展示
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
