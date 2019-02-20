@@ -15,36 +15,64 @@ export function getRecommend() {
 }
 
 export function getDiscList() {
-  const url = '/api/getDiscList'
+    const url = '/api/getDiscList'
 
-  const data = Object.assign({}, commonParams, {
-    picmid: 1,
-    rnd: 0.05723217189877294,
-    g_tk: 5381,
-    loginUin: 0,
-    hostUin: 0,
-    format: 'json',
-    inCharset: 'utf8',
-    outCharset: 'utf-8',
-    notice: 0,
-    platform: 'yqq.json',
-    needNewCode: 0,
-    categoryId: 10000000,
-    sortId: 5,
-    sin: 0,
-    ein: 29
-  })
+    const data = Object.assign({}, commonParams, {
+        picmid: 1,
+        rnd: 0.05723217189877294,
+        g_tk: 5381,
+        loginUin: 0,
+        hostUin: 0,
+        format: 'json',
+        inCharset: 'utf8',
+        outCharset: 'utf-8',
+        notice: 0,
+        platform: 'yqq.json',
+        needNewCode: 0,
+        categoryId: 10000000,
+        sortId: 5,
+        sin: 0,
+        ein: 29
+    })
 
-  const options = {
-      url,
-      headers:{
-          referer: 'https://c.y.qq.com/',
-          host: 'c.y.qq.com'
-      },
-      data
-  };
-  return ws('GET',options);
+    return axios.get(url, {
+        params: data
+    }).then((res) => {
+        return Promise.resolve(res.data)
+    })
 }
+
+// export function getDiscList() {
+//   const url = '/api/getDiscList'
+//
+//   const data = Object.assign({}, commonParams, {
+//     picmid: 1,
+//     rnd: 0.05723217189877294,
+//     g_tk: 5381,
+//     loginUin: 0,
+//     hostUin: 0,
+//     format: 'json',
+//     inCharset: 'utf8',
+//     outCharset: 'utf-8',
+//     notice: 0,
+//     platform: 'yqq.json',
+//     needNewCode: 0,
+//     categoryId: 10000000,
+//     sortId: 5,
+//     sin: 0,
+//     ein: 29
+//   })
+//
+//   const options = {
+//       url,
+//       headers:{
+//           referer: 'https://c.y.qq.com/',
+//           host: 'c.y.qq.com'
+//       },
+//       data
+//   };
+//   return ws('GET',options);
+// }
 
 
 export function getSongList(disstid) {

@@ -44,6 +44,7 @@ class Recommend extends Component<Props,State>{
     componentDidMount(){
         // console.log("Recommend的componentDidMount")
         if(cacheData){
+            console.log("cacheData")
             this.setState(
                 {
                     recommends: cacheData.recommends,
@@ -51,8 +52,8 @@ class Recommend extends Component<Props,State>{
                 }
             )
         }else{
-            this._getRecommend()
-            this._getDiscList()
+            this.getRecommend()
+            this.getDiscList()
         }
     }
 
@@ -64,7 +65,7 @@ class Recommend extends Component<Props,State>{
         this.unmoutedFlag=true
     }
 
-    _getRecommend() {
+    getRecommend() {
         getRecommend().then((res) => {
             if (res.code === ERR_OK && !this.unmoutedFlag) {
                 this.setState({
@@ -74,15 +75,25 @@ class Recommend extends Component<Props,State>{
         })
     }
 
-    async _getDiscList(){
-        const data = await getDiscList();
-        // console.log(data)
-        //这里应该用ts的类型判断来代替
-        if(data && !this.unmoutedFlag){
-            this.setState({
-                discList: data.list
-            })
-        }
+    // async _getDiscList(){
+    //     const data = await getDiscList();
+    //     // console.log(data)
+    //     //这里应该用ts的类型判断来代替
+    //     if(data && !this.unmoutedFlag){
+    //         this.setState({
+    //             discList: data.list
+    //         })
+    //     }
+    // }
+
+    getDiscList(){
+        getDiscList().then((res) => {
+            if (res.code === ERR_OK && !this.unmoutedFlag) {
+                this.setState({
+                    discList: res.data.list
+                })
+            }
+        })
     }
 
     selectDisc = (disc:any) => {
