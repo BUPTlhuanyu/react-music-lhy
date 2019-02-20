@@ -46,7 +46,7 @@
 - [3、typescript在react项目中的实践之ref](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5%e4%b9%8bref)
 
 ### 部署
-- [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%e9%83%a8%e7%bd%b2/react%e9%a1%b9%e7%9b%ae%e6%9c%ac%e5%9c%b0%e9%83%a8%e7%bd%b2%e5%88%b0nginx)
+- [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/react%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0nginx.md)
 
 ## ToDo
 - [x] 完善项目中typescript类型
