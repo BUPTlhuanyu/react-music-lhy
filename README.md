@@ -60,6 +60,7 @@
     - [x] 媒体事件类型 `const { currentTime } : { currentTime: number } = e.target as HTMLMediaElement`
 - [x] 项目本地部署
 - [ ] create-react-app优化打包
+- [ ] electron构建exe
 
 
 ## 页面展示
