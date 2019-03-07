@@ -45,6 +45,9 @@
 - [2、typescript在react项目中的实践](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5)
 - [3、typescript在react项目中的实践之ref](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5%e4%b9%8bref)
 
+### D6
+- [1、webpack之splitChunks提升打包编译速度](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D6/webpack%e4%b9%8bsplitChunks%e6%8f%90%e5%8d%87%e6%89%93%e5%8c%85%e7%bc%96%e8%af%91%e9%80%9f%e5%ba%a6.md)
+
 ### 部署
 - [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/react%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0nginx.md)
 
