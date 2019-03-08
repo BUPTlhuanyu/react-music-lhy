@@ -47,6 +47,7 @@
 
 ### D6
 - [1、webpack之splitChunks提升打包编译速度](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D6/webpack%e4%b9%8bsplitChunks%e6%8f%90%e5%8d%87%e6%89%93%e5%8c%85%e7%bc%96%e8%af%91%e9%80%9f%e5%ba%a6.md)
+- [2、webpack之happypack多线程打包](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D6/webpack%e4%b9%8bhappypack%e5%a4%9a%e7%ba%bf%e7%a8%8b%e6%89%93%e5%8c%85.md)
 
 ### 部署
 - [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/react%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0nginx.md)
