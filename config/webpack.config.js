@@ -239,7 +239,7 @@ module.exports = function(webpackEnv) {
       splitChunks: {
           cacheGroups: {
               vendor: {
-                  test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                  test: /[\\/]node_modules[\\/](react|react-dom|redux|rect-redux|react-transition-group|react-router)[\\/]/,
                   name: 'vendor',
                   chunks: 'all',
               }
