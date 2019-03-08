@@ -33,7 +33,7 @@ const {
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
 //用于生成不同模式下的config
-const configFactory = require('../config/webpack.config');
+const configFactory = require('../config/webpack.config.happypack.js');
 //webpack-dev-server的配置
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
