@@ -1,6 +1,6 @@
 这里用到happypack结合create-react-app进行多线程打包，从效果来看，并没有提升打包速度。这里有一个问题就是postcss与happypack有冲突，无法再new HappyPack中为postcss传入一个函数，作为plugins的值，解决办法是添加postcss.config.js。具体请看项目代码，这里主要贴出一些关键代码：
 
-# webpack.config.js的改动 #
+# webpack.config.withhappypack.js的改动 #
 
 ### 1、先在文件顶部引入happypack： ###
 
@@ -23,7 +23,7 @@ const HappyPack = require('happypack');
 
 
 
-### 3、最后在webpack.config.js的plugins中添加： ###
+### 3、最后在webpack.config.withhappypack.js的plugins中添加： ###
 
       new HappyPack({
           id:"sassRegex",
