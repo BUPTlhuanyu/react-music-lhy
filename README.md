@@ -68,13 +68,12 @@
 
 
 ## 页面展示
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic1.png)
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic2.png)
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic3.png)
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic4.png)
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic5.png)
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic6.png)
-![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/Pic7.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/Transition.gif)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/home.gif)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/lazyload.gif)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/player.gif)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/scroll.gif)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/scroll2.gif)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
