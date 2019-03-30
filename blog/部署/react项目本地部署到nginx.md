@@ -21,6 +21,17 @@ node代理服务监听的是3111端口的请求。
 
 
 ## 配置nginx ##
+这里主要涉及到一下几点：
+
+1、创建vhost文件夹，将各个站点的配置分割到单个conf文件，避免nginx.conf的臃肿，便于维护查错。创建vhost文件夹下的conf的首要工作就是在nginx.conf的http对象中加上`include vhost/*.conf;`，确保nginx启动的时候，启动vhost下的所有conf配置。
+
+2、关于反向代理的处理，在监听到80对api接口的所有请求，通过配置proxy_pass来实现。
+
+3、图片或者css以及less等静态资源请求路径的配置。
+
+**nginx相关的配置有待进一步细致的了解。**
+
+
 nginx安装目录的文件夹conf下的vhost文件夹下创建配置文件 **music.com.conf**，配置如下：
 
 	server {
