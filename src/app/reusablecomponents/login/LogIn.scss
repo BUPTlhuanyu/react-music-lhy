@@ -1,0 +1,33 @@
+@import "common/style/variable.scss";
+
+.login{
+  position:absolute;
+  top:20%;
+  left:0;
+  width:100%;
+  .login-item{
+    margin:10px 35px;
+    padding:0 6px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 25px;
+    background: $color-highlight-background;
+    border-radius: 6px;
+    .box{
+      flex: 1;
+      margin: 0 5px;
+      line-height: 18px;
+      background: $color-highlight-background;
+      color: $color-text;
+      font-size: $font-size-medium;
+      &::placeholder{
+        color: $color-text-d
+      }
+    }
+    .icon-dismiss{
+      font-size: 16px;
+      color: $color-background;
+    }
+  }
+}

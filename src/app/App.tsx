@@ -6,7 +6,7 @@ import Tab from 'components/tab/Tab'
 import Recommend from 'components/recommend/Recommend'
 import Player from 'components/player/Player'
 // import UserCenter from "components/user-center/UserCenter";
-// import Search from 'components/search/Search'
+import Search from 'components/search/Search'
 // import Singer from 'components/singer/Singer'
 // import Rank from 'components/rank/Rank'
 
@@ -44,10 +44,10 @@ const Rank = Loadable({
         loading: () => <Loading text={"按需加载"}/>
     });
 
-const Search = Loadable({
-        loader: () => {return import(/* webpackChunkName: "Search" */ 'components/search/Search')},
-        loading: () => <Loading text={"按需加载"}/>
-});
+// const Search = Loadable({
+//         loader: () => {return import(/* webpackChunkName: "Search" */ 'components/search/Search')},
+//         loading: () => <Loading text={"按需加载"}/>
+// });
 
 const Singer = Loadable({
         loader: () => {return import(/* webpackChunkName: "Singer" */ 'components/singer/Singer')},

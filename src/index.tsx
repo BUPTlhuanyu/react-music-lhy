@@ -5,6 +5,7 @@ import App from './app/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import configureStore from "store/store"
+import { defaultState } from 'store/stateTypes'
 
 // const FastClick = require('fastclick');
 // FastClick.attach(document.body);
@@ -14,7 +15,7 @@ fastClick.attach(document.body);
 
 import { BrowserRouter } from 'react-router-dom'
 
-const store = configureStore()
+const store = configureStore(defaultState)
 
 ReactDOM.render(
     <Provider store={store}>

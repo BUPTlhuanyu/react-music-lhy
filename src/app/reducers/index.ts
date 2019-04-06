@@ -4,6 +4,7 @@ import * as player from './player'
 import disc from './disc'
 import topList from './rank'
 import searchHistory from './search'
+import userName from './user'
 
 const reducer = combineReducers({
     singer:singer,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
     currentIndex:player.currentIndex,
     disc: disc,
     topList:topList,
-    searchHistory:searchHistory
+    searchHistory:searchHistory,
+    userName: userName
 })
 
 export default reducer

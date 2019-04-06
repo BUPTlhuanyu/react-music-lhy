@@ -64,6 +64,8 @@ export type ITopList = {
     type : number
 }
 
+export type IUserName = string
+
 // ******** store state ********* //
 
 export type IStoreState = {
@@ -77,6 +79,7 @@ export type IStoreState = {
     sequenceList : ISequenceList
     singer : ISinger
     topList : ITopList
+    userName : IUserName
 }
 
 
@@ -129,7 +132,9 @@ export const defaultState: IStoreState = {
         songList : [],
         topTitle : '',
         type : -1
-    }
+    },
+    userName : ''
 }
+
 
 
