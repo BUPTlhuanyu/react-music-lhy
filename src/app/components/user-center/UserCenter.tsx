@@ -5,7 +5,6 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { IUserName } from 'store/stateTypes'
 import LogIn from 'reuse/login/LogIn'
-import { NavLink } from 'react-router-dom'
 
 interface UserCenterProps{
     history:any,
@@ -40,7 +39,7 @@ class UserCenter extends Component<UserCenterProps,UserCenterState>{
                     <i className="icon-back"/>
                 </div>
                 {
-                    userName ?
+                    !userName ?
                         <LogIn/>
                      :
                         <div className="no-result-wrapper" >
