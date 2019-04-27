@@ -37,7 +37,7 @@ let createTable = function( sql ) {
 
 
 let findDataById = function( table,  id ) {
-  let  _sql =  "SELECT * FROM ?? WHERE id = ? "
+  let  _sql =  "SELECT * FROM ?? WHERE user_id = ? "
   return query( _sql, [ table, id, start, end ] )
 }
 
@@ -55,13 +55,13 @@ let insertData = function( table, values ) {
 
 
 let updateData = function( table, values, id ) {
-  let _sql = "UPDATE ?? SET ? WHERE id = ?"
+  let _sql = "UPDATE ?? SET ? WHERE user_id = ?"
   return query( _sql, [ table, values, id ] )
 }
 
 
 let deleteDataById = function( table, id ) {
-  let _sql = "DELETE FROM ?? WHERE id = ?"
+  let _sql = "DELETE FROM ?? WHERE user_id = ?"
   return query( _sql, [ table, id ] )
 }
 

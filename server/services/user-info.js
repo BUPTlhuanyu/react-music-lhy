@@ -1,5 +1,5 @@
 /**
- * 用户业务操作
+ * 用户业务操作,调用modle层对数据库进行间接操作，输入数据的验证
  */
 
 const validator = require('validator')
@@ -25,7 +25,6 @@ const user = {
    */
   async getExistOne( formData ) {
     let resultData = await userModel.getExistOne({
-      'email': formData.email,
       'name': formData.userName
     })
     return resultData
@@ -50,14 +49,14 @@ const user = {
    * @return {object|null}     查找结果
    */
   async getUserInfoByUserName( userName ) {
-    
+
     let resultData = await userModel.getUserInfoByUserName( userName ) || {}
     let userInfo = {
       // id: resultData.id,
-      email: resultData.email,
-      userName: resultData.name,
-      detailInfo: resultData.detail_info,
-      createTime: resultData.create_time
+      // email: resultData.email,
+      userName: resultData.user_name,
+      // detailInfo: resultData.detail_info,
+      // createTime: resultData.create_time
     }
     return userInfo
   },
@@ -78,16 +77,8 @@ const user = {
       result.message = userCode.ERROR_USER_NAME
       return result
     }
-    if ( !validator.isEmail( userInfo.email ) ) {
-      result.message = userCode.ERROR_EMAIL
-      return result
-    }
     if ( !/[\w+]{6,16}/.test( userInfo.password )  ) {
       result.message = userCode.ERROR_PASSWORD
-      return result
-    }
-    if ( userInfo.password !== userInfo.confirmPassword ) {
-      result.message = userCode.ERROR_PASSWORD_CONFORM
       return result
     }
 

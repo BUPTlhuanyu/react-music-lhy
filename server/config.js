@@ -1,9 +1,9 @@
 const config = {
 
-  port: 8888,
+  port: 9527,
 
   database: {
-    DATABASE: 'koa_demo',
+    DATABASE: 'music',
     USERNAME: 'root',
     PASSWORD: 'lhy',
     PORT: '3306',

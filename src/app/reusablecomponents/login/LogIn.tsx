@@ -3,32 +3,45 @@ import './LogIn.scss'
 import debounce from 'lodash/debounce'
 import {admin} from 'api/admin.js'
 import {ERR_OK} from 'api/config'
+import { Dispatch } from 'redux'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import {
+    setUserName,
+} from 'actions/user'
+import { IUserName } from 'store/stateTypes'
+import Error from 'reuse/error/Error'
 
 interface LogInProps{
-
+    setUserName:Function,
+    history:any,
+    location:any,
+    match:any
 }
 
 interface LogInState{
     formData : {
         userName : string,
-        passWord : string,
+        password : string,
         type : string
-    }
+    },
+    errorText : string
 }
 
 
 class LogIn extends Component<LogInProps,LogInState>{
     constructor(props:LogInProps){
         super(props);
-        this.debounceSetState = debounce(this.debounceSetState, 100, {
+        this.debounceSetState = debounce(this.debounceSetState, 30, {
             leading: false,
         });
         this.state={
             formData : {
                 userName : '',
-                passWord : '',
+                password : '',
                 type : ''
-            }
+            },
+            errorText : ''
         }
     }
 
@@ -45,8 +58,8 @@ class LogIn extends Component<LogInProps,LogInState>{
             this.setState({
                 formData
             })
-        }else if(option === 'passWord' ){
-            let formData = Object.assign({},this.state.formData,{passWord:''})
+        }else if(option === 'password' ){
+            let formData = Object.assign({},this.state.formData,{password:''})
             this.setState({
                 formData
             })
@@ -57,26 +70,36 @@ class LogIn extends Component<LogInProps,LogInState>{
         this.debounceSetState({userName:e.target.value})
     }
 
-    passWordHandler : React.ChangeEventHandler<HTMLInputElement>= (e) => {
-        this.debounceSetState({passWord:e.target.value})
+    passwordHandler : React.ChangeEventHandler<HTMLInputElement>= (e) => {
+        this.debounceSetState({password:e.target.value})
     }
 
     submitHandler = (type:string) => {
         let formData = Object.assign({},this.state.formData,{type:type})
-        console.log(formData)
         this.setState({
             formData
         })
         admin(formData).then((res:any) => {
-            if (res.code === ERR_OK) {
-                console.log(res)
+            if (res.success) {
+                this.props.setUserName(formData.userName)
+            }else{
+                if(res.message){
+                    this.setState({
+                        errorText : res.message
+                    })
+                }
             }
         })
     }
 
+    clearError = () => {
+        this.setState({
+            errorText : ''
+        })
+    }
 
     render(){
-        const formData = this.state.formData;
+        const { formData , errorText } = this.state;
         return(
             <div className="login">
                 <div className="login-item">
@@ -92,11 +115,12 @@ class LogIn extends Component<LogInProps,LogInState>{
                 <div className="login-item">
                     <input className="box"
                            placeholder={"密码"}
-                           onChange={this.passWordHandler}
-                           value = {formData.passWord}
+                           onChange={this.passwordHandler}
+                           value = {formData.password}
+                           type="password"
                     />
                     <i  className="icon-dismiss"
-                        onClick={ this.clear.bind(this,'passWord') }
+                        onClick={ this.clear.bind(this,'password') }
                     />
                 </div>
                 <div className="login-item">
@@ -109,10 +133,23 @@ class LogIn extends Component<LogInProps,LogInState>{
                             onClick={this.submitHandler.bind(this,'注册')}
                     >注册</span>
                 </div>
+                {
+                    errorText && <Error text={ errorText } clearError={this.clearError}/>
+                }
             </div>
-
         )
     }
 }
 
-export default LogIn
+
+
+const mapDispatchToProps = (dispatch:Dispatch,ownProps:any) => {
+    return {
+        setUserName: (userName:IUserName) => (
+            dispatch(setUserName(userName))
+        ),
+        ...ownProps
+    }
+}
+
+export default withRouter(connect(()=>({}),mapDispatchToProps)(LogIn))

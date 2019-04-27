@@ -8,7 +8,19 @@ const user = {
    * @return {object}       mysql执行结果
    */
   async create ( model ) {
-    let result = await dbUtils.insertData( 'user_info', model )
+    let result = await dbUtils.insertData( 'user', model )
+    let result2 = await dbUtils.createTable(
+        `CREATE TABLE IF NOT EXISTS user_${model.user_name}(
+          id INT PRIMARY KEY AUTO_INCREMENT,
+          mid VARCHAR(40),
+          singer VARCHAR(40),
+          name VARCHAR(40),
+          album VARCHAR(40),
+          duration INT,
+          image VARCHAR(255),
+          url VARCHAR(255)
+        )ENGINE=InnoDB DEFAULT CHARSET=utf8;`
+    )
     return result
   },
 
@@ -19,8 +31,8 @@ const user = {
    */
   async getExistOne(options ) {
     let _sql = `
-    SELECT * from user_info
-      where email="${options.email}" or name="${options.name}"
+    SELECT * from user
+      where user_name="${options.name}"
       limit 1`
     let result = await dbUtils.query( _sql )
     if ( Array.isArray(result) && result.length > 0 ) {
@@ -38,8 +50,8 @@ const user = {
    */
   async getOneByUserNameAndPassword( options ) {
     let _sql = `
-    SELECT * from user_info
-      where password="${options.password}" and name="${options.name}"
+    SELECT * from user
+      where user_password="${options.password}" and user_name="${options.name}"
       limit 1`
     let result = await dbUtils.query( _sql )
     if ( Array.isArray(result) && result.length > 0 ) {
@@ -48,28 +60,7 @@ const user = {
       result = null
     }
     return result
-  },
-
-  /**
-   * 根据用户名查找用户信息
-   * @param  {string} userName 用户账号名称
-   * @return {object|null}     查找结果
-   */
-  async getUserInfoByUserName( userName ) {
-
-    let result = await dbUtils.select(
-      'user_info',
-      ['id', 'email', 'name', 'detail_info', 'create_time', 'modified_time', 'modified_time' ])
-    if ( Array.isArray(result) && result.length > 0 ) {
-      result = result[0]
-    } else {
-      result = null
-    }
-    return result
-  },
-
-
-
+  }
 }
 
 

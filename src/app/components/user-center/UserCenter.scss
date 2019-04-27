@@ -25,6 +25,17 @@
       color: $color-theme;
     }
   }
+  .logout{
+    position: absolute;
+    top: 0;
+    right: 6px;
+    z-index: 50;
+    span{
+      display: block;
+      padding: 13px;
+      color: $color-theme;
+    }
+  }
   .switches-wrapper{
     margin: 10px 0 30px 0
   }

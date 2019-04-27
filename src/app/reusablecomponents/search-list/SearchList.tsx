@@ -25,8 +25,8 @@ const SearchList : React.SFC<SearchListProps> = ({searches,selectItem,deleteItem
                                      e.stopPropagation()
                                      deleteItem(item)
                                   }}>
-                        <i className="icon-delete"/>
-                    </span>
+                                <i className="icon-delete"/>
+                            </span>
                         </li>
                     ))
                 }

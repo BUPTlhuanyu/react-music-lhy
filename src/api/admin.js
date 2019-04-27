@@ -7,15 +7,13 @@ import axios from 'axios'
 export function admin(options) {
     let url;
     if(options.type === '登录'){
-        url = host + '/api/login'
+        url = host + '/api/user/signIn'
     }else if(options.type === '注册'){
-        url = host + '/api/logup'
+        url = host + '/api/user/signUp'
     }
-    const data = Object.assign({}, {userName:'',passWord:''}, options)
+    const data = Object.assign({}, {userName:'',password:''}, options)
 
-    return axios.get(url, {
-        params: data
-    }).then((res) => {
+    return axios.post(url, data).then((res) => {
         return Promise.resolve(res.data)
     })
 }

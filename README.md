@@ -4,10 +4,23 @@
 ##### 声明：本项目参考了滴滴大佬的vue项目，原vue项目请关注[ustbhuangyi](https://github.com/ustbhuangyi)
 
 ## 项目运行
- ##### `npm install`
- ##### `npm start`
- ##### 项目中用到的一些自定义types在common/js/typings目录下
- ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
+    ### 前端项目启动
+     ##### `npm install`
+     ##### `npm start`
+     ##### 项目中用到的一些自定义types在common/js/typings目录下
+     ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
+
+    ### 后端项目启动
+     ##### 安装mysql
+     ##### 启动mysql服务:`net start <mysql程序名称>`
+     ##### 登录用户: `mysql -uroot -p`
+     ##### 输入密码
+     ##### 创建数据库：`CREATE DATABASE music;`
+     ##### 利用`server/sql/music.sql`中的查询语句创建数据表user
+     ##### 启动一个终端，切换到server文件夹下
+     ##### `npm install`
+     ##### `npm start`
+
 
 ## 项目笔记
 ### D1
@@ -67,8 +80,10 @@
 - [ ] create-react-app优化打包
 - [ ] electron构建exe
 - [ ] 个人中心管理系统
-    - [ ] mysql数据库表的设计
-    - [ ] 后端结构设计
+    - [x] mysql数据库表的设计
+    - [x] 登录注册
+    - [ ] cookie
+    - [ ] session
 
 
 ## 页面展示
