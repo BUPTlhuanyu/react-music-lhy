@@ -86,6 +86,9 @@
 - [ ] 个人中心管理系统
     - [x] mysql数据库表的设计
     - [x] 登录注册
+    - [x] koa2-cors解决跨域
+    - [x] koa-bodyparser解决post数据的解析与提取
+    - [x] 后端API功能实现、postman测试、前端测试:getDataByPage, addFavorite, deleteFavorite
     - [ ] cookie
     - [ ] session
 
