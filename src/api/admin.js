@@ -7,9 +7,9 @@ import axios from 'axios'
 export function admin(options) {
     let url;
     if(options.type === '登录'){
-        url = host + '/api/user/signIn'
+        url = host + '/admin/user/signIn'
     }else if(options.type === '注册'){
-        url = host + '/api/user/signUp'
+        url = host + '/admin/user/signUp'
     }
     const data = Object.assign({}, {userName:'',password:''}, options)
 

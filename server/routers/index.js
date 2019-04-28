@@ -4,9 +4,11 @@
 
 const router = require('koa-router')()
 
-const api = require('./api')
+const admin = require('./admin')
+const favorite = require('./favorite')
 
-router.use('/api', api.routes(), api.allowedMethods())
+router.use('/admin', admin.routes(), admin.allowedMethods())
+router.use('/favorite', favorite.routes(), favorite.allowedMethods())
 
 module.exports = router
 

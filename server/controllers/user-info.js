@@ -8,6 +8,7 @@ module.exports = {
    */
   async signIn( ctx ){
     let formData = ctx.request.body
+      console.log(formData)
     let result = {
       success: false,
       message: '',

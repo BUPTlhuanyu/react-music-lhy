@@ -28,7 +28,6 @@ let query = function( sql, values ) {
       }
     })
   })
-
 }
 
 let createTable = function( sql ) {
@@ -42,12 +41,17 @@ let findDataById = function( table,  id ) {
 }
 
 
-let findDataByPage = function( table, keys, start, end ) {
-  let  _sql =  "SELECT ?? FROM ??  LIMIT ? , ?"
-  return query( _sql, [keys,  table,  start, end ] )
+let findDataByPage = function( table, start, end ) {
+  let  _sql =  "SELECT * FROM ??  LIMIT ? , ?"
+  return query( _sql, [ table,  start, end ] )
 }
 
-
+// 例子
+// var post  = {id: 1, title: 'Hello MySQL'};
+// var query = connection.query('INSERT INTO posts SET ?', post, function(err, result) {
+//     // Neat!
+// });
+// console.log(query.sql); // INSERT INTO posts SET `id` = 1, `title` = 'Hello MySQL'
 let insertData = function( table, values ) {
   let _sql = "INSERT INTO ?? SET ?"
   return query( _sql, [ table, values ] )
@@ -60,9 +64,9 @@ let updateData = function( table, values, id ) {
 }
 
 
-let deleteDataById = function( table, id ) {
-  let _sql = "DELETE FROM ?? WHERE user_id = ?"
-  return query( _sql, [ table, id ] )
+let deleteDataByField = function( table, Field ) {
+  let _sql = "DELETE FROM ?? WHERE ?"
+  return query( _sql, [ table, Field ] )
 }
 
 
@@ -81,7 +85,7 @@ module.exports = {
   createTable,
   findDataById,
   findDataByPage,
-  deleteDataById,
+  deleteDataByField,
   insertData,
   updateData,
   select,

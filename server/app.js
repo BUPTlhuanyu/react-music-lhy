@@ -6,7 +6,7 @@ const Koa = require('koa')
 // const koaStatic = require('koa-static')
 // const views = require('koa-views')
 const bodyParser = require('koa-bodyparser')
-// const koaLogger = require('koa-logger')
+const koaLogger = require('koa-logger')
 // const session = require('koa-session-minimal')
 // const MysqlStore = require('koa-mysql-session')
 
@@ -34,7 +34,7 @@ const app = new Koa()
 // }))
 
 // 配置控制台日志中间件
-// app.use(koaLogger())
+app.use(koaLogger())
 
 // -- 将POST请求中的data数据存放在ctx.request.body中 -- \\
 // 配置ctx.body解析中间件

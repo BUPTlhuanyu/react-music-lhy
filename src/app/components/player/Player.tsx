@@ -28,11 +28,13 @@ import {
     IStoreState
 } from 'store/stateTypes'
 import { Dispatch } from 'redux'
+import {addFavorite,deleteFavorite} from 'api/favorite.js'
 
 const transform = prefixStyle('transform')
 const transitionDuration = prefixStyle('transitionDuration')
 
 import './player.scss'
+import { IUserName } from 'store/stateTypes'
 
 
 interface PlayerPropType{
@@ -47,7 +49,8 @@ interface PlayerPropType{
     setSequenceList:Function,
     playing:IPlaying,
     mode:IMode,
-    sequenceList:ISequenceList
+    sequenceList:ISequenceList,
+    userName:IUserName
 }
 
 interface PlayerStateType{
@@ -58,7 +61,8 @@ interface PlayerStateType{
     currentLyric:any,
     playingLyric:string,
     currentLineNum:number,
-    currentShow:string
+    currentShow:string,
+    favorite:boolean
 }
 
 let currentIndex:number;
@@ -69,6 +73,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         const newId = props.playlist[props.currentIndex] && props.playlist[props.currentIndex].id;
         if(newId !== currentId){
             return {
+                favorite:false,
                 songReady:false,
                 currentSong:props.playlist[props.currentIndex]
             }
@@ -107,7 +112,46 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
             currentLyric:null,
             playingLyric:'',
             currentLineNum:0,
-            currentShow:'cd'
+            currentShow:'cd',
+            favorite:false
+        }
+    }
+
+    toggleFavorite(item:any){
+        console.log('可以判断当前歌曲是否存在于喜欢的歌曲列表中来决定这里favorite状态，建议直接在render中判断，尽量避免使用getDerivedStateFromProps')
+        let data = Object.assign(
+            {},
+            {
+                userName:this.props.userName,
+                mid:'',
+                singer:'',
+                name:'',
+                album:'',
+                duration:0,
+                image:'',
+                url:''
+            },
+            item
+        )
+        if(!this.state.favorite){
+            addFavorite(data).then((data)=>{
+                    if(data.success){
+                        this.setState({
+                            favorite:true
+                        })
+                    }
+                }
+            )
+        }else{
+            deleteFavorite(data).then((data)=>{
+                console.log(data)
+                    if(data.success){
+                        this.setState({
+                            favorite:false
+                        })
+                    }
+                }
+            )
         }
     }
 
@@ -490,7 +534,14 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
 
     render(){
         const { fullScreen, playlist } = this.props;
-        const { currentTime, currentSong, radius, currentLyric, currentLineNum, playingLyric, currentShow } = this.state
+        const { currentTime,
+                currentSong,
+                radius,
+                currentLyric,
+                currentLineNum,
+                playingLyric,
+                currentShow,
+                favorite } = this.state
         const styleDisplay = playlist.length ? 'block' : 'none';
         return (
             <div className="player" style={{display: `${styleDisplay}`}}>
@@ -565,8 +616,8 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                             <div className={this.disableCls()+" icon i-right"}>
                                 <i className="icon-next" onClick={this.next}/>
                             </div>
-                            <div className={this.disableCls()+" icon i-right"}>
-                                <i className="icon-not-favorite"/>
+                            <div className={this.disableCls()+" icon i-right"} onClick={()=>{this.toggleFavorite(currentSong)}}>
+                                <i className={favorite?"icon-favorite":"icon-not-favorite"}/>
                             </div>
                         </div>
                     </div>
@@ -592,6 +643,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                 </div>
                 <PlayList
                     ref={this.playlist}
+                    toggleFavorite={()=>{console.log("todo，歌曲的favorite信息应该存在store中")}}
                     changeMode={this.changeMode}
                     iconMode={this.iconMode}
                     modeText={this.modeText}
@@ -620,7 +672,8 @@ const mapStateToProp = (state:IStoreState) => ({
     currentIndex : state.currentIndex,
     playing:state.playing,
     mode:state.mode,
-    sequenceList:state.sequenceList
+    sequenceList:state.sequenceList,
+    userName : state.userName
 })
 
 const mapDispatchToProps = (dispatch:Dispatch) => ({

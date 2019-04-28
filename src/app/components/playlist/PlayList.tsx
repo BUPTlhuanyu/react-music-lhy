@@ -16,7 +16,8 @@ interface PlayListProps{
     deleteSong:Function,
     getCurrentIcon:Function,
     selectItem:Function,
-    scrollToCurrent:Function
+    scrollToCurrent:Function,
+    toggleFavorite:Function
 }
 
 interface PlayListState{
@@ -75,7 +76,8 @@ class PlayList extends Component<PlayListProps,PlayListState>{
             sequenceList,
             getCurrentIcon,
             selectItem,
-            deleteSong } = this.props
+            deleteSong,
+            toggleFavorite } = this.props
         return(
             <div className="playlist" style={{display:showFlag?"":"none"}}>
                 <div className="list-wrapper">
@@ -99,7 +101,7 @@ class PlayList extends Component<PlayListProps,PlayListState>{
                                     >
                                         <i className={"current "+ getCurrentIcon(item)} />
                                         <span className="text">{item.name}</span>
-                                        <span className="like">
+                                        <span className="like" onClick={()=>{toggleFavorite(item)}}>
                                             <i className="icon-not-favorite"/>
                                          </span>
                                         <span className="delete"

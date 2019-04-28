@@ -12,7 +12,7 @@ const user = {
     let result2 = await dbUtils.createTable(
         `CREATE TABLE IF NOT EXISTS user_${model.user_name}(
           id INT PRIMARY KEY AUTO_INCREMENT,
-          mid VARCHAR(40),
+          mid VARCHAR(40) UNIQUE,
           singer VARCHAR(40),
           name VARCHAR(40),
           album VARCHAR(40),
