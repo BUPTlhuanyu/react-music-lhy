@@ -100,3 +100,5 @@
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/player.gif)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/scroll.gif)
 ![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E5%B1%95%E7%A4%BA/scroll2.gif)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%E5%90%8E%E7%AB%AF/getDataByPage%E6%B5%8B%E8%AF%95.png)
+![](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%E5%90%8E%E7%AB%AF/%e7%99%bb%e5%bd%95%e6%b3%a8%e5%86%8c%e6%b7%bb%e5%8a%a0favorite%e7%9a%84%e7%ae%80%e5%8d%95%e6%bc%94%e7%a4%ba.gif)
