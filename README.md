@@ -65,6 +65,10 @@
 ### 部署
 - [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/react%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0nginx.md)
 
+### node后端
+- [1、后端项目结构](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%e5%90%8e%e7%ab%af/%e5%90%8e%e7%ab%af%e9%a1%b9%e7%9b%ae%e7%bb%93%e6%9e%84.md)
+
+
 ## ToDo
 - [x] 完善项目中typescript类型
     - [x] store，action类型
