@@ -17,6 +17,19 @@ const cors = require('koa2-cors');
 
 const app = new Koa()
 
+// -- 解决跨域问题 -- \\
+
+app.use(cors({
+    origin: function (ctx) {
+        return 'http://localhost:3000';
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE','OPTIONS'], //设置允许的HTTP请求类型
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
+
 // session存储配置
 // const sessionMysqlConfig= {
 //     user: config.database.USERNAME,
@@ -52,19 +65,6 @@ app.use(bodyParser())
 //     extension: 'ejs'
 // }))
 
-
-// -- 解决跨域问题 -- \\
-
-app.use(cors({
-    origin: function () {
-        return '*';
-    },
-    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-    maxAge: 5,
-    credentials: true,
-    allowMethods: ['GET', 'POST', 'DELETE'], //设置允许的HTTP请求类型
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-}));
 
 // 初始化路由中间件
 app.use(routers.routes()).use(routers.allowedMethods())

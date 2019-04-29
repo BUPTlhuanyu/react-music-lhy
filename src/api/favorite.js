@@ -22,7 +22,7 @@ export function addFavorite(options) {
         options
     )
 
-    return axios.post(url, data).then((res) => {
+    return axios.post(url, data, {withCredentials:true}).then((res) => {
         return Promise.resolve(res.data)
     })
 }

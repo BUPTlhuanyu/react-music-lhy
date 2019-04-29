@@ -1,6 +1,17 @@
 const userInfoService = require('./../services/user-info')
 const userCode = require('./../codes/user')
 
+//cookie版本0：不设置expire表示会话结束就关闭标签需要重新登录，expire表示到期时间
+//cookie版本1：maxage表示从设置cookie开始存在的秒数
+const ckConfig = {
+    domain:'http://localhost:3000',
+    path:'/',
+    maxAge: 10 * 60 * 1000,
+    // expires: new Date('2019-05-15'),
+    httpOnly:false,
+    overwrite:false
+}
+
 module.exports = {
   /**
    * 登录操作
@@ -8,7 +19,6 @@ module.exports = {
    */
   async signIn( ctx ){
     let formData = ctx.request.body
-      console.log(formData)
     let result = {
       success: false,
       message: '',
@@ -18,6 +28,11 @@ module.exports = {
     let userResult = await userInfoService.signIn( formData )
     if ( userResult ) {
       if ( formData.userName === userResult.user_name ) {
+          ctx.cookies.set(
+              'cid123243432343',
+              userResult.user_id,
+              ckConfig
+          )
         result.success = true
       } else {
         result.message = userCode.FAIL_USER_NAME_OR_PASSWORD_ERROR
