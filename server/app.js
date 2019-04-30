@@ -24,7 +24,7 @@ app.use(cors({
         return 'http://localhost:3000';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-    maxAge: 5,
+    maxAge: 100,
     credentials: true,
     allowMethods: ['GET', 'POST', 'DELETE','OPTIONS'], //设置允许的HTTP请求类型
     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
