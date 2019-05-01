@@ -21,7 +21,7 @@ const app = new Koa()
 
 app.use(cors({
     origin: function (ctx) {
-        return 'localhost';
+        return 'http://localhost:3000';
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 100,

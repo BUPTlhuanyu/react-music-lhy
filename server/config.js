@@ -1,6 +1,6 @@
 const config = {
 
-  port: 9527,
+  port: 3111,
 
   database: {
     DATABASE: 'music',

@@ -6,7 +6,7 @@
 ## 项目运行
 ### 前端项目启动
  ##### `npm install`
- ##### `npm start`
+ ##### `npm run dev`
  ##### 项目中用到的一些自定义types在common/js/typings目录下
  ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
 
@@ -67,6 +67,8 @@
 
 ### node后端
 - [1、后端项目结构](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%e5%90%8e%e7%ab%af/%e5%90%8e%e7%ab%af%e9%a1%b9%e7%9b%ae%e7%bb%93%e6%9e%84.md)
+- [2、](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%e5%90%8e%e7%ab%af/%e4%bb%a3%e7%90%86%e5%ae%9e%e7%8e%b0%e6%9c%ac%e5%9c%b0cookie%e8%b7%a8%e5%9f%9f%e8%b0%83%e8%af%95.md)
+- [ ] 3、webpack-dev-server原理分析
 
 
 ## ToDo
@@ -91,7 +93,7 @@
     - [x] koa2-cors解决跨域
     - [x] koa-bodyparser解决post数据的解析与提取
     - [x] 后端API功能实现、postman测试、前端测试:getDataByPage, addFavorite, deleteFavorite
-    - [ ] cookie
+    - [x] cookie:利用webpack的webpack-dev-server代理实现本地cookie跨域调试。
     - [ ] session
 
 
