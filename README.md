@@ -4,12 +4,6 @@
 ##### 声明：本项目参考了滴滴大佬的vue项目，原vue项目请关注[ustbhuangyi](https://github.com/ustbhuangyi)
 
 ## 项目运行
-### 前端项目启动
- ##### `npm install`
- ##### `npm run dev`
- ##### 项目中用到的一些自定义types在common/js/typings目录下
- ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
-
 ### 后端项目启动
  ##### 安装mysql
  ##### 启动mysql服务:`net start <mysql程序名称>`
@@ -20,6 +14,12 @@
  ##### 启动一个终端，切换到server文件夹下
  ##### `npm install`
  ##### `npm start`
+
+### 前端项目启动
+ ##### `npm install`
+ ##### `npm run dev`
+ ##### 项目中用到的一些自定义types在common/js/typings目录下
+ ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
 
 
 ## 项目笔记
