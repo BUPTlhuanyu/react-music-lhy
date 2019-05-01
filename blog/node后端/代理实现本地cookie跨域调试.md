@@ -1,3 +1,6 @@
+#### 问题还原
+本地调试的情况下，HOST为A的客户端，发送请求到HOST为B的服务端。但浏览器无法将服务端发来的set-cookie中的cookie内容写入相应domain的cookie中，并且chrome下会隐藏响应头set-cookie。尝试了[链接](https://stackoverflow.com/questions/1134290/cookies-on-localhost-with-explicit-domain)中的方法，都无法搞定。
+
 #### 代理实现本地cookie跨域调试的一些方法
 主要的还是利用代理来解决cookie的跨域问题，可以利用nginx作为代理来实现cookie跨域。由于项目是由create-react-app建立的，为了调试方便，因此这里用webpack的webpack-dev-server提供的代理来实现，对应于package.json中proxy对应的代理端口。
 
