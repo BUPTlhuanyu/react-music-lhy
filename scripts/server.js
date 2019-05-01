@@ -6,6 +6,16 @@ const app = express()
 
 const apiRoutes = express.Router()
 
+
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", req.headers.origin); //需要显示设置来源
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials",true); //带cookies7     res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
+
+
 apiRoutes.get('/getDiscList', function (req, res) {
     var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
     axios.get(url, {

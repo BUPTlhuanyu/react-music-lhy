@@ -5,11 +5,11 @@ import {host} from './config'
 import axios from 'axios'
 
 export function admin(options) {
-    let url;
+    let url = 'http://localhost:9527';
     if(options.type === '登录'){
-        url = '/admin/user/signIn'
+        url = url + '/admin/user/signIn'
     }else if(options.type === '注册'){
-        url = '/admin/user/signUp'
+        url = url + '/admin/user/signUp'
     }
     const data = Object.assign({}, {userName:'',password:''}, options)
 
