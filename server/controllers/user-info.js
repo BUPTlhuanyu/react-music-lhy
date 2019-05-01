@@ -3,8 +3,11 @@ const userCode = require('./../codes/user')
 
 //cookie版本0：不设置expire表示会话结束就关闭标签需要重新登录，expire表示到期时间
 //cookie版本1：maxage表示从设置cookie开始存在的秒数
+//本地调试cookie跨域，无法set-cookie
+//https://stackoverflow.com/questions/1134290/cookies-on-localhost-with-explicit-domain
+//Setting the cookie domain to an empty string works
 const ckConfig = {
-    domain:'http://localhost:3000/user',
+    domain:'',
     path:'/',
     maxAge: 10 * 60 * 1000,
     // expires: new Date('2019-05-15'),
