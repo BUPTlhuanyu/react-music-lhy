@@ -97,6 +97,13 @@
     - [x] cookie:利用webpack的webpack-dev-server代理实现本地cookie跨域调试。
     - [ ] session
     - [ ] 利用cookie中的信息获取数据库中用户信息
+    - [ ] 缓存
+    - [ ] 数据上传，下载
+    - [ ] nginx负载均衡，redis存储
+    - [ ] 压力测试
+    - [ ] 日志
+    - [ ] 部署，pm2
+    - [ ] websocket, https
 
 
 ## 页面展示
