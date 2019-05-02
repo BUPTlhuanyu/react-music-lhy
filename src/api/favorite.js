@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export function addFavorite(options) {
     let url;
-    url = host + '/favorite/add'
+    url = '/favorite/add'
     const data = Object.assign(
         {},
         {
@@ -29,7 +29,7 @@ export function addFavorite(options) {
 
 export function deleteFavorite(options) {
     let url;
-    url = host + '/favorite/delete'
+    url = '/favorite/delete'
     const data = Object.assign(
         {},
         {

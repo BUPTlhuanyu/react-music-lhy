@@ -45,7 +45,7 @@ app.use(cors({
 
 ```
 const ckConfig = {
-    domain:'localhost:3000',
+    domain:'localhost',
     path:'/',
     maxAge: 10 * 60 * 1000,
     // expires: new Date('2019-05-15'),
