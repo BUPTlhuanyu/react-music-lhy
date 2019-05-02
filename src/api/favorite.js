@@ -1,7 +1,6 @@
 /**
  * Created by liaohuanyu on 2019/4/28.
  */
-import {host} from './config'
 import axios from 'axios'
 
 export function addFavorite(options) {

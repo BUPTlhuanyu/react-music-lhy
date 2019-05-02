@@ -35,9 +35,13 @@ const transitionDuration = prefixStyle('transitionDuration')
 
 import './player.scss'
 import { IUserName } from 'store/stateTypes'
+import { withRouter } from 'react-router'
 
 
 interface PlayerPropType{
+    history:any,
+    location:any,
+    match:any,
     fullScreen : IFullScreen,
     playlist : IPlaylist,
     currentIndex : ICurrentIndex,
@@ -118,6 +122,15 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 
     toggleFavorite(item:any){
+        if(!this.state.songReady || !this.audio.current){
+            return
+        }
+        console.log("this.state.songReady",this.state.songReady)
+        if (!this.props.userName) {
+            this.props.setFullScreen(false)
+            this.props.history.push('/user')
+            return
+        }
         console.log('可以判断当前歌曲是否存在于喜欢的歌曲列表中来决定这里favorite状态，建议直接在render中判断，尽量避免使用getDerivedStateFromProps')
         let data = Object.assign(
             {},
@@ -604,8 +617,8 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                             <span className="time time-r">{this.format(currentSong && currentSong.duration)}</span>
                         </div>
                         <div className="operators">
-                            <div className="icon i-left" onClick={this.changeMode}>
-                                <i className={this.iconMode()}/>
+                            <div className="icon i-left" >
+                                <i className={this.iconMode()} onClick={this.changeMode}/>
                             </div>
                             <div className = {this.disableCls()+" icon i-left"}>
                                 <i className="icon-prev" onClick={this.prev}/>
@@ -616,8 +629,8 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                             <div className={this.disableCls()+" icon i-right"}>
                                 <i className="icon-next" onClick={this.next}/>
                             </div>
-                            <div className={this.disableCls()+" icon i-right"} onClick={()=>{this.toggleFavorite(currentSong)}}>
-                                <i className={favorite?"icon-favorite":"icon-not-favorite"}/>
+                            <div className={this.disableCls()+" icon i-right"} >
+                                <i className={favorite?"icon-favorite":"icon-not-favorite"} onClick={()=>{this.toggleFavorite(currentSong)}}/>
                             </div>
                         </div>
                     </div>
@@ -666,14 +679,15 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
     }
 }
 
-const mapStateToProp = (state:IStoreState) => ({
+const mapStateToProp = (state:IStoreState,ownProps:any) => ({
     fullScreen : state.fullScreen,
     playlist : state.playlist,
     currentIndex : state.currentIndex,
     playing:state.playing,
     mode:state.mode,
     sequenceList:state.sequenceList,
-    userName : state.userName
+    userName : state.userName,
+    ...ownProps
 })
 
 const mapDispatchToProps = (dispatch:Dispatch) => ({
@@ -697,4 +711,4 @@ const mapDispatchToProps = (dispatch:Dispatch) => ({
     }
 })
 
-export default connect(mapStateToProp, mapDispatchToProps)(Player)
+export default withRouter(connect(mapStateToProp, mapDispatchToProps)(Player))
