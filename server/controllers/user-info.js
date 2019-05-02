@@ -6,10 +6,13 @@ const userCode = require('./../codes/user')
 const ckConfig = {
     domain:'localhost',
     path:'/',
-    maxAge: 10 * 60 * 1000,
-    expires: new Date(Date.now() + 100000),
+    // maxAge: 10 * 60 * 1000,
+    // 单位是ms
+    maxAge: 10000,
+    //当前时间一分钟过期：60000ms
+    expires: new Date(Date.now()+600000),
     httpOnly:false,
-    overwrite:false
+    overwrite:true
 }
 
 module.exports = {
