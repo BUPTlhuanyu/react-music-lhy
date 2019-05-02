@@ -85,6 +85,7 @@
 - [ ] 数据与视图分离
 - [ ] 组件优化
 - [ ] 项目结构的思考，总结
+- [ ] 用户详情页组件实现，利用cookie中的信息获取数据库中用户数据渲染用户详情页组件
 - [ ] create-react-app优化打包
 - [ ] electron构建exe
 - [ ] 个人中心管理系统
@@ -95,6 +96,7 @@
     - [x] 后端API功能实现、postman测试、前端测试:getDataByPage, addFavorite, deleteFavorite
     - [x] cookie:利用webpack的webpack-dev-server代理实现本地cookie跨域调试。
     - [ ] session
+    - [ ] 利用cookie中的信息获取数据库中用户信息
 
 
 ## 页面展示
