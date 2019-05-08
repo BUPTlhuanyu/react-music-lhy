@@ -71,7 +71,7 @@
 - [ ] 3、webpack-dev-server原理分析
 
 ### 调试
-- [1、fiddler抓包http进行本地调试](http://note.youdao.com/noteshare?id=&sub=1A34BF503D0A4B85851C7FE8019E1DCD)
+- [1、fiddler抓包http进行本地调试](http://note.youdao.com/noteshare?id=70e08556aa386dfc5f649dd6b4b15150&sub=1A34BF503D0A4B85851C7FE8019E1DCD)
 
 
 ## ToDo
