@@ -101,7 +101,10 @@
     - [x] 后端API功能实现、postman测试、前端测试:getDataByPage, addFavorite, deleteFavorite
     - [x] cookie:利用webpack的webpack-dev-server代理实现本地cookie跨域调试。
     - [x] cookie + 签名:获取数据库中用户信息
-    - [ ] session
+    - [ ] session:
+        - [ ] koa-session-minimal 适用于koa2 的session中间件，提供存储介质的读写接口 。
+        - [ ] koa-mysql-session 为koa-session-minimal中间件提供MySQL数据库的session数据读写操作。
+        - [ ] koa-redis 为koa-session-minimal中间件提供redis的session数据读写操作。
     - [ ] 缓存
     - [ ] 数据上传，下载
     - [ ] nginx负载均衡，redis存储
