@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import './UserCenter.scss'
-import NoResult from 'reuse/no-result/NoResult'
+import UserDetails from '../user-details/UserDetails'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { IUserName } from 'store/stateTypes'
@@ -56,8 +56,8 @@ class UserCenter extends Component<UserCenterProps,UserCenterState>{
                     !userName ?
                         <LogIn/>
                      :
-                        <div className="no-result-wrapper" >
-                            <NoResult title="noResultDesc"/>
+                        <div className="user-details-wrapper" >
+                            <UserDetails />
                         </div>
                 }
             </div>

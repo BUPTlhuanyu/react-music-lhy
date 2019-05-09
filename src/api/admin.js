@@ -16,3 +16,11 @@ export function admin(options) {
         return Promise.resolve(res.data)
     })
 }
+
+export function getUserInfo() {
+    let url = '/admin/user/getUserInfo';
+
+    return axios.get(url, {withCredentials:true}).then((res) => {
+        return Promise.resolve(res.data)
+    })
+}

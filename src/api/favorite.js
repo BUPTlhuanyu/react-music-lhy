@@ -48,3 +48,19 @@ export function deleteFavorite(options) {
         return Promise.resolve(res.data)
     })
 }
+
+export function getDataByPage(options) {
+    let url;
+    url = '/favorite/getFavorite'
+    const data = Object.assign(
+        {},
+        {
+            userName:'',
+        },
+        options
+    )
+
+    return axios.post(url, data).then((res) => {
+        return Promise.resolve(res.data)
+    })
+}

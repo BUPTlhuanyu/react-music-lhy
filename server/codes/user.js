@@ -24,6 +24,8 @@ const userCode = {
 
   FAIL_USER_NO_EXIST: '用户不存在',
 
+  BAD_REQUEST: '存在安全问题'
+
 }
 
 

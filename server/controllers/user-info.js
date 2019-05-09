@@ -1,5 +1,6 @@
 const userInfoService = require('./../services/user-info')
 const userCode = require('./../codes/user')
+const { getSignature, verificationSignature } = require('./../utils/crypto')
 
 //cookie版本0：不设置expire表示会话结束就关闭标签需要重新登录，expire表示到期时间
 //cookie版本1：maxage表示从设置cookie开始存在的秒数
@@ -35,6 +36,11 @@ module.exports = {
               'cid',
               userResult.user_id,
               ckConfig
+          );
+          ctx.cookies.set(
+              'signature',
+              getSignature(userResult.user_id),
+              ckConfig
           )
         result.success = true
       } else {
@@ -48,8 +54,29 @@ module.exports = {
     ctx.body = result;
   },
 
-  async getLoginUserInfo( ctx ){
-      ctx.body = ctx.request.body
+  async getUserInfo( ctx ){
+      let result = {
+          success: false,
+          message: '',
+          data: null,
+          code: ''
+      }
+      let cid = ctx.cookies.get('cid')
+      let signature = ctx.cookies.get('signature')
+      if(verificationSignature(cid, signature)){
+          let userResult = await userInfoService.getUserInfoByUserId(cid)
+          if(userResult){
+              result.success = true
+              result.data = {
+                  userName : userResult.userName
+              }
+          }else{
+              result.message = userCode.FAIL_USER_NO_EXIST
+          }
+      }else{
+          result.message = userCode.BAD_REQUEST
+      }
+      ctx.body = result
   },
 
   async signUp( ctx ){
@@ -80,6 +107,17 @@ module.exports = {
           user_name: formData.userName
       })
       if ( userResult && userResult.insertId * 1 > 0) {
+          console.log(userResult)
+          ctx.cookies.set(
+              'cid',
+              userResult.insertId,
+              ckConfig
+          );
+          ctx.cookies.set(
+              'signature',
+              getSignature(userResult.insertId),
+              ckConfig
+          )
           result.success = true
       } else {
           result.message = userCode.ERROR_SYS

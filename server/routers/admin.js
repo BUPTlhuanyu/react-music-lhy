@@ -9,7 +9,7 @@ const router = require('koa-router')()
 const userInfoController = require('./../controllers/user-info')
 
 const routers = router
-    .get('/user/getUserInfo', userInfoController.getLoginUserInfo)
+    .get('/user/getUserInfo', userInfoController.getUserInfo)
     .post('/user/signIn', userInfoController.signIn)
     .post('/user/signUp', userInfoController.signUp)
 

@@ -3,6 +3,7 @@
  */
 const favoriteService = require('./../services/favorite')
 const favoriteCode = require('./../codes/favorite')
+const { verificationSignature } = require('./../utils/crypto')
 
 module.exports = {
     async addFavorite(ctx){
@@ -54,13 +55,19 @@ module.exports = {
             data: null,
             code: ''
         }
-        let getResult = await favoriteService.getDataByPage( data )
-        console.log(getResult)
-        if ( getResult && getResult.length > 0) {
-            result.success = true
-            result.data = getResult
-        } else {
-            result.message = favoriteCode.ERROR_SYS
+        let cid = ctx.cookies.get('cid')
+        let signature = ctx.cookies.get('signature')
+        if(verificationSignature(cid, signature)){
+            let getResult = await favoriteService.getDataByPage( data )
+            console.log(getResult)
+            if ( getResult && getResult.length > 0) {
+                result.success = true
+                result.data = getResult
+            } else {
+                result.message = favoriteCode.ERROR_SYS
+            }
+        }else{
+            result.message = favoriteCode.BAD_REQUEST
         }
 
         ctx.body = result;

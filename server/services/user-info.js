@@ -48,9 +48,9 @@ const user = {
    * @param  {string} userName 用户名
    * @return {object|null}     查找结果
    */
-  async getUserInfoByUserName( userName ) {
+  async getUserInfoByUserId( user_id ) {
 
-    let resultData = await userModel.getUserInfoByUserName( userName ) || {}
+    let resultData = await userModel.getUserInfoByUserId( { user_id } ) || {}
     let userInfo = {
       // id: resultData.id,
       // email: resultData.email,
