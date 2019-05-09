@@ -105,8 +105,9 @@
         - [ ] koa-session-minimal 适用于koa2 的session中间件，提供存储介质的读写接口 。
         - [ ] koa-mysql-session 为koa-session-minimal中间件提供MySQL数据库的session数据读写操作。
         - [ ] koa-redis 为koa-session-minimal中间件提供redis的session数据读写操作。
-    - [ ] 缓存
     - [ ] 数据上传，下载
+    - [ ] 缓存
+    - [ ] 静态服务器
     - [ ] nginx负载均衡，redis存储
     - [ ] 压力测试
     - [ ] 日志
