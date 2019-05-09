@@ -98,9 +98,8 @@
     - [x] koa-bodyparser解决post数据的解析与提取
     - [x] 后端API功能实现、postman测试、前端测试:getDataByPage, addFavorite, deleteFavorite
     - [x] cookie:利用webpack的webpack-dev-server代理实现本地cookie跨域调试。
-    - [x] cookie + 签名
+    - [x] cookie + 签名:获取数据库中用户信息
     - [ ] session
-    - [ ] 利用cookie中的信息获取数据库中用户信息
     - [ ] 缓存
     - [ ] 数据上传，下载
     - [ ] nginx负载均衡，redis存储
