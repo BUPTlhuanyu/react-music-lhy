@@ -9,6 +9,8 @@ import NoResult from 'reuse/no-result/NoResult'
 import {getUserInfo} from 'api/admin.js'
 import {getDataByPage} from 'api/favorite.js'
 import Loading from 'reuse/loading/Loading';
+import Scroll from 'reuse/scroll/Scroll'
+import logo from "./logo@3x.png"
 
 interface UserDetailsProps{
 
@@ -47,27 +49,48 @@ class UserDetails extends Component<UserDetailsProps, UserDetailsState>{
         let {
                 userName,
                 loading,
-                favoriteSongs
-
+                favoriteSongs,
+                avatar
             } = this.state;
         return (
-            <div>
+            <div className = "user-details">
                 {
                     !loading ?
                     <Loading text={"正在获取数据"}/>
                         :
                         userName || favoriteSongs ?
                             <div>
-                                {userName}
-                                {
-                                    favoriteSongs && favoriteSongs.map((item , index)=> {
-                                        return (
-                                                <div key = {item.mid}>
-                                                    {item.name}
-                                                </div>
-                                            )
-                                    })
-                                }
+                                <div className="user-info">
+                                    <img
+                                        alt="user"
+                                        className="avatar"
+                                        src={avatar?avatar:logo}
+                                        width="100"
+                                        height="100"
+                                    />
+                                    <span className="name">{userName}</span>
+                                </div>
+                                <Scroll className="list-content" >
+                                    <ul >
+                                        {
+                                            favoriteSongs && favoriteSongs.map((item, index)=>(
+                                                <li
+                                                    className="item"
+                                                    key={index}
+                                                >
+                                                    <i className={"current "} />
+                                                    <span className="text">{item.name}</span>
+                                                    <span className="like" >
+                                                        <i className="icon-not-favorite"/>
+                                                    </span>
+                                                    <span className="delete">
+                                                        <i className="icon-delete"/>
+                                                    </span>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                </Scroll>
                             </div>
                             :
                             <NoResult title="noResultDesc"/>

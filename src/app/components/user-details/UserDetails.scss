@@ -1,0 +1,65 @@
+@import "common/style/variable.scss";
+@import "common/style/mixin.scss";
+
+.user-details{
+  .user-info{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding: 40px 30px;
+    .avatar{
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+    .name{
+      margin-left: 20px;
+      color: $color-theme;
+      font-size: $font-size-large;
+    }
+  }
+
+  .list-content{
+    max-height: 240px;
+    overflow: hidden;
+    .item{
+      display: flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 14px 0 10px;
+      overflow: hidden;
+      &.list-enter-active, &.list-leave-active{
+        transition: all 0.1s
+      }
+      &.list-enter, &.list-leave-to{
+        height: 0
+      }
+      .current{
+        flex: 0 0 20px;
+        width: 20px;
+        font-size: $font-size-small;
+        color: $color-theme-d;
+      }
+      .text{
+        flex: 1;
+        @include no-wrap();
+        font-size: $font-size-medium;
+        color: $color-text-d;
+      }
+      .like{
+        @include extend-click();
+        margin-right: 15px;
+        font-size: $font-size-small;
+        color: $color-theme;
+        .icon-favorite{
+          color: $color-sub-theme
+        }
+      }
+      .delete{
+        @include extend-click();
+        font-size: $font-size-small;
+        color: $color-theme;
+      }
+    }
+  }
+}
