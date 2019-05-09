@@ -69,6 +69,8 @@
 - [1、后端项目结构](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%e5%90%8e%e7%ab%af/%e5%90%8e%e7%ab%af%e9%a1%b9%e7%9b%ae%e7%bb%93%e6%9e%84.md)
 - [2、代理实现本地cookie跨域调试](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%e5%90%8e%e7%ab%af/%e4%bb%a3%e7%90%86%e5%ae%9e%e7%8e%b0%e6%9c%ac%e5%9c%b0cookie%e8%b7%a8%e5%9f%9f%e8%b0%83%e8%af%95.md)
 - [ ] 3、webpack-dev-server原理分析
+- [4、基于session与cookie的登录凭证](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%E5%90%8E%E7%AB%AF/%E5%9F%BA%E4%BA%8Esession%E4%B8%8Ecookie%E7%9A%84%E7%99%BB%E5%BD%95%E5%87%AD%E8%AF%81.md)
+- [5、cookie+签名实现登录凭证](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%E5%90%8E%E7%AB%AF/cookie%2B%E7%AD%BE%E5%90%8D%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E5%87%AD%E8%AF%81.md)
 
 ### 调试
 - [1、fiddler抓包http进行本地调试](http://note.youdao.com/noteshare?id=70e08556aa386dfc5f649dd6b4b15150&sub=1A34BF503D0A4B85851C7FE8019E1DCD)
