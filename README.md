@@ -50,8 +50,8 @@
 - [2、页面切换与异步数据请求bug](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/%E9%A1%B5%E9%9D%A2%E5%88%87%E6%8D%A2%E4%B8%8E%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82bug.md)
 - [3、getDerivedStateFromProps使用技巧](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/getDerivedStateFromProps%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7.md)
 - [4、基于react-transition-group的react过渡动画](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%E5%8A%A8%E7%94%BBCSSTransition.md)
-- [5、react-lodable组件动态导入](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react-lodable%e7%bb%84%e4%bb%b6%e5%8a%a8%e6%80%81%e5%af%bc%e5%85%a5)
-- [6、react中输入框防抖debounce](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%e4%b8%ad%e8%be%93%e5%85%a5%e6%a1%86%e9%98%b2%e6%8a%96debounce)
+- [5、react-lodable组件动态导入](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react-lodable%e7%bb%84%e4%bb%b6%e5%8a%a8%e6%80%81%e5%af%bc%e5%85%a5.md)
+- [6、react中输入框防抖debounce](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%e4%b8%ad%e8%be%93%e5%85%a5%e6%a1%86%e9%98%b2%e6%8a%96debounce.md)
 
 ### D5
 - [1、typescript约束输入数据结构编写listView可复用组件](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e7%ba%a6%e6%9d%9f%e8%be%93%e5%85%a5%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e7%bc%96%e5%86%99listView%e5%8f%af%e5%a4%8d%e7%94%a8%e7%bb%84%e4%bb%b6)
