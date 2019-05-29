@@ -54,9 +54,9 @@
 - [6、react中输入框防抖debounce](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D4/react%e4%b8%ad%e8%be%93%e5%85%a5%e6%a1%86%e9%98%b2%e6%8a%96debounce.md)
 
 ### D5
-- [1、typescript约束输入数据结构编写listView可复用组件](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e7%ba%a6%e6%9d%9f%e8%be%93%e5%85%a5%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e7%bc%96%e5%86%99listView%e5%8f%af%e5%a4%8d%e7%94%a8%e7%bb%84%e4%bb%b6)
-- [2、typescript在react项目中的实践](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5)
-- [3、typescript在react项目中的实践之ref](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5%e4%b9%8bref)
+- [1、typescript约束输入数据结构编写listView可复用组件](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e7%ba%a6%e6%9d%9f%e8%be%93%e5%85%a5%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e7%bc%96%e5%86%99listView%e5%8f%af%e5%a4%8d%e7%94%a8%e7%bb%84%e4%bb%b6.md)
+- [2、typescript在react项目中的实践](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5.md)
+- [3、typescript在react项目中的实践之ref](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D5/typescript%e5%9c%a8react%e9%a1%b9%e7%9b%ae%e4%b8%ad%e7%9a%84%e5%ae%9e%e8%b7%b5%e4%b9%8bref.md)
 
 ### D6
 - [1、webpack之splitChunks提升打包编译速度](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D6/webpack%e4%b9%8bsplitChunks%e6%8f%90%e5%8d%87%e6%89%93%e5%8c%85%e7%bc%96%e8%af%91%e9%80%9f%e5%ba%a6.md)
