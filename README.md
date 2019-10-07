@@ -63,7 +63,8 @@
 - [2、webpack之happypack多线程打包](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/D6/webpack%e4%b9%8bhappypack%e5%a4%9a%e7%ba%bf%e7%a8%8b%e6%89%93%e5%8c%85.md)
 
 ### 部署
-- [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/react%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0nginx.md)
+- [1、react项目本地部署到nginx](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/1%e3%80%81react%e9%a1%b9%e7%9b%ae%e6%9c%ac%e5%9c%b0%e9%83%a8%e7%bd%b2%e5%88%b0nginx.md)
+- [2、gzip优化](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/%E9%83%A8%E7%BD%B2/2%e3%80%81gzip%e4%bc%98%e5%8c%96.md)
 
 ### node后端
 - [1、后端项目结构](https://github.com/BUPTlhuanyu/react-music-lhy/blob/master/blog/node%e5%90%8e%e7%ab%af/%e5%90%8e%e7%ab%af%e9%a1%b9%e7%9b%ae%e7%bb%93%e6%9e%84.md)
