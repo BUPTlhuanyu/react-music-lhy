@@ -30,8 +30,8 @@
     "dev": "node scripts/start.js",
     "serverOld": "node scripts/server.js",
     "startOld": "concurrently \"npm run server\" \"npm run dev\" --prefix \"{time}-{pid}\"",
-    "serverNew":"node server/app.js",
-    "start":"concurrently \"npm run serverNew\" \"npm run dev\" --prefix \"{time}-{pid}\"",
+    "serverNew": "node server/app.js",
+    "start": "concurrently \"npm run serverNew\" \"npm run dev\" --prefix \"{time}-{pid}\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
@@ -161,5 +161,5 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "proxy": "http://localhost:3111",
-  "homepage":"."
+  "homepage": "."
 }

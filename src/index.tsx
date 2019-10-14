@@ -11,7 +11,7 @@ import { defaultState } from 'store/stateTypes'
 // FastClick.attach(document.body);
 
 import fastClick from 'fastclick';
-fastClick.attach(document.body);
+(fastClick as any).attach(document.body);
 
 import { BrowserRouter } from 'react-router-dom'
 

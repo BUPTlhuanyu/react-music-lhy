@@ -1,4 +1,7 @@
-### alias配置
+## alias配置
+
+#### tsconfig中的baseurl为'.'
+
 ##### 首先在paths.js写好路径，如下
 ```
 module.exports = {
@@ -70,11 +73,24 @@ tsconfig.json文件下配置baseUrl与paths
     import Header from './components/header/Header'
 ```
 
-
+#### tsconfig中的baseurl为'src'
+只需在在tsconfig.json文件下配置baseUrl与paths
+```
+    "baseUrl":"src",
+    "paths":{
+      "src/*":["./*"],
+      "components/*":["./app/components/*"],
+      "common/*":["./common/*"],
+      "api/*":["./api/*"],
+      "reuse/*":["./app/reusablecomponents/*"],
+      "actions/*":["./app/actions/*"],
+      "reducers/*":["./app/reducers/*"],
+      "store/*":["./app/store/*"]
+    }
+```
 
 ### 总结
 在webpack与typescript结合使用的情况下，需要配置alias以及tsconfig下的baseUrl与paths，并且paths中配置某个文件夹下的路径的时候两处的“/*”一定不能省略。
 ```
 "components/*":["src/app/components/*"]
 ```
-
