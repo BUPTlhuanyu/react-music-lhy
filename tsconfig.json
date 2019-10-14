@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "baseUrl":"src",
+    "baseUrl":".",
     "paths":{
-      "src/*":["./*"],
-      "components/*":["./app/components/*"],
-      "common/*":["./common/*"],
-      "api/*":["./api/*"],
-      "reuse/*":["./app/reusablecomponents/*"],
-      "actions/*":["./app/actions/*"],
-      "reducers/*":["./app/reducers/*"],
-      "store/*":["./app/store/*"]
+      "src/*":["src/*"],
+      "components/*":["src/app/components/*"],
+      "common/*":["src/common/*"],
+      "api/*":["src/api/*"],
+      "reuse/*":["src/app/reusablecomponents/*"],
+      "actions/*":["src/app/actions/*"],
+      "reducers/*":["src/app/reducers/*"],
+      "store/*":["src/app/store/*"]
     },
     "lib": [
       "dom",
