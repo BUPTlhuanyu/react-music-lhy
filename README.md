@@ -1,5 +1,5 @@
 ## 一个适合练手的react项目
-##### 项目以及项目笔记会不断更新
+##### 时间原因项目不再更新
 ##### 体会vue与react项目区别
 ##### 声明：本项目参考了滴滴大佬的vue项目，原vue项目请关注[ustbhuangyi](https://github.com/ustbhuangyi)
 
