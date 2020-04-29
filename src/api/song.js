@@ -20,3 +20,13 @@ export function getLyric(mid) {
     return Promise.resolve(res.data)
   })
 }
+
+export function getVkey(mid) {
+  const url = '/api/getVkey'
+
+  return axios.get(url, {
+    params: {songmid: mid}
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

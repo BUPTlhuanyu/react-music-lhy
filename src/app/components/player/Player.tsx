@@ -16,6 +16,7 @@ import {shuffle} from 'common/js/util'
 import Lyric from 'lyric-parser'
 import {prefixStyle} from 'common/js/dom'
 import PlayList from 'components/playlist/PlayList'
+import axios from 'axios'
 
 import {
     ISong ,
@@ -58,6 +59,7 @@ interface PlayerPropType{
 }
 
 interface PlayerStateType{
+    currentSongUrl: string,
     songReady:boolean,
     currentTime:number,
     currentSong:ISong,
@@ -72,17 +74,22 @@ interface PlayerStateType{
 let currentIndex:number;
 let currentId:number;
 
+
+
 class Player extends Component<PlayerPropType, PlayerStateType>{
     static getDerivedStateFromProps(props:any){
         const newId = props.playlist[props.currentIndex] && props.playlist[props.currentIndex].id;
         if(newId !== currentId){
+            currentId = newId
             return {
                 favorite:false,
                 songReady:false,
-                currentSong:props.playlist[props.currentIndex]
+                currentSongUrl: '',
+                currentSong: props.playlist[props.currentIndex]
             }
         }
-        return {}
+        // console.log('getDerivedStateFromProps========>')
+        return null
     }
     audio:React.RefObject<HTMLAudioElement>;
     lyricList:React.RefObject<Scroll>;
@@ -109,6 +116,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
             percent:0
         }
         this.state ={
+            currentSongUrl: '',
             songReady: false,
             currentTime:0,
             currentSong: props.playlist[props.currentIndex],
@@ -167,12 +175,26 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
             )
         }
     }
+    getSongUrl(musicData: ISong){
+        // 解决方案一：深拷贝
+        // 解决方案二：immutable
+        return axios.get('/api/getVkey', {
+            params: {songmid: musicData.mid}
+        }).then(res => {
+            let currentSongUrl = res.data.response.playLists[0]
+            // console.log('query====', url)
+            return currentSongUrl
+        })
+    }
 
-    componentDidMount(){
-        // this.setState({
-        //     currentTime:this.audio.current.currentTime,
-        //     currentSong:this.props.playlist[this.props.currentIndex]
-        // })
+    componentDidUpdate(prevProps: PlayerPropType, prevState: PlayerStateType){
+        if(this.state.currentSong && !this.state.currentSongUrl){
+            this.getSongUrl(this.state.currentSong).then(currentSongUrl => {
+                this.setState({
+                    currentSongUrl
+                })
+            })
+        }
     }
 
     getLyric = () => {
@@ -549,12 +571,14 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         const { fullScreen, playlist } = this.props;
         const { currentTime,
                 currentSong,
+                currentSongUrl,
                 radius,
                 currentLyric,
                 currentLineNum,
                 playingLyric,
                 currentShow,
                 favorite } = this.state
+                
         const styleDisplay = playlist.length ? 'block' : 'none';
         return (
             <div className="player" style={{display: `${styleDisplay}`}}>
@@ -669,7 +693,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                 />
                 <audio
                     ref={this.audio}
-                    src={currentSong && currentSong.url}
+                    src={currentSongUrl}
                     onCanPlay={this.canPlayHandler}
                     onTimeUpdate={this.updateTime}
                     onEnded={this.end}

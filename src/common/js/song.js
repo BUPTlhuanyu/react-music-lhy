@@ -54,8 +54,7 @@ export function createSong(musicData) {
         album: musicData.albumname,
         duration: musicData.interval,
         image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-        url: `https://api.bzqll.com/music/tencent/url?key=579621905&id=${musicData.songmid}br=320`,
-        url1: `https://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg?albummid=${musicData.songmid}&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0`
+        url: ''
     })
 }
 

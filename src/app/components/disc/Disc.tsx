@@ -51,10 +51,10 @@ class DiscBase extends Component<DiscBasePropType, DiscBaseStateType>{
             this.props.history.push('/recommend')
             return
         }
-        getSongList(this.props.disc.dissid).then((res) => {
+        getSongList(this.props.disc.dissid).then(async (res) => {
             if (res.code === ERR_OK && !this.unmoutedFlag) {
                 this.setState({
-                    songs:this._normalizeSongs(res.cdlist[0].songlist)
+                    songs: this._normalizeSongs(res.cdlist[0].songlist)
                 })
             }
         })

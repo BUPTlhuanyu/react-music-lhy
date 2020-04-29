@@ -8,6 +8,7 @@ const routers = router
     .get('/getDiscList', apiProxy.getDiscList)
     .get('/search', apiProxy.search)
     .get('/getSongList', apiProxy.getSongList)
+    .get('/getVkey', apiProxy.getVkey)
     .get('/lyric',apiProxy.lyric)
 
 
