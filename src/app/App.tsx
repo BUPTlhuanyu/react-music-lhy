@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router'
+import ReactLazyHOC from 'reuse/react-lazy-hoc/ReactLazyHOC'
+import Loading from 'reuse/loading/Loading'
 
 import Header from 'components/header/Header'
 import Tab from 'components/tab/Tab'
-import Recommend from 'components/recommend/Recommend'
 import Player from 'components/player/Player'
-// import UserCenter from "components/user-center/UserCenter";
-import Search from 'components/search/Search'
-// import Singer from 'components/singer/Singer'
-// import Rank from 'components/rank/Rank'
+import Recommend from 'components/recommend/Recommend'
+
+const UserCenter = ReactLazyHOC(React.lazy(() => import("components/user-center/UserCenter")), <Loading />);
+const Search = ReactLazyHOC(React.lazy(() => import('components/search/Search')), <Loading />);
+const Singer = ReactLazyHOC(React.lazy(() => import('components/singer/Singer')), <Loading />);
+const Rank = ReactLazyHOC(React.lazy(() => import('components/rank/Rank')), <Loading />);
 
 class App extends Component {
   render() {
@@ -36,25 +39,3 @@ class App extends Component {
 }
 
 export default App;
-
-import Loadable from 'react-loadable';
-import Loading from 'reuse/loading/Loading';
-const Rank = Loadable({
-        loader: () => {return import(/* webpackChunkName: "Rank" */ 'components/rank/Rank')},
-        loading: () => <Loading text={"按需加载"}/>
-    });
-
-// const Search = Loadable({
-//         loader: () => {return import(/* webpackChunkName: "Search" */ 'components/search/Search')},
-//         loading: () => <Loading text={"按需加载"}/>
-// });
-
-const Singer = Loadable({
-        loader: () => {return import(/* webpackChunkName: "Singer" */ 'components/singer/Singer')},
-        loading: () => <Loading text={"按需加载"}/>
-});
-
-const UserCenter = Loadable({
-        loader: () => {return import(/* webpackChunkName: "UserCenter" */ 'components/user-center/UserCenter')},
-        loading: () => <Loading text={"按需加载"}/>
-});
