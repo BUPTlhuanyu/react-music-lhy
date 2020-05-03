@@ -18,7 +18,7 @@
 ### 前端项目启动
  ##### `npm install`
  ##### `npm run dev`
- ##### 项目中用到的一些自定义types在common/js/typings目录下
+ ##### ~~项目中用到的一些自定义types在common/js/typings目录下~~
  ##### 可以通过dts-gen为没有types的npm包自动生成d.ts声明文件
 
 
