@@ -1,3 +1,8 @@
+/**
+ *  index在这里是做store相关的初始化处理
+ *  APP组件会通过router/index来做router的初始化， APP有可能会获取数据然后传入router/index
+ *  router/index会通过传入的数据来呈现不同的布局
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './common/style/index.scss';
@@ -13,15 +18,11 @@ import { defaultState } from 'store/stateTypes'
 import fastClick from 'fastclick';
 (fastClick as any).attach(document.body);
 
-import { BrowserRouter } from 'react-router-dom'
-
 const store = configureStore(defaultState)
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <App />
     </Provider>,
     document.getElementById('root')
 );

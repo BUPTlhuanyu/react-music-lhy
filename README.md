@@ -88,9 +88,9 @@
     - [x] ref类型 `React.RefObject<Scroll> --> <Scroll ref={this.toplist}></Scroll>`
     - [x] 媒体事件类型 `const { currentTime } : { currentTime: number } = e.target as HTMLMediaElement`
 - [x] 项目本地部署
+- [x] 项目结构的思考，总结
 - [ ] 数据与视图分离
 - [ ] 组件优化
-- [ ] 项目结构的思考，总结
 - [ ] create-react-app优化打包
 - [ ] electron构建exe
 - [ ] 个人中心管理系统
