@@ -5,6 +5,7 @@
     "paths":{
       "src/*":["src/*"],
       "components/*":["src/app/components/*"],
+      "pages/*":["src/app/pages/*"],
       "common/*":["src/common/*"],
       "api/*":["src/api/*"],
       "reuse/*":["src/app/reusablecomponents/*"],
