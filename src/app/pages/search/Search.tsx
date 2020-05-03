@@ -1,17 +1,17 @@
 import React,{ Component } from 'react'
-import SearchBox from 'reuse/search-box/SearchBox'
+import SearchBox from 'src/app/components/search-box/SearchBox'
 import './Search.scss'
 import {getHotKey, search} from 'api/search'
 import {ERR_OK} from 'api/config'
-import Suggest from 'components/suggest/Suggest'
+import Suggest from 'src/app/pages/search/components/suggest/Suggest'
 import {createSongSearch} from 'common/js/song'
 import { Route, withRouter } from 'react-router'
-import SingerDetail from '../singer-detail/SingerDetail'
+import SingerDetail from '../../components/singer-detail/SingerDetail'
 import { connect } from 'react-redux'
 import { setSearchHistory } from 'actions/search'
 import { saveSearch, deleteSearch, clearSearch } from 'common/js/cache'
-import SearchList from 'reuse/search-list/SearchList'
-import Confirm from 'reuse/confirm/Confirm'
+import SearchList from 'src/app/components/search-list/SearchList'
+import Confirm from 'src/app/components/confirm/Confirm'
 
 import {
     IStoreState,

@@ -8,14 +8,14 @@ import {
     setPlaylist,
     setSequenceList
 } from 'actions/player'
-import ProgressBar from 'reuse/progress-bar/ProgressBar'
-import ProgressCircle from 'reuse/progress-circle/ProgressCircle'
-import Scroll from 'reuse/scroll/Scroll'
+import ProgressBar from 'src/app/components/progress-bar/ProgressBar'
+import ProgressCircle from 'src/app/components/progress-circle/ProgressCircle'
+import Scroll from 'src/app/components/scroll/Scroll'
 import {playMode} from 'common/js/config'
 import {shuffle} from 'common/js/util'
 import Lyric from 'lyric-parser'
 import {prefixStyle} from 'common/js/dom'
-import PlayList from 'components/playlist/PlayList'
+import PlayList from 'src/app/layouts/player/components/playlist/PlayList'
 import axios from 'axios'
 
 import {

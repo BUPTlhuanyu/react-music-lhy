@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import Scroll from 'reuse/scroll/Scroll'
-import Loading from 'reuse/loading/Loading'
-import SongList from 'reuse/song-list/SongList'
+import Scroll from 'src/app/components/scroll/Scroll'
+import Loading from 'src/app/components/loading/Loading'
+import SongList from 'src/app/components/song-list/SongList'
 import './MusicList.scss'
 import { connect } from 'react-redux'
 import {

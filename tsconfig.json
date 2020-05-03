@@ -5,10 +5,11 @@
     "paths":{
       "src/*":["src/*"],
       "components/*":["src/app/components/*"],
+      "router/*":["src/app/router/*"],
+      "layouts/*":["src/app/layouts/*"],
       "pages/*":["src/app/pages/*"],
       "common/*":["src/common/*"],
       "api/*":["src/api/*"],
-      "reuse/*":["src/app/reusablecomponents/*"],
       "actions/*":["src/app/actions/*"],
       "reducers/*":["src/app/reducers/*"],
       "store/*":["src/app/store/*"]

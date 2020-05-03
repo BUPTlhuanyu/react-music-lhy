@@ -10,7 +10,7 @@ import {
     setUserName,
 } from 'actions/user'
 import { IUserName } from 'store/stateTypes'
-import Error from 'reuse/error/Error'
+import Error from 'src/app/components/error/Error'
 
 interface LogInProps{
     setUserName:Function,

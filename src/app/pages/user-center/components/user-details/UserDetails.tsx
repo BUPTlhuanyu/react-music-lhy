@@ -5,11 +5,11 @@
 
 import React, {Component} from 'react'
 import './UserDetails.scss'
-import NoResult from 'reuse/no-result/NoResult'
+import NoResult from 'src/app/components/no-result/NoResult'
 import {getUserInfo} from 'api/admin.js'
 import {getDataByPage} from 'api/favorite.js'
-import Loading from 'reuse/loading/Loading';
-import Scroll from 'reuse/scroll/Scroll'
+import Loading from 'src/app/components/loading/Loading';
+import Scroll from 'src/app/components/scroll/Scroll'
 import logo from "./logo@3x.png"
 
 interface UserDetailsProps{

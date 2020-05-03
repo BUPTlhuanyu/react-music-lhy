@@ -5,10 +5,10 @@
 */
 
 import React,{ Component, TouchEvent } from 'react'
-import Loading from 'reuse/loading/Loading'
+import Loading from 'src/app/components/loading/Loading'
 import './ListView.scss'
-import LazyImage from 'reuse/lazyimg/Lazy-img'
-import Scroll from 'reuse/scroll/Scroll'
+import LazyImage from 'src/app/components/lazyimg/Lazy-img'
+import Scroll from 'src/app/components/scroll/Scroll'
 import {getData} from 'common/js/dom.js'
 
 //边条每个li的高度

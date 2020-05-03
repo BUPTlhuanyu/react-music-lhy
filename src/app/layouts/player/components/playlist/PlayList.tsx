@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import './PlayList.scss'
-import Scroll from 'reuse/scroll/Scroll'
-import Confirm from 'reuse/confirm/Confirm'
+import Scroll from 'src/app/components/scroll/Scroll'
+import Confirm from 'src/app/components/confirm/Confirm'
 
 import {
     ISequenceList

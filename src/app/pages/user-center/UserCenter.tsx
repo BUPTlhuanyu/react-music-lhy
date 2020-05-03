@@ -1,10 +1,10 @@
 import React,{ Component } from 'react'
 import './UserCenter.scss'
-import UserDetails from '../user-details/UserDetails'
+import UserDetails from './components/user-details/UserDetails'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { IUserName } from 'store/stateTypes'
-import LogIn from 'reuse/login/LogIn'
+import LogIn from 'src/app/components/login/LogIn'
 import {
     setUserName,
 } from 'actions/user'
