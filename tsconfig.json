@@ -8,6 +8,7 @@
       "router/*":["src/app/router/*"],
       "layouts/*":["src/app/layouts/*"],
       "pages/*":["src/app/pages/*"],
+      "hooks/*":["src/app/hooks/*"],
       "common/*":["src/common/*"],
       "api/*":["src/api/*"],
       "actions/*":["src/app/actions/*"],

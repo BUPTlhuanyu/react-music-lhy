@@ -81,7 +81,9 @@ module.exports = {
   appApi:resolveApp('src/api'),
   appActions: resolveApp('src/app/actions'),
   appReducers: resolveApp('src/app/reducers'),
-  appReusablecomponents: resolveApp('src/app/reusablecomponents'),
+  appHooks: resolveApp('src/app/hooks'),
+  appLayouts: resolveApp('src/app/layouts'),
+  appPages: resolveApp('src/app/pages'),
   appStore: resolveApp('src/app/store'),
 
   appRouter:resolveApp('src/router'),
