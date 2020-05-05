@@ -4,35 +4,23 @@ import { connect } from 'react-redux'
 import {  Route, withRouter } from 'react-router'
 import {getRecommend, getDiscList} from 'api/recommend.js'
 import {ERR_OK} from 'api/config'
+
 import Carousel from 'components/carousel/Carousel'
 import Scroll from 'components/scroll/Scroll'
 import Loading from 'components/loading/Loading'
 import LazyImage from 'components/lazyimg/Lazy-img'
 import Disc from 'pages/recommend/components/disc/Disc'
+
 import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
 
 import { setDisc } from 'actions/disc'
 import { IDisc } from 'store/stateTypes'
+import { Props, State, recommendItem } from './types'
 import { Dispatch } from 'redux';
 
-interface Props{
-  setDisc:Function,
-  history:any,
-  location:any,
-  match:any
-}
-
-interface recommendItem{
-  linkUrl: string
-  picUrl: string
-  [key: string]: any
-}
-
-interface State{
-  recommends: Array<recommendItem>,
-  discList:Array<IDisc>
-}
-
+/**
+ * 更新内存缓存的数据
+ */
 let cacheData:{
   maxage: number,
   prevTime: number,
@@ -54,19 +42,23 @@ function updateCacheData(
   Object.assign(cacheData, data)
 }
 
-
-function getRecommendData(setState: React.Dispatch<React.SetStateAction<recommendItem[]>>, unmoutedFlag: boolean) {
+/**
+ * 获取推荐数据，并将数据传入setState
+ * @param setState 用于更新组件state
+ * @param unmoutedFlag 这里需要传入ref对象，引用传递才能使得外界修改该对象属性值影响到函数内部的逻辑
+ */
+function getRecommendData(setState: React.Dispatch<React.SetStateAction<recommendItem[]>>, unmoutedFlag: React.MutableRefObject<boolean>) {
   getRecommend().then((res) => {
-    if (res.code === ERR_OK && !unmoutedFlag) {
+    if (res.code === ERR_OK && !unmoutedFlag.current) {
       console.log('res.data.slider', res.data.slider)
       setState(res.data.slider)
       updateCacheData({recommends: res.data.slider})
     }
   })
 }
-function getDiscListData(setState: React.Dispatch<React.SetStateAction<IDisc[]>>, unmoutedFlag: boolean) {
+function getDiscListData(setState: React.Dispatch<React.SetStateAction<IDisc[]>>, unmoutedFlag: React.MutableRefObject<boolean>) {
   getDiscList().then((res) => {
-    if (res.code === ERR_OK && !unmoutedFlag) {
+    if (res.code === ERR_OK && !unmoutedFlag.current) {
       setState(res.data.list)
       updateCacheData({discList: res.data.list})
     }
@@ -93,8 +85,8 @@ function Recommend(props: Props){
       /* 如果手动刷新或者时间超过了5分钟组件挂载了，那么就需要重新获取推荐列表以及歌单列表 */
       if(Date.now() - cacheData.prevTime > cacheData.maxage){
           cacheData.prevTime = Date.now()                                 // 设置缓存的时间为当前向后端获取数据的时间
-          getRecommendData(setRecommends, unmoutedFlag.current)           // 获取轮播图推荐歌单
-          getDiscListData(setDiscList, unmoutedFlag.current)              // 获取歌单列表
+          getRecommendData(setRecommends, unmoutedFlag)                   // 获取轮播图推荐歌单
+          getDiscListData(setDiscList, unmoutedFlag)                      // 获取歌单列表
           
       }else{
           setRecommends(cacheData.recommends)
@@ -152,10 +144,7 @@ function Recommend(props: Props){
           </div>
         </div>
         {
-          !discList.length &&
-          <div className="loading-container" >
-            <Loading/>
-          </div>
+          !discList.length && <Loading customCls="loading-container" />
         }
       </Scroll>
       <Route path="/recommend/:id" component={Disc}/>
