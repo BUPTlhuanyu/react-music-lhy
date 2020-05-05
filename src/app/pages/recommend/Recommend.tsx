@@ -50,7 +50,6 @@ function updateCacheData(
 function getRecommendData(setState: React.Dispatch<React.SetStateAction<recommendItem[]>>, unmoutedFlag: React.MutableRefObject<boolean>) {
   getRecommend().then((res) => {
     if (res.code === ERR_OK && !unmoutedFlag.current) {
-      console.log('res.data.slider', res.data.slider)
       setState(res.data.slider)
       updateCacheData({recommends: res.data.slider})
     }
@@ -79,7 +78,7 @@ function Recommend(props: Props){
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])  // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])              // 歌单列表数据
 
-  const unmoutedFlag = useRef(false)                                      // 组件是否挂载
+  const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                                      // 组件是否挂载
 
   useDidMountAndWillUnmount(() => {
       /* 如果手动刷新或者时间超过了5分钟组件挂载了，那么就需要重新获取推荐列表以及歌单列表 */

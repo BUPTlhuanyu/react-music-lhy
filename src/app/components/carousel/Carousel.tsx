@@ -1,194 +1,68 @@
-import React,{ Component } from 'react'
+import React,{ Component, useRef, useState, useCallback, useEffect } from 'react'
 import './carousel.scss'
-import BScroll from 'better-scroll'
-import {addClass} from 'common/js/dom.js'
+import Carouseler from './carouseler'
+
+import useDidMountAndWillUnmount from 'hooks/useDidMountAndWillUnmount'
 
 interface componentsProps{
     children: any
 }
 
-interface componentsState{
-    loop:boolean ,
-    threshold:number ,
-    autoPlay:boolean ,
-    interval:number ,
-    showDot:boolean ,
-    click:boolean ,
-    speed:number,
-    currentPageIndex:number,
-    dots:Array<any>
+const BSoptions = {
+  scrollX: true,
+  scrollY: false,
+  momentum: false,
+  snap: {
+      loop: true,
+      threshold: 0.3,
+      speed: 400
+  },
+  bounce: false,
+  stopPropagation: true,
+  click: true
 }
 
-// let resizeTimer:any=null;
-// let carouselBS:any = null;
-// let children:any = null;
-// let timer:any=null;
 
-export default class Carousel extends Component<componentsProps, componentsState>{
-    carousel:React.RefObject<HTMLDivElement>;
-    carouselGroup:React.RefObject<HTMLDivElement>;
-    children:any;
-    resizeTimer:any;
-    carouselBS:any;
-    timer:any;
-    constructor(props:componentsProps){
-        super(props);
-        this.carousel = React.createRef();
-        this.carouselGroup = React.createRef();
-        this.resizeTimer=null;
-        this.carouselBS = null;
-        this.children = null;
-        this.timer=null;
-        this.state = {
-            loop:true,
-            autoPlay:true,
-            interval:4000,
-            showDot:true,
-            click:true,
-            threshold:0.3,
-            speed:400,
-            dots: [],
-            currentPageIndex: 0,
-        }
-    }
+function Carousel(props: componentsProps){
+  const [dots, setDots] = useState<Array<number>>([])
+  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0)
 
-    componentDidMount(){
-        // console.log("Carouseld的componentDidMount")
-        this.update();
+  /* ref */
+  const carousel: React.RefObject<HTMLDivElement> = useRef(null)
+  const carouselGroup: React.RefObject<HTMLDivElement> = useRef(null)
 
-        window.addEventListener('resize', () => {
-            if (!this.carouselBS || !this.carouselBS.enabled) {
-                return
-            }
-            clearTimeout(this.resizeTimer)
-            this.resizeTimer = setTimeout(() => {
-                if (this.carouselBS.isInTransition) {
-                    this._onScrollEnd()
-                } else {
-                    if (this.state.autoPlay) {
-                        this._play()
-                    }
-                }
-                this.refresh()
-            }, 60)
-        })
-    }
+  /* 初始化 点 */ 
+  const _initDots = useCallback(() => {
+    setDots(new Array(props.children.length).fill(0))
+  }, [props.children, setDots])
 
-    componentWillUnmount(){
-        clearTimeout(this.resizeTimer);
-        clearTimeout(this.timer);
-    }
+  /* 挂载阶段 */
+  useDidMountAndWillUnmount(() => {
+    if(!carousel.current && !carouselGroup.current) return 
+    let carouseler = new Carouseler(
+      carousel.current as HTMLElement, 
+      carouselGroup.current as HTMLElement, 
+      setCurrentPageIndex, 
+      'carousel-item', 
+      BSoptions
+    )
+    carouseler.init()
+    _initDots()
+    return carouseler.cleanUp // 注意这里return的函数会在组件卸载之前执行，这个函数会被保存在一个变量destory上，执行destory的时候，函数内部this如果没有显示绑定那么指向全局对象，严格模式下是undefined。如果被显示绑定了，比如bind那么this就是指向bind的那个对象，bind的原理就用到了闭包
+  })
 
-    update() {
-        if (this.carouselBS) {
-            this.carouselBS.destroy()
+  return (
+    <div className="carousel" ref={carousel}>
+      <div className="carousel-group" ref={carouselGroup}>
+        {props.children}
+      </div>
+      <div className="dots">
+        {
+          dots.length && dots.map((item, index)=><span className={"dot"+ (currentPageIndex===index?" active":"")} key={index}/>)
         }
-        this.init()
-    }
-    init() {
-        clearTimeout(this.timer)
-        this.setState({
-            currentPageIndex: 0
-        })
-        this._setSlideWidth()
-        if (this.state.showDot) {
-            this._initDots()
-        }
-        this._initSlide()
-        if (this.state.autoPlay) {
-            this._play()
-        }
-    }
-    _initDots() {
-        this.setState({
-            dots: new Array(this.children.length).fill(0)
-        })
-    }
-    _initSlide() {
-        if(!this.carousel.current)return
-        this.carouselBS = new BScroll(this.carousel.current, {
-            scrollX: true,
-            scrollY: false,
-            momentum: false,
-            snap: {
-                loop: this.state.loop,
-                threshold: this.state.threshold,
-                speed: this.state.speed
-            },
-            bounce: false,
-            stopPropagation: true,
-            click: this.state.click
-        })
-        this.carouselBS.on('scrollEnd', this._onScrollEnd.bind(this))
-        this.carouselBS.on('touchEnd', () => {
-            if (this.state.autoPlay) {
-                this._play()
-            }
-        })
-        this.carouselBS.on('beforeScrollStart', () => {
-            if (this.state.autoPlay) {
-                clearTimeout(this.timer)
-            }
-        })
-    }
-    _setSlideWidth(isResize:boolean=false) {
-        if(!this.carouselGroup.current || !this.carousel.current)return
-        this.children = this.carouselGroup.current.children
-        // console.log(this.children.length,this.children[0])
-        let width = 0
-        let sliderWidth = this.carousel.current.clientWidth
-        // console.log(sliderWidth)
-        for (let i = 0; i < this.children.length; i++) {
-            let child = this.children[i]
-            addClass(child, 'carousel-item')
-
-            child.style.width = sliderWidth + 'px'
-            width += sliderWidth
-        }
-        if (this.state.loop && !isResize) {
-            width += 2 * sliderWidth
-        }
-        this.carouselGroup.current.style.width = width + 'px'
-    }
-    _play() {
-        clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-            this.carouselBS.next()
-        }, this.state.interval)
-    }
-    refresh() {
-        this._setSlideWidth(true)
-        this.carouselBS.refresh()
-    }
-    _onScrollEnd() {
-        let pageIndex = this.carouselBS.getCurrentPage().pageX;
-        // console.log(this)
-        this.setState({
-            currentPageIndex:pageIndex
-        })
-        if (this.state.autoPlay) {
-            this._play()
-        }
-    }
-    render(){
-        // console.log("Carouseld的render")
-        const {dots , currentPageIndex} = this.state;
-        // console.log(dots.length,currentPageIndex)
-        // console.log("dot"+ (currentPageIndex===1?" active":""))
-        return (
-            <div className="carousel" ref={this.carousel}>
-                <div className="carousel-group" ref={this.carouselGroup}>
-                    {this.props.children}
-                </div>
-                <div className="dots">
-                    {
-                        dots.length && dots.map((item, index)=>(
-                            <span className={"dot"+ (currentPageIndex===index?" active":"")} key={index}/>
-                            )
-                        )
-                    }
-                </div>
-            </div>
-        )
-    }
+      </div>
+    </div>
+  )
 }
+
+export default Carousel
