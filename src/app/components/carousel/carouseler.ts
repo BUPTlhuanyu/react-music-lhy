@@ -14,7 +14,6 @@ export default class Carouseler{
       if(!carousel && !carouselGroup){
         throw new Error('carousel and carouselGroup must be type of HTMLElement')
       }
-      console.log('this.onScrollEndFn', typeof onScrollEndFn);
       this.carousel = carousel
       this.carouselGroup = carouselGroup
       this.onScrollEndFn = onScrollEndFn

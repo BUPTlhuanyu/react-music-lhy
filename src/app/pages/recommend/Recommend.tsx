@@ -6,9 +6,9 @@ import {getRecommend, getDiscList} from 'api/recommend.js'
 import {ERR_OK} from 'api/config'
 
 import Carousel from 'components/carousel/Carousel'
+import LazyImage from 'components/lazyimg/Lazy-img'
 import Scroll from 'components/scroll/Scroll'
 import Loading from 'components/loading/Loading'
-import LazyImage from 'components/lazyimg/Lazy-img'
 import Disc from 'pages/recommend/components/disc/Disc'
 
 import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
@@ -77,10 +77,14 @@ function selectDisc(disc: IDisc, props: Props) {
 function Recommend(props: Props){
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])  // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])              // 歌单列表数据
+  const [root, setContainer] = useState<Element | null>(null)
 
   const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                                      // 组件是否挂载
 
   useDidMountAndWillUnmount(() => {
+      /* 获取图片懒加载的root节点 */
+      let root = document.querySelector(".recommend")
+      setContainer(root)
       /* 如果手动刷新或者时间超过了5分钟组件挂载了，那么就需要重新获取推荐列表以及歌单列表 */
       if(Date.now() - cacheData.prevTime > cacheData.maxage){
           cacheData.prevTime = Date.now()                                 // 设置缓存的时间为当前向后端获取数据的时间
@@ -123,8 +127,9 @@ function Recommend(props: Props){
                   <li className="item" key={item.dissid} onClick={() => {selectDisc(item, props)}}>
                     <div className="icon">
                       <LazyImage
+                        selector = ".discListLazy"
                         className="discListLazy"
-                        containerClassName="recommend"
+                        root = {root}
                         sizes="200px"
                         src="https://placehold.it/200x300?text=Image1"
                         srcset={item.imgurl}

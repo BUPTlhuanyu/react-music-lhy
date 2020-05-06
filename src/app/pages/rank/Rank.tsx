@@ -19,7 +19,8 @@ import {
 import { Dispatch } from 'redux'
 
 interface RankStateType{
-    topListArr:Array<ITopList>
+    topListArr:Array<ITopList>,
+    root: Element | null
 }
 
 interface RankPropType{
@@ -35,11 +36,15 @@ class Rank extends Component<RankPropType,RankStateType>{
         super(props)
         this.unmoutedFlag=false
         this.state = {
-            topListArr:[]
+            topListArr:[],
+            root: null
         }
     }
 
     componentDidMount(){
+        this.setState({
+            root: document.querySelector(".rank")
+        })
         this._getTopList()
     }
 
@@ -59,7 +64,7 @@ class Rank extends Component<RankPropType,RankStateType>{
     }
 
     render(){
-        const { topListArr } = this.state
+        const { topListArr, root } = this.state
         return(
             <div className="rank" ref="rank">
                 <Scroll className="toplist">
@@ -69,8 +74,9 @@ class Rank extends Component<RankPropType,RankStateType>{
                                 <li className="item" key={index} onClick={() => {this.selectItem(item)}}>
                                     <div className="icon">
                                         <LazyImage
+                                            selector = ".RankListLazy"
                                             className="RankListLazy"
-                                            containerClassName="rank"
+                                            root={root}
                                             sizes="200px"
                                             src="https://placehold.it/200x300?text=Image1"
                                             srcset={item.picUrl}

@@ -46,6 +46,7 @@ interface ListViewState{
     currentIndex : number,
     touch : touchType,
     listHeight:Array<any>
+    root: Element | null
 }
 
 class ListView extends Component<ListViewProps, ListViewState>{
@@ -65,10 +66,14 @@ class ListView extends Component<ListViewProps, ListViewState>{
                 y1 : 0,
                 y2 : 0,
                 anchorIndex: ""
-            }
+            },
+            root: null
         }
     }
     componentDidMount(){
+        this.setState({
+            root: document.querySelector(".listview")
+        })
         this.timer = setTimeout(()=>{
             this._calculateHeight()
         },1000)
@@ -182,7 +187,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
 
     render(){
         const {data} = this.props;
-        const {currentIndex} = this.state;
+        const {currentIndex, root} = this.state;
         let shortcutList=data.map((group) => {
             return group.title.substr(0, 1)
         });
@@ -198,8 +203,9 @@ class ListView extends Component<ListViewProps, ListViewState>{
                                         !! group.items.length && group.items.map((item:any, index:number)=>(
                                             <li className="list-group-item" key={index} onClick={()=>{this.selectItem(item)}}>
                                                 <LazyImage
+                                                    selector = ".avatarListLazy"
                                                     className="avatarListLazy avatar"
-                                                    containerClassName="listview"
+                                                    root={root}
                                                     sizes="200px"
                                                     srcset={item.avatar}
                                                     width="60"

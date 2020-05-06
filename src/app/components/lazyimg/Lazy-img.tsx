@@ -4,11 +4,14 @@
  * @author: liaohuanyu
  * @date 2019/2/1
 */
-import React,{Component} from "react";
+import React,{Component, useRef} from "react";
 import LazyLoad from "common/js/lazyload.es2015.js"
 import logo from "./logo@2x.png"
 
+import useDidMountAndWillUnmount from 'hooks/useDidMountAndWillUnmount'
+
 interface LazyImageProps{
+    selector: string,
     className:string,
     alt?:string,
     src?:string,
@@ -16,57 +19,36 @@ interface LazyImageProps{
     sizes?:string,
     width?:string,
     height?:string,
-    containerClassName?:string
+    root:Element | null
 }
 
 interface LazyImageState{
 
 }
 
-
-export class LazyImage extends Component <LazyImageProps, LazyImageState> {
-    lazyLoadInstance:any
-    constructor(props:LazyImageProps){
-        super(props);
-        this.lazyLoadInstance = null;
-    }
-
-    // Update lazyLoad after first rendering of every image
-    componentDidMount() {
-        // console.log('lazyLoadInstance')
-        if(!this.lazyLoadInstance){
-            let container;
-            try{
-                container = document.getElementsByClassName(this.props.containerClassName+"")[0]
-            }
-            catch(err){
-                container = null;
-            };
-            const lazyloadConfig = {
-                elements_selector: "."+this.props.className.split(" ")[0],
-                container: container,
-                threshold:0
-            };
-            this.lazyLoadInstance = new LazyLoad(lazyloadConfig);
-        }
-        this.lazyLoadInstance.update();
-    }
-    render() {
-        const { alt, srcset, sizes, width, height, className } = this.props;
-        let src = this.props.src ? this.props.src : logo;
-        return (
-            <img
-                alt={alt}
-                className={className}
-                src={logo}
-                data-src={src}
-                data-srcset={srcset}
-                data-sizes={sizes}
-                width={width}
-                height={height}
-            />
-        );
-    }
+function LazyImage(props: LazyImageProps){
+    const lazyLoadInstance: React.MutableRefObject<any> = useRef(null)
+    useDidMountAndWillUnmount(() => {
+      const lazyloadConfig = {
+        elements_selector: props.selector,
+        container: props.root,
+        threshold:0
+      };
+      lazyLoadInstance.current = new LazyLoad(lazyloadConfig);
+      lazyLoadInstance.current.update();
+    })
+    return (
+        <img
+            alt={props.alt}
+            className={props.className}
+            src={logo}
+            data-src={props.src}
+            data-srcset={props.srcset}
+            data-sizes={props.sizes}
+            width={props.width}
+            height={props.height}
+        />
+    )
 }
 
 export default LazyImage;
