@@ -14,8 +14,7 @@ import Disc from 'pages/recommend/components/disc/Disc'
 import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
 
 import { setDisc } from 'actions/disc'
-import { IDisc } from 'store/stateTypes'
-import { Props, State, recommendItem } from './types'
+import { Props, recommendItem, IDisc } from './types'
 import { Dispatch } from 'redux';
 
 /**
@@ -79,7 +78,7 @@ function Recommend(props: Props){
   const [discList, setDiscList] = useState<Array<IDisc>>([])              // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
 
-  const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                                      // 组件是否挂载
+  const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)     // 组件是否挂载
 
   useDidMountAndWillUnmount(() => {
       /* 获取图片懒加载的root节点 */
