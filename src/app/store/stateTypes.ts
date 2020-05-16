@@ -114,7 +114,7 @@ export const defaultState: IStoreState = {
         score : -1,
         version : -1
     },
-    fullScreen : false,
+    fullScreen : true,
     mode : playMode.sequence,
     playing : false,
     playlist : [],

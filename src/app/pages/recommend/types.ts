@@ -1,6 +1,9 @@
 import { IDisc } from 'store/stateTypes'
 
+export type Disc = IDisc
+
 export interface Props{
+  fullScreen: boolean,
     setDisc:Function,
     history:any,
     location:any,
@@ -21,4 +24,5 @@ export interface State{
 // https://github.com/babel/babel-loader/issues/603
 // https://stackoverflow.com/questions/53444390/how-to-create-a-package-with-the-isolatedmodules-true-option-enabled
 // 与 ts.config 的 --isolatedModules 
-export type {IDisc}
+// 导致无法正常导出
+// export type {IDisc}

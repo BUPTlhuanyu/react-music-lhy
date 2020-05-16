@@ -7,15 +7,20 @@ import {ERR_OK} from 'api/config'
 
 import Carousel from 'components/carousel/Carousel'
 import LazyImage from 'components/lazyimg/Lazy-img'
-import Scroll from 'components/scroll/Scroll'
 import Loading from 'components/loading/Loading'
 import Disc from 'pages/recommend/components/disc/Disc'
 
 import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
+import useScroll from 'hooks/useScroll'
 
 import { setDisc } from 'actions/disc'
-import { Props, recommendItem, IDisc } from './types'
+import { Props, recommendItem, Disc as IDisc }  from './types'
 import { Dispatch } from 'redux';
+import BScroll from 'better-scroll'
+
+import {
+  IStoreState
+} from 'store/stateTypes'
 
 /**
  * 更新内存缓存的数据
@@ -74,11 +79,13 @@ function selectDisc(disc: IDisc, props: Props) {
 }
 
 function Recommend(props: Props){
-  const [recommends, setRecommends] = useState<Array<recommendItem>>([])  // 轮播图数据
-  const [discList, setDiscList] = useState<Array<IDisc>>([])              // 歌单列表数据
+  const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
+  const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
 
-  const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)     // 组件是否挂载
+  const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                   // 组件是否挂载
+  const scrollContanier: React.MutableRefObject<HTMLDivElement | null> = useRef(null)   // scrollContanier ref
+  const scroller: any = useScroll(scrollContanier, { click: true })                       // ！！！这里的类型需要确定一下
 
   useDidMountAndWillUnmount(() => {
       /* 获取图片懒加载的root节点 */
@@ -86,10 +93,9 @@ function Recommend(props: Props){
       setContainer(root)
       /* 如果手动刷新或者时间超过了5分钟组件挂载了，那么就需要重新获取推荐列表以及歌单列表 */
       if(Date.now() - cacheData.prevTime > cacheData.maxage){
-          cacheData.prevTime = Date.now()                                 // 设置缓存的时间为当前向后端获取数据的时间
-          getRecommendData(setRecommends, unmoutedFlag)                   // 获取轮播图推荐歌单
-          getDiscListData(setDiscList, unmoutedFlag)                      // 获取歌单列表
-          
+          cacheData.prevTime = Date.now()                                               // 设置缓存的时间为当前向后端获取数据的时间
+          getRecommendData(setRecommends, unmoutedFlag)                                 // 获取轮播图推荐歌单
+          getDiscListData(setDiscList, unmoutedFlag)                                    // 获取歌单列表
       }else{
           setRecommends(cacheData.recommends)
           setDiscList(cacheData.discList)
@@ -97,11 +103,13 @@ function Recommend(props: Props){
       /* 卸载的时候标记为挂载，以免组件卸载之后数据请求返回导致渲染报错 */
       return function willunmount(){
           unmoutedFlag.current = true
+          scrollContanier.current = null
+          scroller.wrapperBs.current = null
       }
   })
   return(
     <div className="recommend">
-      <Scroll className="recommend-content">
+      <div className="recommend-content" ref = {scrollContanier}>
         <div>
           <div className="slider-wrapper">
             {
@@ -118,8 +126,8 @@ function Recommend(props: Props){
               </Carousel>
             }
           </div>
-          <div className="recommend-list">
-            <h1 className="list-title">热门歌单推荐</h1>
+          <div className="recommend-list" style= {{ paddingBottom: `${props.fullScreen? '0' : '60px'}` }}>
+            <h1 className="list-title">热门歌单推荐{scroller.x}</h1>
             <ul>
               {
                 !!discList.length && discList.map((item, index)=>(
@@ -149,7 +157,7 @@ function Recommend(props: Props){
         {
           !discList.length && <Loading customCls="loading-container" />
         }
-      </Scroll>
+      </div>
       <Route path="/recommend/:id" component={Disc}/>
     </div>
   )
@@ -163,4 +171,8 @@ const mapDispatchToProps = (dispatch:Dispatch) => {
   }
 }
 
-export default withRouter(connect(() => ({}), mapDispatchToProps)(Recommend))
+const mapStateToProp = (state: IStoreState) => ({
+  fullScreen : state.fullScreen
+})
+
+export default withRouter(connect(mapStateToProp, mapDispatchToProps)(Recommend))
