@@ -80,15 +80,13 @@ function selectDisc(disc: IDisc, props: Props) {
 }
 
 function Recommend(props: Props){
-  Logger.red('34')
-
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
 
   const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                   // 组件是否挂载
   const scrollContanier: React.MutableRefObject<HTMLDivElement | null> = useRef(null)   // scrollContanier ref
-  const scroller: any = useScroll(scrollContanier, { click: true })                       // ！！！这里的类型需要确定一下
+  useScroll(scrollContanier, { click: true })                                           // 这里用不着 bs 实例，所以也不需要获取，自定义 hook 内部会手动 GC
 
   useDidMountAndWillUnmount(() => {
       /* 获取图片懒加载的root节点 */
@@ -106,8 +104,7 @@ function Recommend(props: Props){
       /* 卸载的时候标记为挂载，以免组件卸载之后数据请求返回导致渲染报错 */
       return function willunmount(){
           unmoutedFlag.current = true
-          scrollContanier.current = null
-          scroller.wrapperBs.current = null
+          // scrollContanier.current = null             // 不需要手动清除对 dom 的引用， react 会在卸载的时候自动清除， 但是对于非 dom 的 ref 是需要手动清除 current 的
       }
   })
   return(

@@ -12,22 +12,18 @@ function createColorLogger(colors: string[], name?: string){
     let LoggerObj = {}
     for(let color of colors){
         (<LoggerObj>LoggerObj)[color] = function(...content: Array<BasicType>): void{
-            if(content.length > 1) console.group()
-            for(let item of content){
-                if(
-                    typeof item === 'number'        || 
-                    typeof item === 'string'        || 
-                    typeof item === 'boolean'       || 
-                    typeof item === 'undefined'     || 
-                    typeof item === 'bigint'
-                ){
-                    console.log(`%c${item}`, `color: ${color}`)
-                }else{
-                    console.log(item)
-                }
-                
+            if(content.length === 0) return
+            let date = new Date()
+            let time = [date.getHours(), date.getMinutes(), date.getMilliseconds()].join(':')
+            if(
+                typeof content[0] === 'string'   
+            ){
+                content[0] = `%c[${time}] ${content[0]}`
+                content.splice(1, 0, `color: ${color}`)
+            }else{
+                content.unshift(`%c[${time}]`, `color: ${color}`)
             }
-            if(content.length > 1) console.groupEnd()
+            console.log(...content)
         }  
     }
     const Logger = Object.assign({}, LoggerObj, console)
