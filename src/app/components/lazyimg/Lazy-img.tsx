@@ -22,9 +22,6 @@ interface LazyImageProps{
     root:Element | null
 }
 
-interface LazyImageState{
-
-}
 
 function LazyImage(props: LazyImageProps){
     const lazyLoadInstance: React.MutableRefObject<any> = useRef(null)

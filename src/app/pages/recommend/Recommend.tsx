@@ -8,7 +8,6 @@ import {ERR_OK} from 'api/config'
 import Carousel from 'components/carousel/Carousel'
 import LazyImage from 'components/lazyimg/Lazy-img'
 import Loading from 'components/loading/Loading'
-import Disc from 'pages/recommend/components/disc/Disc'
 
 import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
 import useScroll from 'hooks/useScroll'
@@ -80,6 +79,7 @@ function selectDisc(disc: IDisc, props: Props) {
 }
 
 function Recommend(props: Props){
+  const [loadSrc, setLoadSrc] = useState<boolean>(false)
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
@@ -114,11 +114,11 @@ function Recommend(props: Props){
           <div className="slider-wrapper">
             {
               !!recommends.length &&
-              <Carousel>
+              <Carousel setLoadSrc = {setLoadSrc}>
                 {
                   recommends.map((item, index)=>(
-                      <div key={item.id}>
-                        <a href={item.linkUrl}><img src={item.picUrl}/></a>
+                      <div key={item.id} className = "carousel-item">
+                        <a href={item.linkUrl}><img src={loadSrc? item.picUrl : ''}/></a>
                       </div>
                     )
                   )
@@ -158,7 +158,6 @@ function Recommend(props: Props){
           !discList.length && <Loading customCls="loading-container" />
         }
       </div>
-      <Route path="/recommend/:id" component={Disc}/>
     </div>
   )
 }

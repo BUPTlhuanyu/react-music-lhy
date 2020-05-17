@@ -1,5 +1,5 @@
 import BScroll, {BsOption} from 'better-scroll'
-import {addClass} from 'common/js/dom.js'
+// import {addClass} from 'common/js/dom.js'
 
 export default class Carouseler{
     carousel: HTMLElement
@@ -8,16 +8,16 @@ export default class Carouseler{
     timer: NodeJS.Timeout | null
     resizeTimer: NodeJS.Timeout | null
     onScrollEndFn: Function
-    carouselItemClass: string
+    // carouselItemClass: string
     BSoptions?: Partial<BsOption>
-    constructor(carousel: HTMLElement, carouselGroup: HTMLElement, onScrollEndFn: Function, carouselItemClass: string, BSoptions?: Partial<BsOption>){
+    constructor(carousel: HTMLElement, carouselGroup: HTMLElement, onScrollEndFn: Function, BSoptions?: Partial<BsOption>){
       if(!carousel && !carouselGroup){
         throw new Error('carousel and carouselGroup must be type of HTMLElement')
       }
       this.carousel = carousel
       this.carouselGroup = carouselGroup
       this.onScrollEndFn = onScrollEndFn
-      this.carouselItemClass = carouselItemClass
+      // this.carouselItemClass = carouselItemClass
       this.BSoptions = BSoptions
       this.carouselBS = null
       this.timer = null
@@ -30,11 +30,11 @@ export default class Carouseler{
     }
     init(){
       this._setSlideWidth() 
-      this._initSlide()
+      // this._initSlide()
       if(this.BSoptions && typeof this.BSoptions.snap === 'object' && this.BSoptions.snap.loop){
-        this.play()
+        // this.play()
       }
-      this._onResize()
+      // this._onResize()
     }
     /* 用于设置轮播图每个图片宽以及所有轮播图的宽度 */
     _setSlideWidth(isResize:boolean=false){
@@ -44,7 +44,7 @@ export default class Carouseler{
       let sliderWidth = this.carousel.clientWidth
       for (let i = 0; i < carouselGroupChildren.length; i++) {
           let child = carouselGroupChildren[i]
-          addClass(child, this.carouselItemClass);
+          // addClass(child, this.carouselItemClass);
           child.setAttribute('style', `width: ${sliderWidth}px`)
           // (child as HTMLElement).style.width = sliderWidth + 'px' // 或者
           width += sliderWidth
