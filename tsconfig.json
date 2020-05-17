@@ -34,6 +34,7 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
+    "src",
+    "global.d.ts"
   ]
 }

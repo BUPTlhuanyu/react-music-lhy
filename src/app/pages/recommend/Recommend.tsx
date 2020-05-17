@@ -21,6 +21,7 @@ import BScroll from 'better-scroll'
 import {
   IStoreState
 } from 'store/stateTypes'
+import logger from 'redux-logger'
 
 /**
  * 更新内存缓存的数据
@@ -79,6 +80,8 @@ function selectDisc(disc: IDisc, props: Props) {
 }
 
 function Recommend(props: Props){
+  Logger.red('34')
+
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
@@ -88,7 +91,6 @@ function Recommend(props: Props){
   const scroller: any = useScroll(scrollContanier, { click: true })                       // ！！！这里的类型需要确定一下
 
   useDidMountAndWillUnmount(() => {
-      console.log('%cRecommend', 'color: red' );
       /* 获取图片懒加载的root节点 */
       let root = document.querySelector(".recommend")
       setContainer(root)
@@ -128,7 +130,7 @@ function Recommend(props: Props){
             }
           </div>
           <div className="recommend-list" style= {{ paddingBottom: `${props.fullScreen? '0' : '60px'}` }}>
-            <h1 className="list-title">热门歌单推荐{scroller.x}</h1>
+            <h1 className="list-title">热门歌单推荐</h1>
             <ul>
               {
                 !!discList.length && discList.map((item, index)=>(

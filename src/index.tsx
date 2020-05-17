@@ -3,6 +3,12 @@
  *  APP组件会通过router/index来做router的初始化， APP有可能会获取数据然后传入router/index
  *  router/index会通过传入的数据来呈现不同的布局
  */
+if(process.env.NODE_ENV === 'development'){
+    let createColorLogger = require('src/common/js/Logger').default
+    if(!createColorLogger(['red', 'green', 'blue'], 'Logger')) throw new Error('createColorLogger failed')
+}
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './common/style/index.scss';
