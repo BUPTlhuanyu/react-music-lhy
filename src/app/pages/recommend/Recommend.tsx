@@ -88,6 +88,7 @@ function Recommend(props: Props){
   const scroller: any = useScroll(scrollContanier, { click: true })                       // ！！！这里的类型需要确定一下
 
   useDidMountAndWillUnmount(() => {
+      console.log('%cRecommend', 'color: red' );
       /* 获取图片懒加载的root节点 */
       let root = document.querySelector(".recommend")
       setContainer(root)

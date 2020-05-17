@@ -23,7 +23,8 @@ function useScroll(ref: RefObject<Element>, options: Partial<BsOption>): any{
 
     // const [pullUp, setPullUp] = useState<boolean>()
     useDidMountAndWillUnmount(() => {
-        if(ref && ref.current && !wrapperBs.current){
+        // 这里不需要判断 ref 是否能够拿到 dom，因为这里模拟的 didMount 执行之前，会更新所有节点的 ref，因此都是能拿到 dom 的
+        if(!wrapperBs.current){
             wrapperBs.current = initScroller(ref, options) 
             return function(){
                 wrapperBs.current && wrapperBs.current.destroy()
