@@ -181,7 +181,6 @@ class MusicList extends Component<MusicListProps, MusicListState>{
     }
 
     render(){
-        // console.log("MusicListBase",this.props)
         const { bgImage, songs, singerName } = this.props;
         const rank = this.props.rank || false;
         return (
