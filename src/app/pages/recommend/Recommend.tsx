@@ -79,7 +79,6 @@ function selectDisc(disc: IDisc, props: Props) {
 }
 
 function Recommend(props: Props){
-  const [loadSrc, setLoadSrc] = useState<boolean>(false)
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
@@ -114,11 +113,11 @@ function Recommend(props: Props){
           <div className="slider-wrapper">
             {
               !!recommends.length &&
-              <Carousel setLoadSrc = {setLoadSrc}>
+              <Carousel>
                 {
                   recommends.map((item, index)=>(
                       <div key={item.id} className = "carousel-item">
-                        <a href={item.linkUrl}><img src={loadSrc? item.picUrl : ''}/></a>
+                        <a href={item.linkUrl}><img src={item.picUrl}/></a>
                       </div>
                     )
                   )
