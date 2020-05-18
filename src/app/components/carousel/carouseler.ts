@@ -30,11 +30,11 @@ export default class Carouseler{
     }
     init(){
       this._setSlideWidth() 
-      // this._initSlide()
+      this._initSlide()
       if(this.BSoptions && typeof this.BSoptions.snap === 'object' && this.BSoptions.snap.loop){
-        // this.play()
+        this.play()
       }
-      // this._onResize()
+      this._onResize()
     }
     /* 用于设置轮播图每个图片宽以及所有轮播图的宽度 */
     _setSlideWidth(isResize:boolean=false){

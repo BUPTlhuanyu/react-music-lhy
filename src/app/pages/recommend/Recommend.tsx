@@ -15,7 +15,6 @@ import useScroll from 'hooks/useScroll'
 import { setDisc } from 'actions/disc'
 import { Props, recommendItem, Disc as IDisc }  from './types'
 import { Dispatch } from 'redux';
-import BScroll from 'better-scroll'
 
 import {
   IStoreState
