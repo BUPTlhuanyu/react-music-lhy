@@ -1,7 +1,6 @@
 import './Disc.scss'
 
 import React,{ Component, useState, useRef, useCallback } from 'react'
-import { withRouter } from 'react-router'
 import { CSSTransition } from 'react-transition-group'
 import { connect } from 'react-redux'
 
@@ -10,17 +9,12 @@ import {ERR_OK} from 'api/config'
 
 import MusicList from 'components/music-list/MusicList'
 import {createSong} from 'common/js/song.js'
-import { IDisc, ISong } from 'store/stateTypes'
+import { ISong } from 'store/stateTypes'
+import { DiscPropType } from './type'
 
 import useDidMountAndWillUnmount from 'hooks/useDidMountAndWillUnmount'
 
-interface DiscBasePropType{
-    disc:IDisc,
-    history:any
-}
-
 const _normalizeSongs = function(list: Array<any>): ISong[]{
-    Logger.green(list)
     let ret: ISong[]= []
     list.forEach((item) => {
         let musicData = item
@@ -32,15 +26,16 @@ const _normalizeSongs = function(list: Array<any>): ISong[]{
 }
 
 
-function DiscBase(props: DiscBasePropType){
+function Disc(props: DiscPropType){
+    if(!props.disc) return null
     const [showMusicList, setShowMusicList] = useState<boolean>(true)
     const [songs, setSongs] = useState<Array<ISong>>([])
 
     const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                   // 组件是否挂载
 
     const _getSongList = useCallback(() => {
-        if (!props.disc.dissid) {
-            props.history.push('/recommend')
+        Logger.blue('props.disc')
+        if (!props.disc || !props.disc.dissid) {
             return
         }
         getSongList(props.disc.dissid).then((res) => {
@@ -48,9 +43,10 @@ function DiscBase(props: DiscBasePropType){
                 setSongs( _normalizeSongs(res.cdlist[0].songlist))
             }
         })
-    }, [props.disc.dissid, props.history])
+    }, [props.disc])
 
     useDidMountAndWillUnmount(() => {
+        Logger.red('Disc')
         _getSongList()
         return () => {
             unmoutedFlag.current = true
@@ -65,7 +61,7 @@ function DiscBase(props: DiscBasePropType){
             appear={true}
             unmountOnExit
             onExited = { () => {
-                props.history.goBack()
+                props.back()
             } }
         >
             <MusicList singerName={props.disc.dissname} bgImage={props.disc.imgurl} songs={songs} back={() => {setShowMusicList(false)}}/>
@@ -73,13 +69,5 @@ function DiscBase(props: DiscBasePropType){
     )
 }
 
-const mapStateToProps = (state:{disc:IDisc},ownProps:any) => (
-    {
-        disc:state.disc,
-        ...ownProps
-    }
-)
-
-const Disc = withRouter(connect(mapStateToProps)(DiscBase));
 
 export default Disc

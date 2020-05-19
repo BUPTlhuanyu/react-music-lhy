@@ -87,6 +87,7 @@
     - [x] react事件类型
     - [x] ref类型 `React.RefObject<Scroll> --> <Scroll ref={this.toplist}></Scroll>`
     - [x] 媒体事件类型 `const { currentTime } : { currentTime: number } = e.target as HTMLMediaElement`
+    - [ ] 完善 type 的组织方式
 - [x] 项目本地部署
 - [x] 项目结构的思考，总结
 - [ ] electron构建exe

@@ -1,9 +1,11 @@
 import './recommend.scss'
-import React,{ Component, useState, useRef } from 'react'
+import React,{ Component, useState, useRef, useCallback } from 'react'
 import { connect } from 'react-redux'
 import {  Route, withRouter } from 'react-router'
 import {getRecommend, getDiscList} from 'api/recommend.js'
 import {ERR_OK} from 'api/config'
+
+import ReactLazyHOC from 'src/app/components/react-lazy-hoc/ReactLazyHOC'
 
 import Carousel from 'components/carousel/Carousel'
 import LazyImage from 'components/lazyimg/Lazy-img'
@@ -19,7 +21,9 @@ import { Dispatch } from 'redux';
 import {
   IStoreState
 } from 'store/stateTypes'
-import logger from 'redux-logger'
+
+import { DiscPropType } from './component/disc/type'
+const Disc = ReactLazyHOC<DiscPropType>(React.lazy(() => import('src/app/pages/recommend/component/disc/Disc')), <Loading />);
 
 /**
  * 更新内存缓存的数据
@@ -67,20 +71,12 @@ function getDiscListData(setState: React.Dispatch<React.SetStateAction<IDisc[]>>
   })
 }
 
-/**
- * 选择歌单之后进行前端路由跳转
- * @param disc 
- * @param props 
- */
-function selectDisc(disc: IDisc, props: Props) {
-  props.history.push(`/recommend/${disc.dissid}`);
-  props.setDisc(disc)
-}
-
 function Recommend(props: Props){
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
   const [root, setContainer] = useState<Element | null>(null)
+  const [disc, setDisc] = useState<IDisc | null>(null)
+  const [showDisc, setShowDisc] = useState<boolean>(false)
 
   const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                   // 组件是否挂载
   const scrollContanier: React.MutableRefObject<HTMLDivElement | null> = useRef(null)   // scrollContanier ref
@@ -105,6 +101,19 @@ function Recommend(props: Props){
           // scrollContanier.current = null             // 不需要手动清除对 dom 的引用， react 会在卸载的时候自动清除， 但是对于非 dom 的 ref 是需要手动清除 current 的
       }
   })
+
+
+  const  handleDisc = useCallback((index?: number) => {
+    if(typeof index !== 'number'){
+      Logger.green('hidde Disc')      
+      setShowDisc(false)
+    }else{
+      Logger.green('show Disc')
+      setShowDisc(true)
+      setDisc(discList[index])
+    }
+  }, [discList])
+
   return(
     <div className="recommend">
       <div className="recommend-content" ref = {scrollContanier}>
@@ -129,7 +138,7 @@ function Recommend(props: Props){
             <ul>
               {
                 !!discList.length && discList.map((item, index)=>(
-                  <li className="item" key={item.dissid} onClick={() => {selectDisc(item, props)}}>
+                  <li className="item" key={item.dissid} onClick={() => {handleDisc(index)}}>
                     <div className="icon">
                       <LazyImage
                         selector = ".discListLazy"
@@ -156,6 +165,10 @@ function Recommend(props: Props){
           !discList.length && <Loading customCls="loading-container" />
         }
       </div>
+      {/* <Route path="/recommend/:id" component={Disc}/> */}
+      {
+        showDisc && <Disc disc = {disc} back = {handleDisc}/>
+      }
     </div>
   )
 }
