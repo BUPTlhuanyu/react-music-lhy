@@ -1,66 +1,52 @@
-import React,{ Component } from 'react'
+import React,{ Component, useState, useCallback, useEffect, useRef } from 'react'
 import './Confirm.scss'
+
+enum closeTag{
+    CANCEL = 'cancel',
+    CONFIRM = 'confirm'
+}
 
 interface ConfirmProps{
     text:string,
     confirmBtnText?:string,
     cancelBtnText?:string,
-    confirmHandler:Function
+    open: boolean,
+    onClose?: (closeTag: closeTag) => void,
 }
 
 interface ConfirmState{
     showFlag:boolean
 }
 
+function Confirm({
+    text, 
+    cancelBtnText = "取消", 
+    confirmBtnText = "确定", 
+    onClose = (closeTag: closeTag) => {},  // 注意保持引用不变
+    open
+}: ConfirmProps){
 
-class Confirm extends Component<ConfirmProps,ConfirmState>{
-    constructor(props:ConfirmProps){
-        super(props);
-        this.state={
-            showFlag:false
-        }
-    }
+    const cancel = useCallback(() => {
+        onClose(closeTag.CANCEL)
+    }, [onClose])
 
-    show = () => {
-        this.setState({
-            showFlag : true
-        })
-    }
+    const confirm = useCallback(() => {
+        onClose(closeTag.CONFIRM)
+    }, [onClose])
 
-    hide = () => {
-        this.setState({
-            showFlag : false
-        })
-    }
-
-    cancel = () => {
-        this.hide()
-    }
-
-    confirm = () => {
-        this.hide()
-        this.props.confirmHandler()
-    }
-
-    render(){
-        const {text} = this.props
-        const cancelBtnText = this.props.cancelBtnText || '取消'
-        const confirmBtnText = this.props.confirmBtnText || '确定'
-        const {showFlag} = this.state
-        return(
-            <div className="confirm" style={{display:showFlag?"":"none"}}>
-                <div className="confirm-wrapper">
-                    <div className="confirm-content">
-                        <p className="text">{text}</p>
-                        <div className="operate">
-                            <div  className="operate-btn left" onClick={this.cancel}>{cancelBtnText}</div>
-                            <div  className="operate-btn" onClick={this.confirm}>{confirmBtnText}</div>
-                        </div>
+    return (
+        <div className = "confirm" style={{ display: open ? "" : "none" }}>
+            <div className = "confirm-wrapper">
+                <div className = "confirm-content">
+                    <p className = "text">{text}</p>
+                    <div className = "operate">
+                        <div  className = "operate-btn left" onClick = {cancel}>{cancelBtnText}</div>
+                        <div  className = "operate-btn" onClick = {confirm}>{confirmBtnText}</div>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>        
+    )
 }
 
 export default Confirm

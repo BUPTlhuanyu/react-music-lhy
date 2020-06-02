@@ -22,10 +22,11 @@ interface PlayListProps{
 
 interface PlayListState{
     showFlag:boolean
+    openConfirm:boolean
 }
 
 class PlayList extends Component<PlayListProps,PlayListState>{
-    confirm:React.RefObject<Confirm>;
+    confirm:React.RefObject<any>;
     listContent:React.RefObject<Scroll>;
     scrollSon:React.RefObject<HTMLUListElement>;
     constructor(props:PlayListProps){
@@ -33,8 +34,10 @@ class PlayList extends Component<PlayListProps,PlayListState>{
         this.confirm = React.createRef()
         this.listContent = React.createRef()
         this.scrollSon = React.createRef()
+        this._deleteSongList = this._deleteSongList.bind(this)
         this.state={
-            showFlag:false
+            showFlag:false,
+            openConfirm:false
         }
     }
 
@@ -62,8 +65,19 @@ class PlayList extends Component<PlayListProps,PlayListState>{
     }
 
     showConfirm = () => {
-        if(!this.confirm.current)return
-        this.confirm.current.show()
+        this.setState({
+            openConfirm: true
+        })
+    }
+
+    // 需要在内部构建一些 ts 类型，也方便以后抽出为公共组件库
+    _deleteSongList = (closeTag: string) => {
+        this.setState({
+            openConfirm: false
+        })
+        if(closeTag === 'confirm'){
+            this.props.deleteSongList()
+        }
     }
 
     render(){
@@ -72,7 +86,6 @@ class PlayList extends Component<PlayListProps,PlayListState>{
             iconMode,
             changeMode,
             modeText,
-            deleteSongList,
             sequenceList,
             getCurrentIcon,
             selectItem,
@@ -128,10 +141,10 @@ class PlayList extends Component<PlayListProps,PlayListState>{
                 </div>
                 {/*@confirm="confirmClear"*/}
                 <Confirm
-                    ref={this.confirm}
+                    open = {this.state.openConfirm}
                     text="是否清空播放列表"
                     confirmBtnText="清空"
-                    confirmHandler={deleteSongList}
+                    onClose={this._deleteSongList}
                 />
                 {/*<add-song ref="addSong"/>*/}
             </div>

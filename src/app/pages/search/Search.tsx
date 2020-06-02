@@ -32,19 +32,21 @@ interface SearchStateType{
     query:string,
     page:number,
     result:Array<any>,
-    hasMore:boolean
+    hasMore:boolean,
+    openConfirm:boolean
 }
 
 class Search extends Component<SearchPropType, SearchStateType>{
     searchBox:React.RefObject<SearchBox>;
     unmoutedFlag:boolean;
-    confirm:React.RefObject<Confirm>;
+    confirm:React.RefObject<any>;
     constructor(props:SearchPropType){
         super(props)
         this.unmoutedFlag = false
         this.searchBox = React.createRef()
         this.confirm = React.createRef()
         this.state = {
+            openConfirm: false,
             hotKey:[],
             query:'',
             page:1,
@@ -156,13 +158,20 @@ class Search extends Component<SearchPropType, SearchStateType>{
         this.props.setSearchHistory(deleteSearch(query))
     }
 
-    clearSearchHistory = () => {
-        this.props.setSearchHistory(clearSearch())
+    clearSearchHistory = (closeTag: string) => {
+        this.setState({
+            openConfirm: false
+        })
+        if(closeTag === 'confirm'){
+            this.props.setSearchHistory(clearSearch())
+        }
+        
     }
 
     showConfirm = () => {
-        if(!this.confirm.current)return
-        this.confirm.current.show()
+        this.setState({
+            openConfirm: true
+        })
     }
 
     render(){
@@ -215,10 +224,10 @@ class Search extends Component<SearchPropType, SearchStateType>{
                              saveSearch={this.saveSearch}
                     />
                 </div>
-                <Confirm    ref={this.confirm}
+                <Confirm    open={this.state.openConfirm}
                             text="是否清空所有搜索历史"
                             confirmBtnText="清空"
-                            confirmHandler = {this.clearSearchHistory}
+                            onClose = {this.clearSearchHistory}
                 />
                 <Route path="/search/:id" component={SingerDetail}/>
             </div>
