@@ -45,12 +45,36 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
+// 获取本机 ip
+const os = require('os');
+
+function getNetworkIp() {
+	let needHost = ''; // 打开的host
+	try {
+		// 获得网络接口列表
+		let network = os.networkInterfaces();
+		for (let dev in network) {
+			let iface = network[dev];
+			for (let i = 0; i < iface.length; i++) {
+				let alias = iface[i];
+				if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+					needHost = alias.address;
+				}
+			}
+		}
+	} catch (e) {
+		needHost = 'localhost';
+	}
+	return needHost;
+}
+
 // Tools like Cloud9 rely on this.
 //webpack-dev-server监听的端口，默认为3000端口，
 // 访问url为localhost：3000的时候会被webpack-dev-server服务器代理并返回html页面
 //host默认为'0.0.0.0'也就是localhost
+// 为了手机调试方便修改为本机 ip
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = process.env.HOST || '0.0.0.0';
+const HOST = process.env.HOST || getNetworkIp() ;
 
 if (process.env.HOST) {
   console.log(
@@ -116,6 +140,7 @@ checkBrowsers(paths.appPath, isInteractive)
       }
       console.log(chalk.cyan('Starting the development server...\n'));
         console.log(chalk.cyan(urls.lanUrlForConfig))
+        console.log(chalk.cyan(urls.localUrlForBrowser))
         //打开浏览器，默认为localhost
       openBrowser(urls.localUrlForBrowser);
     });
