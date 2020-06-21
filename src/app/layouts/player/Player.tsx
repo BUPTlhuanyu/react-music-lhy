@@ -580,104 +580,109 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
                 favorite } = this.state
                 
         const styleDisplay = playlist.length ? 'block' : 'none';
+        if(!playlist.length) return null
         return (
-            <div className="player" style={{display: `${styleDisplay}`}}>
-                <div className="normal-player" style={{display: `${fullScreen? 'block' : 'none'}`}}>
-                    <div className="background">
-                        <img width="100%" height="100%" src={currentSong && currentSong.image}/>
-                    </div>
-                    <div className="top">
-                        <div className="back" onClick={this.back}>
-                            <i className="icon-back"/>
-                        </div>
-                        <h1 className="title" >{currentSong && currentSong.name}</h1>
-                        <h2 className="subtitle">{currentSong && currentSong.singer}</h2>
-                    </div>
-                    <div className="middle"
-                        onTouchStart={this.middleTouchStart}
-                         onTouchMove={this.middleTouchMove}
-                         onTouchEnd={this.middleTouchEnd}
-                    >
-                        <div className="middle-l" ref={this.middleL}>
-                            <div className="cd-wrapper">
-                                <div className={this.cdCls()+" cd"} >
-                                    <img className="image" src={currentSong && currentSong.image}/>
+            <div className="player">
+                {
+                    fullScreen? 
+                        <div className="normal-player">
+                            <div className="background">
+                                <img width="100%" height="100%" src={currentSong && currentSong.image}/>
+                            </div>
+                            <div className="top">
+                                <div className="back" onClick={this.back}>
+                                    <i className="icon-back"/>
                                 </div>
+                                <h1 className="title" >{currentSong && currentSong.name}</h1>
+                                <h2 className="subtitle">{currentSong && currentSong.singer}</h2>
                             </div>
-                            <div className="playing-lyric-wrapper">
-                                <div className="playing-lyric">{playingLyric}</div>
-                            </div>
-                        </div>
-                        <Scroll className="middle-r" ref={this.lyricList} >
-                            <div className="lyric-wrapper">
-                                {
-                                    currentLyric &&
-                                    <div ref={this.lyricLine}>
+                            <div className="middle"
+                                onTouchStart={this.middleTouchStart}
+                                onTouchMove={this.middleTouchMove}
+                                onTouchEnd={this.middleTouchEnd}
+                            >
+                                <div className="middle-l" ref={this.middleL}>
+                                    <div className="cd-wrapper">
+                                        <div className={this.cdCls()+" cd"} >
+                                            <img className="image" src={currentSong && currentSong.image}/>
+                                        </div>
+                                    </div>
+                                    <div className="playing-lyric-wrapper">
+                                        <div className="playing-lyric">{playingLyric}</div>
+                                    </div>
+                                </div>
+                                <Scroll className="middle-r" ref={this.lyricList} >
+                                    <div className="lyric-wrapper">
                                         {
-                                            currentLyric.lines.map((line:{txt:string},index:number) => (
-                                                    <p className={"text" + (currentLineNum === index ? " current":"")}
-                                                       key={index}
-                                                    >
-                                                        {line.txt}
-                                                    </p>
-                                                )
-                                            )
+                                            currentLyric &&
+                                            <div ref={this.lyricLine}>
+                                                {
+                                                    currentLyric.lines.map((line:{txt:string},index:number) => (
+                                                            <p className={"text" + (currentLineNum === index ? " current":"")}
+                                                            key={index}
+                                                            >
+                                                                {line.txt}
+                                                            </p>
+                                                        )
+                                                    )
+                                                }
+                                            </div>
                                         }
                                     </div>
-                                }
+                                </Scroll>
                             </div>
-                        </Scroll>
-                    </div>
-                    <div className="bottom">
-                        <div className="dot-wrapper">
-                            <span className={"dot" + (currentShow === 'cd' ? " active": "")}/>
-                            <span className={"dot" + (currentShow === 'lyric' ? " active": "")}/>
+                            <div className="bottom">
+                                <div className="dot-wrapper">
+                                    <span className={"dot" + (currentShow === 'cd' ? " active": "")}/>
+                                    <span className={"dot" + (currentShow === 'lyric' ? " active": "")}/>
+                                </div>
+                                <div className="progress-wrapper">
+                                    <span className="time time-l">{this.format(currentTime)}</span>
+                                    <div className="progress-bar-wrapper">
+                                        <ProgressBar percent={this.percent()} onProgressBarChange={this.onProgressBarChange}/>
+                                    </div>
+                                    <span className="time time-r">{this.format(currentSong && currentSong.duration)}</span>
+                                </div>
+                                <div className="operators">
+                                    <div className="icon i-left" >
+                                        <i className={this.iconMode()} onClick={this.changeMode}/>
+                                    </div>
+                                    <div className = {this.disableCls()+" icon i-left"}>
+                                        <i className="icon-prev" onClick={this.prev}/>
+                                    </div>
+                                    <div className={this.disableCls()+" icon i-center"}>
+                                        <i onClick={this.togglePlaying} className={this.playIcon()}/>
+                                    </div>
+                                    <div className={this.disableCls()+" icon i-right"}>
+                                        <i className="icon-next" onClick={this.next}/>
+                                    </div>
+                                    <div className={this.disableCls()+" icon i-right"} >
+                                        <i className={favorite?"icon-favorite":"icon-not-favorite"} onClick={()=>{this.toggleFavorite(currentSong)}}/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="progress-wrapper">
-                            <span className="time time-l">{this.format(currentTime)}</span>
-                            <div className="progress-bar-wrapper">
-                                <ProgressBar percent={this.percent()} onProgressBarChange={this.onProgressBarChange}/>
-                            </div>
-                            <span className="time time-r">{this.format(currentSong && currentSong.duration)}</span>
+                    :
+                    <div className="mini-player" style={{display: 'flex'}} onClick={this.open}>
+                        <div className="icon">
+                            <img width="40" height="40" src={currentSong && currentSong.image} className={this.cdCls()}/>
                         </div>
-                        <div className="operators">
-                            <div className="icon i-left" >
-                                <i className={this.iconMode()} onClick={this.changeMode}/>
-                            </div>
-                            <div className = {this.disableCls()+" icon i-left"}>
-                                <i className="icon-prev" onClick={this.prev}/>
-                            </div>
-                            <div className={this.disableCls()+" icon i-center"}>
-                                <i onClick={this.togglePlaying} className={this.playIcon()}/>
-                            </div>
-                            <div className={this.disableCls()+" icon i-right"}>
-                                <i className="icon-next" onClick={this.next}/>
-                            </div>
-                            <div className={this.disableCls()+" icon i-right"} >
-                                <i className={favorite?"icon-favorite":"icon-not-favorite"} onClick={()=>{this.toggleFavorite(currentSong)}}/>
-                            </div>
+                        <div className="text">
+                            <h2 className="name" >{currentSong && currentSong.name}</h2>
+                            <p className="desc">{currentSong && currentSong.singer}</p>
+                        </div>
+                        <div className="control" style={{position:"relative"}}>
+                            <ProgressCircle percent={this.percent()} radius={radius}>
+                                <i className= {this.miniIcon()+" icon-mini"} onClick={this.toggleMiniPlaying} />
+                            </ProgressCircle>
+                        </div>
+                        <div className="control"
+                            onClick={this.showPlaylist}
+                        >
+                            <i className="icon-playlist"/>
                         </div>
                     </div>
-                </div>
-                <div className="mini-player" style={{display: `${!fullScreen? 'flex' : 'none'}`}} onClick={this.open}>
-                    <div className="icon">
-                        <img width="40" height="40" src={currentSong && currentSong.image} className={this.cdCls()}/>
-                    </div>
-                    <div className="text">
-                        <h2 className="name" >{currentSong && currentSong.name}</h2>
-                        <p className="desc">{currentSong && currentSong.singer}</p>
-                    </div>
-                    <div className="control" style={{position:"relative"}}>
-                        <ProgressCircle percent={this.percent()} radius={radius}>
-                            <i className= {this.miniIcon()+" icon-mini"} onClick={this.toggleMiniPlaying} />
-                        </ProgressCircle>
-                    </div>
-                    <div className="control"
-                         onClick={this.showPlaylist}
-                    >
-                        <i className="icon-playlist"/>
-                    </div>
-                </div>
+                }
                 <PlayList
                     ref={this.playlist}
                     toggleFavorite={()=>{console.log("todo，歌曲的favorite信息应该存在store中")}}

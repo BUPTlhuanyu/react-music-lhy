@@ -1,6 +1,7 @@
 @import "common/style/variable.scss";
 
 .progress-bar{
+  transform: translateZ(0);
   height: 30px;
   .bar-inner{
     position: relative;
