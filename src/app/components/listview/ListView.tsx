@@ -142,7 +142,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
 
     onTouchStartHandler : React.TouchEventHandler<HTMLDivElement>= (e) => {
         if(!this.listGroup.current)return
-        let anchorIndex = getData(e.target, 'index')
+        let anchorIndex = Number(getData(e.target, 'index'))
         if(anchorIndex){
             let firstTouch = e.touches[0]
             let touch = Object.assign({}, this.state.touch,{
@@ -186,6 +186,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
     }
 
     render(){
+        Logger.red('render list')
         const {data} = this.props;
         const {currentIndex, root} = this.state;
         let shortcutList=data.map((group) => {
@@ -225,6 +226,7 @@ class ListView extends Component<ListViewProps, ListViewState>{
                         {
                             !!shortcutList.length && shortcutList.map((item, index)=>{
                                 let className = "item" + (currentIndex === index? " current" : "");
+                                Logger.green('currentIndex', currentIndex, index)
                                 return <li className={className} key={index} data-index={index}>{item}</li>
                             })
                         }

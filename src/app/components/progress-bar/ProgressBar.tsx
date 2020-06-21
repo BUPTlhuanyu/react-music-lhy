@@ -57,7 +57,7 @@ function ProgressBar(props: ProgressBarPropType) {
         // 通知外面
         const percent = newInnerWidth / progressTotalWidth
         props.onProgressBarChange(percent)        
-    }, [progressBar, props.onProgressBarChange])
+    }, [progressBar, props.onProgressBarChange, setInnerWidth])
 
     /**
      * 以下没有必要用 useCallBack 来缓存事件处理函数，因为 div 上的 style 会频繁更新，所以事件处理函数是否是新的函数已经没有意义了
