@@ -82,6 +82,7 @@ class Player extends Component<PlayerPropType, PlayerStateType>{
         if(newId !== currentId){
             currentId = newId
             return {
+                currentTime: 0,
                 favorite:false,
                 songReady:false,
                 currentSongUrl: '',

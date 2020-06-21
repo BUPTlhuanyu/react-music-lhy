@@ -23,12 +23,7 @@ interface ProgressBarStateType{
 const progressBtnWidth = 16
 const transform = prefixStyle('transform')
 
-// 缓存，避免组件挂载卸载的时候导致进度条从 0 开始
 let progressTotalWidth = 0;
-let innerWidthCache = 0
-function CacheState(newVal:number) {
-    innerWidthCache = newVal
-}
 
 interface touch{
     initiated:boolean,
@@ -39,13 +34,7 @@ function ProgressBar(props: ProgressBarPropType) {
     const progressBar: React.RefObject<HTMLDivElement> = useRef(null);
     const touch: React.MutableRefObject<touch> = useRef({initiated: false, prevX: 0})
 
-    const [innerWidth, setInnerWidth] = useState<number>(innerWidthCache)
-
-    // 更新进度条宽度以及缓存
-    const updateInnerWidth = useCallback((newInnerWidth) => {
-        setInnerWidth(newInnerWidth)
-        CacheState(newInnerWidth)
-    }, [setInnerWidth, CacheState]) 
+    const [innerWidth, setInnerWidth] = useState<number>(() => {return progressTotalWidth * props.percent})
 
     // 计算进度条的总长度
     useDidMountAndWillUnmount(() => {
@@ -56,15 +45,15 @@ function ProgressBar(props: ProgressBarPropType) {
     useEffect(() => {
         if(touch.current.initiated) return
         let newInnerWidth = progressTotalWidth * props.percent
-        // 更新进度条宽度以及缓存
-        updateInnerWidth(newInnerWidth)
+        // 更新进度条宽度
+        setInnerWidth(newInnerWidth)
     }, [props.percent])
 
     // 点击进度条的时候，需要更新进度条，并通知外面
     const progressClick = useCallback((e: React.MouseEvent) => {
         let newInnerWidth = e.pageX - (progressBar.current as HTMLDivElement).getBoundingClientRect().left
-        // 更新进度条宽度以及缓存
-        updateInnerWidth(newInnerWidth)
+        // 更新进度条宽度
+        setInnerWidth(newInnerWidth)
         // 通知外面
         const percent = newInnerWidth / progressTotalWidth
         props.onProgressBarChange(percent)        
@@ -89,8 +78,8 @@ function ProgressBar(props: ProgressBarPropType) {
         const deltaX = e.touches[0].pageX - touch.current.prevX
         const newInnerWidth = Math.min(progressTotalWidth - progressBtnWidth, Math.max(0, innerWidth + deltaX))
 
-        // 更新进度条宽度以及缓存
-        updateInnerWidth(newInnerWidth)  
+        // 更新进度条宽度
+        setInnerWidth(newInnerWidth)  
 
         touch.current.prevX = e.touches[0].pageX
     }
