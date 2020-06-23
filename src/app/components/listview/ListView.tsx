@@ -37,14 +37,12 @@ interface ListViewProps{
 }
 
 interface touchType{
-    y1 : number;
-    y2 : number;
+    prevY : number;
     anchorIndex : string;
 }
 
 interface ListViewState{
     currentIndex : number,
-    touch : touchType,
     listHeight:Array<any>
     root: Element | null
 }
@@ -54,19 +52,19 @@ class ListView extends Component<ListViewProps, ListViewState>{
     listGroup:React.RefObject<HTMLUListElement>;
     fixed:React.RefObject<HTMLDivElement>;
     timer:any
+    touch: touchType
     constructor(props: ListViewProps){
         super(props);
         this.listview = React.createRef();
         this.listGroup = React.createRef();
         this.fixed = React.createRef();
+        this.touch = {
+            prevY : 0,
+            anchorIndex: ""
+        },
         this.state = {
             listHeight:[],
             currentIndex: 0,
-            touch:{
-                y1 : 0,
-                y2 : 0,
-                anchorIndex: ""
-            },
             root: null
         }
     }
@@ -145,14 +143,15 @@ class ListView extends Component<ListViewProps, ListViewState>{
         let anchorIndex = Number(getData(e.target, 'index'))
         if(anchorIndex){
             let firstTouch = e.touches[0]
-            let touch = Object.assign({}, this.state.touch,{
-                y1: firstTouch.pageY,
+            this.touch = Object.assign({}, this.touch,{
+                prevY: firstTouch.pageY,
                 anchorIndex
             })
             this.setState({
-                currentIndex:anchorIndex,
-                touch
+                currentIndex:anchorIndex
             })
+            this.listview.current && this.listview.current.stop();
+            Logger.red('this.listGroup.current.childNodes[anchorIndex]', this.listGroup.current.childNodes[anchorIndex], anchorIndex)
             this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
         }else{
             return
@@ -162,23 +161,19 @@ class ListView extends Component<ListViewProps, ListViewState>{
     onTouchMoveHandler = (e: TouchEvent<Element>)=>{
         e.stopPropagation();
         let firstTouch = e.touches[0]
-        let touch = Object.assign({}, this.state.touch,{
-            y2: firstTouch.pageY
-        })
-        this.setState({touch},()=>{
-            if(!this.listGroup.current)return
-            let delta = (this.state.touch.y2 - this.state.touch.y1) / ANCHOR_HEIGHT | 0
-            let anchorIndex = parseInt(this.state.touch.anchorIndex) + delta
-            if(anchorIndex<0){
-                anchorIndex = 0;
-            }else if(anchorIndex > this.listGroup.current.childNodes.length-1){
-                anchorIndex = this.listGroup.current.childNodes.length-1;
-            }else if(Object.is(anchorIndex, NaN)){
-                return
-            }
-            this.setState({currentIndex:anchorIndex})
-            this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
-        })
+        let curY = firstTouch.pageY
+        if(!this.listGroup.current)return
+        let delta = (curY - this.touch.prevY) / ANCHOR_HEIGHT | 0
+        let anchorIndex = parseInt(this.touch.anchorIndex) + delta
+        if(anchorIndex<0){
+            anchorIndex = 0;
+        }else if(anchorIndex > this.listGroup.current.childNodes.length-1){
+            anchorIndex = this.listGroup.current.childNodes.length-1;
+        }else if(Object.is(anchorIndex, NaN)){
+            return
+        }
+        this.setState({currentIndex:anchorIndex})
+        this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
     }
 
     selectItem = (item : any) => {
@@ -186,7 +181,6 @@ class ListView extends Component<ListViewProps, ListViewState>{
     }
 
     render(){
-        Logger.red('render list')
         const {data} = this.props;
         const {currentIndex, root} = this.state;
         let shortcutList=data.map((group) => {
@@ -226,7 +220,6 @@ class ListView extends Component<ListViewProps, ListViewState>{
                         {
                             !!shortcutList.length && shortcutList.map((item, index)=>{
                                 let className = "item" + (currentIndex === index? " current" : "");
-                                Logger.green('currentIndex', currentIndex, index)
                                 return <li className={className} key={index} data-index={index}>{item}</li>
                             })
                         }
