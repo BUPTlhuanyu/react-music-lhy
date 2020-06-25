@@ -18,6 +18,8 @@ const Search = ReactLazyHOC(React.lazy(() => import('src/app/pages/search/Search
 const Singer = ReactLazyHOC(React.lazy(() => import('src/app/pages/singer/Singer')), <Loading />);
 const Rank = ReactLazyHOC(React.lazy(() => import('src/app/pages/rank/Rank')), <Loading />);
 
+const TopList = ReactLazyHOC(React.lazy(() => import('src/app/pages/rank/components/top-list/TopList')), <Loading />);
+
 function renderRoutes() {
     // 这里会有一些逻辑，根据renderRoutes的参数来确定用哪一种layout来布局
     return (
@@ -33,6 +35,7 @@ function renderRoutes() {
                     <Route path="/recommend" component={Recommend}/>
                     {/* <Route exact path="/recommend/:id" component={Disc}/> */}
                     <Route exact path="/rank" component={Rank}/>
+                    <Route exact path="/rank/:id" component={TopList}/>
                     <Route exact path="/search" component={Search}/>
                     <Route exact path="/singer" component={Singer}/>
                     <Route exact path="/user" component={UserCenter}/>

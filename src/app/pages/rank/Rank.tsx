@@ -105,7 +105,7 @@ class Rank extends Component<RankPropType,RankStateType>{
                         </div>
                     }
                 </Scroll>
-                <Route path="/rank/:id" component={TopList}/>
+                {/* <Route path="/rank/:id" component={TopList}/> */}
             </div>
         )
     }
