@@ -5,7 +5,7 @@ import {ERR_OK} from 'api/config'
 import ListView from 'src/app/components/listview/ListView'
 import SingerClass from 'common/js/singer.js'
 import {  Route, withRouter } from 'react-router'
-import SingerDetail from '../../components/singer-detail/SingerDetail'
+// import SingerDetail from '../../components/singer-detail/SingerDetail'
 import { connect } from 'react-redux'
 import {setSinger} from 'actions/singer'
 
@@ -132,7 +132,7 @@ class SingerBase extends Component<singerProps, singerState>{
         return(
             <div className="singer">
                 <ListView data={singers} getItem={this.selectSinger}/>
-                <Route path="/singer/:id" component={SingerDetail}/>
+                {/* <Route path="/singer/:id" component={SingerDetail}/> */}
             </div>
         )
     }

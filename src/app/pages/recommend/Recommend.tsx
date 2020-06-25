@@ -74,18 +74,15 @@ function getDiscListData(setState: React.Dispatch<React.SetStateAction<IDisc[]>>
 function Recommend(props: Props){
   const [recommends, setRecommends] = useState<Array<recommendItem>>([])                // 轮播图数据
   const [discList, setDiscList] = useState<Array<IDisc>>([])                            // 歌单列表数据
-  const [root, setContainer] = useState<Element | null>(null)
   const [disc, setDisc] = useState<IDisc | null>(null)
   const [showDisc, setShowDisc] = useState<boolean>(false)
 
+  const recommendContainer: React.RefObject<HTMLDivElement> = useRef(null)
   const unmoutedFlag: React.MutableRefObject<boolean> = useRef(false)                   // 组件是否挂载
   const scrollContanier: React.MutableRefObject<HTMLDivElement | null> = useRef(null)   // scrollContanier ref
   useScroll(scrollContanier, { click: true })                                           // 这里用不着 bs 实例，所以也不需要获取，自定义 hook 内部会手动 GC
 
   useDidMountAndWillUnmount(() => {
-      /* 获取图片懒加载的root节点 */
-      let root = document.querySelector(".recommend")
-      setContainer(root)
       /* 如果手动刷新或者时间超过了5分钟组件挂载了，那么就需要重新获取推荐列表以及歌单列表 */
       if(Date.now() - cacheData.prevTime > cacheData.maxage){
           cacheData.prevTime = Date.now()                                               // 设置缓存的时间为当前向后端获取数据的时间
@@ -115,7 +112,7 @@ function Recommend(props: Props){
   }, [discList])
 
   return(
-    <div className="recommend">
+    <div className="recommend" ref = {recommendContainer}>
       <div className="recommend-content" ref = {scrollContanier}>
         <div>
           <div className="slider-wrapper">
@@ -143,7 +140,7 @@ function Recommend(props: Props){
                       <LazyImage
                         selector = ".discListLazy"
                         className="discListLazy"
-                        root = {root}
+                        root = {recommendContainer.current}
                         sizes="200px"
                         src="https://placehold.it/200x300?text=Image1"
                         srcset={item.imgurl}

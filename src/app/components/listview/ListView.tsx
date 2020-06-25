@@ -4,12 +4,15 @@
  * @date 2019/2/19
 */
 
-import React,{ Component, TouchEvent } from 'react'
+import React,{ Component, TouchEvent, useRef, useState, useEffect } from 'react'
 import Loading from 'src/app/components/loading/Loading'
 import './ListView.scss'
 import LazyImage from 'src/app/components/lazyimg/Lazy-img'
 import Scroll from 'src/app/components/scroll/Scroll'
 import {getData} from 'common/js/dom.js'
+
+import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
+import useScroll from 'hooks/useScroll'
 
 //边条每个li的高度
 const ANCHOR_HEIGHT = 18;
@@ -47,75 +50,33 @@ interface ListViewState{
     root: Element | null
 }
 
-class ListView extends Component<ListViewProps, ListViewState>{
-    listview:React.RefObject<Scroll>;
-    listGroup:React.RefObject<HTMLUListElement>;
-    fixed:React.RefObject<HTMLDivElement>;
-    timer:any
-    touch: touchType
-    constructor(props: ListViewProps){
-        super(props);
-        this.listview = React.createRef();
-        this.listGroup = React.createRef();
-        this.fixed = React.createRef();
-        this.touch = {
-            prevY : 0,
-            anchorIndex: ""
-        },
-        this.state = {
-            listHeight:[],
-            currentIndex: 0,
-            root: null
-        }
-    }
-    componentDidMount(){
-        this.setState({
-            root: document.querySelector(".listview")
+let listHeight: number[] = []
+let touch = {
+    prevY : 0,
+    anchorIndex: ""
+}
+const ListView = function(props: ListViewProps) {
+    const [currentIndex, setCurrentIndex] = useState<number>(0)
+    const [shortcutList, setShortcutList] = useState<Array<string>>(() => {
+        return props.data.map((group) => {
+            return group.title.substr(0, 1)
         })
-        this.timer = setTimeout(()=>{
-            this._calculateHeight()
-        },1000)
-    }
+    })
 
-    componentWillUnmount(){
-        clearTimeout(this.timer)
-    }
+    const listGroup: React.RefObject<HTMLUListElement> = useRef(null)
+    const scrollContanier: React.MutableRefObject<HTMLDivElement | null> = useRef(null)   // scrollContanier ref
+    const fixed: React.RefObject<HTMLDivElement> = useRef(null)
 
-    refresh = () => {
-        this.listview.current && this.listview.current.refresh()
-    }
-
-    _calculateHeight() {
-        if(!this.listGroup.current){
-            return
-        }
-        let listHeight = []
-        const list = this.listGroup.current.children
-        let height = 0
-        listHeight.push(height)
-        for (let i = 0; i < list.length; i++) {
-            let item = list[i]
-            height += item.clientHeight
-            listHeight.push(height)
-        }
-        this.setState({
-            listHeight
-            }
-        )
-    }
-
-    scrollHandler = (pos : {x:number,y:number}) => {
+    const scrollHandler = (pos : {x:number,y:number}) => {
+        Logger.green('scrollHandler', pos.y)
         // console.log("this",this)
-        if(Object.is(pos.y,NaN) || !this.fixed.current){
+        if(Object.is(pos.y,NaN)){
             return
         }
         let newY = pos.y;
-            const listHeight = this.state.listHeight;
             // 当滚动到顶部，newY>0
             if (newY > 0) {
-                this.setState({
-                    currentIndex : 0
-                })
+                setCurrentIndex(0)
                 return
             }
             // 在中间部分滚动
@@ -123,120 +84,144 @@ class ListView extends Component<ListViewProps, ListViewState>{
                 let height1 = listHeight[i]
                 let height2 = listHeight[i + 1]
                 if (-newY >= height1 && -newY < height2) {
-                    this.setState({
-                        currentIndex : i
-                    })
+                    setCurrentIndex(i)
                     let diff = height2 + newY;
                     let fixedTop = (diff > 0 && diff < TITLE_HEIGHT) ? diff - TITLE_HEIGHT : 0
-                    this.fixed.current.style.transform = `translate3d(0,${fixedTop}px,0)`
+                    fixed.current && (fixed.current.style.transform = `translate3d(0,${fixedTop}px,0)`)
                     return
                 }
             }
             // 当滚动到底部，且-newY大于最后一个元素的上限
-        this.setState({
-            currentIndex : listHeight.length - 2
-        })
+            Logger.green('滚动到底部')
+            setCurrentIndex(listHeight.length - 2)
     }
+    const wrapperBs = useScroll(scrollContanier, { click: true, probeType: 3,  scrollHandler: scrollHandler})
+    
 
-    onTouchStartHandler : React.TouchEventHandler<HTMLDivElement>= (e) => {
-        if(!this.listGroup.current)return
+    useDidMountAndWillUnmount(() => {
+        let timer = setTimeout(()=>{
+            // 计算每个字母下卡片的高度和
+            if(!listGroup.current){
+                return
+            }
+            const list = listGroup.current.children
+            let height = 0
+            listHeight.push(height)
+            for (let i = 0; i < list.length; i++) {
+                let item = list[i]
+                height += item.clientHeight
+                listHeight.push(height)
+            }            
+        },100)
+
+        return function() {
+            clearTimeout(timer)
+        }
+    })
+
+    // 更新歌手数据
+    useEffect(() => {
+        setShortcutList(
+            props.data.map((group) => {
+                return group.title.substr(0, 1)
+            })
+        )
+    }, [props.data])
+
+    const onTouchStartHandler = function(e: React.TouchEvent) {
+        e.preventDefault();
+        if(!listGroup.current)return
         let anchorIndex = Number(getData(e.target, 'index'))
         if(anchorIndex){
             let firstTouch = e.touches[0]
-            this.touch = Object.assign({}, this.touch,{
+            touch = Object.assign({}, touch,{
                 prevY: firstTouch.pageY,
                 anchorIndex
             })
-            this.setState({
-                currentIndex:anchorIndex
-            })
-            this.listview.current && this.listview.current.stop();
-            Logger.red('this.listGroup.current.childNodes[anchorIndex]', this.listGroup.current.childNodes[anchorIndex], anchorIndex)
-            this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
+            setCurrentIndex(anchorIndex)
+            setTimeout(() => {
+                if(wrapperBs.current && listGroup.current) {
+                    wrapperBs.current.scrollToElement((listGroup.current.childNodes[anchorIndex] as HTMLElement), 0)  
+                }
+            }, 50)
         }else{
             return
         }
     }
 
-    onTouchMoveHandler = (e: TouchEvent<Element>)=>{
-        e.stopPropagation();
+    const onTouchMoveHandler = function(e: React.TouchEvent) {
+        Logger.green('onTouchMoveHandler')
+        e.preventDefault();
         let firstTouch = e.touches[0]
         let curY = firstTouch.pageY
-        if(!this.listGroup.current)return
-        let delta = (curY - this.touch.prevY) / ANCHOR_HEIGHT | 0
-        let anchorIndex = parseInt(this.touch.anchorIndex) + delta
+        if(!listGroup.current)return
+        let delta = (curY - touch.prevY) / ANCHOR_HEIGHT | 0
+        let anchorIndex = parseInt(touch.anchorIndex) + delta
         if(anchorIndex<0){
             anchorIndex = 0;
-        }else if(anchorIndex > this.listGroup.current.childNodes.length-1){
-            anchorIndex = this.listGroup.current.childNodes.length-1;
+        }else if(anchorIndex > listGroup.current.childNodes.length-1){
+            anchorIndex = listGroup.current.childNodes.length-1;
         }else if(Object.is(anchorIndex, NaN)){
             return
         }
-        this.setState({currentIndex:anchorIndex})
-        this.listview.current && this.listview.current.scrollToElement(this.listGroup.current.childNodes[anchorIndex], 0)
+        setCurrentIndex(anchorIndex)
+        setTimeout(() => {
+            if(wrapperBs.current && listGroup.current) {
+                wrapperBs.current.scrollToElement((listGroup.current.childNodes[anchorIndex] as HTMLElement), 0)  
+            }
+        }, 50)
     }
 
-    selectItem = (item : any) => {
-        this.props.getItem(item)
-    }
-
-    render(){
-        const {data} = this.props;
-        const {currentIndex, root} = this.state;
-        let shortcutList=data.map((group) => {
-            return group.title.substr(0, 1)
-        });
-        return(
-            <Scroll className="listview" ref={this.listview} scrollHandler={this.scrollHandler} probeType={3}>
-                <ul ref={this.listGroup}>
+    return (
+        <div className="listview" ref = {scrollContanier}>
+            <ul ref = {listGroup}>
+                {
+                    !! props.data.length && props.data.map((group:{title:string,items:Array<any>})=>(
+                        <li className="list-group" key={group.title} >
+                            <h2 className="list-group-title">{group.title}</h2>
+                            <ul>
+                                {
+                                    !! group.items.length && group.items.map((item: IItem)=>(
+                                        <li className="list-group-item" key={item.id} onClick={props.getItem.bind(null, item)}>
+                                            <LazyImage
+                                                selector = ".avatarListLazy"
+                                                className="avatarListLazy avatar"
+                                                root={scrollContanier.current}
+                                                sizes="200px"
+                                                srcset={item.avatar}
+                                                width="60"
+                                                height="60"
+                                                />
+                                            <span className="name">{item.name}</span>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </li>
+                    ))
+                }
+            </ul>
+            <div className="list-shortcut" onTouchStart={onTouchStartHandler} onTouchMove={onTouchMoveHandler}>
+                <ul>
                     {
-                        !! data.length && data.map((group:{title:string,items:Array<any>}, index)=>(
-                            <li className="list-group" key={index} >
-                                <h2 className="list-group-title">{group.title}</h2>
-                                <ul>
-                                    {
-                                        !! group.items.length && group.items.map((item:any, index:number)=>(
-                                            <li className="list-group-item" key={index} onClick={()=>{this.selectItem(item)}}>
-                                                <LazyImage
-                                                    selector = ".avatarListLazy"
-                                                    className="avatarListLazy avatar"
-                                                    root={root}
-                                                    sizes="200px"
-                                                    srcset={item.avatar}
-                                                    width="60"
-                                                    height="60"
-                                                    />
-                                                <span className="name">{item.name}</span>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                            </li>
-                        ))
+                        !!shortcutList.length && shortcutList.map((item, index)=>{
+                            let className = "item" + (currentIndex === index? " current" : "");
+                            return <li className={className} key={index} data-index={index}>{item}</li>
+                        })
                     }
                 </ul>
-                <div className="list-shortcut" onTouchStart={this.onTouchStartHandler} onTouchMove={this.onTouchMoveHandler}>
-                    <ul>
-                        {
-                            !!shortcutList.length && shortcutList.map((item, index)=>{
-                                let className = "item" + (currentIndex === index? " current" : "");
-                                return <li className={className} key={index} data-index={index}>{item}</li>
-                            })
-                        }
-                    </ul>
+            </div>
+            <div className="list-fixed" ref={fixed}>
+                <div className="fixed-title"> {props.data[currentIndex] ? props.data[currentIndex].title : ''}</div>
+            </div>
+            {
+                !props.data.length &&
+                <div className="loading-container">
+                    <Loading />
                 </div>
-                <div className="list-fixed" ref={this.fixed}>
-                    <div className="fixed-title"> {data[currentIndex] ? data[currentIndex].title : ''}</div>
-                </div>
-                    {
-                        !data.length &&
-                        <div className="loading-container">
-                            <Loading />
-                        </div>
-                    }
-            </Scroll>
-        )
-    }
+            }
+        </div>        
+    )
 }
 
 export default ListView

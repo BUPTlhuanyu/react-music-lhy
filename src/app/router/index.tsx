@@ -18,6 +18,7 @@ const Search = ReactLazyHOC(React.lazy(() => import('src/app/pages/search/Search
 const Singer = ReactLazyHOC(React.lazy(() => import('src/app/pages/singer/Singer')), <Loading />);
 const Rank = ReactLazyHOC(React.lazy(() => import('src/app/pages/rank/Rank')), <Loading />);
 
+const SingerDetail = ReactLazyHOC(React.lazy(() => import('src/app/components/singer-detail/SingerDetail')), <Loading />);
 const TopList = ReactLazyHOC(React.lazy(() => import('src/app/pages/rank/components/top-list/TopList')), <Loading />);
 
 function renderRoutes() {
@@ -38,6 +39,7 @@ function renderRoutes() {
                     <Route exact path="/rank/:id" component={TopList}/>
                     <Route exact path="/search" component={Search}/>
                     <Route exact path="/singer" component={Singer}/>
+                    <Route exact path="/singer/:id" component={SingerDetail}/>
                     <Route exact path="/user" component={UserCenter}/>
                 </Switch>
             </BasicLayout>
