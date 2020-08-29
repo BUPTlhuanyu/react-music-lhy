@@ -14,7 +14,7 @@ function createColorLogger(colors: string[], name?: string){
         (<LoggerObj>LoggerObj)[color] = function(...content: Array<BasicType>): void{
             if(content.length === 0) return
             let date = new Date()
-            let time = [date.getHours(), date.getMinutes(), date.getMilliseconds()].join(':')
+            let time = [date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()].join(':')
             if(
                 typeof content[0] === 'string'   
             ){
