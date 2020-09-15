@@ -10,6 +10,7 @@ import './ListView.scss'
 import LazyImage from 'src/app/components/lazyimg/Lazy-img'
 import Scroll from 'src/app/components/scroll/Scroll'
 import {getData} from 'common/js/dom.js'
+import classnames from 'classnames';
 
 import useDidMountAndWillUnmount from 'src/app/hooks/useDidMountAndWillUnmount'
 import useScroll from 'hooks/useScroll'
@@ -36,7 +37,8 @@ interface dataType {
 
 interface ListViewProps{
     data : Array<dataType>,
-    getItem: Function
+    getItem: Function,
+    listClassName?: string | Object
 }
 
 interface touchType{
@@ -62,6 +64,10 @@ const ListView = function(props: ListViewProps) {
             return group.title.substr(0, 1)
         })
     })
+    const listviewClassName = classnames(
+        'listview',
+        props.listClassName
+    );
 
     const listGroup: React.RefObject<HTMLUListElement> = useRef(null)
     const scrollContanier: React.MutableRefObject<HTMLDivElement | null> = useRef(null)   // scrollContanier ref
@@ -173,7 +179,7 @@ const ListView = function(props: ListViewProps) {
     }
 
     return (
-        <div className="listview" ref = {scrollContanier}>
+        <div className={listviewClassName} ref = {scrollContanier}>
             <ul ref = {listGroup}>
                 {
                     !! props.data.length && props.data.map((group:{title:string,items:Array<any>})=>(

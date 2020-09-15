@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/classnames": "^2.2.10",
     "axios": "^0.18.0",
     "better-scroll": "^1.14.1",
+    "classnames": "^2.2.6",
     "fastclick": "^1.0.6",
     "good-storage": "^1.1.0",
     "jsonp": "^0.2.1",

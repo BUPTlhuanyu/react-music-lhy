@@ -74,7 +74,7 @@ function getNetworkIp() {
 //host默认为'0.0.0.0'也就是localhost
 // 为了手机调试方便修改为本机 ip
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = process.env.HOST || getNetworkIp() ;
+const HOST = process.env.HOST || '0.0.0.0' ;
 
 if (process.env.HOST) {
   console.log(

@@ -10,7 +10,8 @@ import { connect } from 'react-redux'
 import {setSinger} from 'actions/singer'
 
 import {
-    ISinger
+    ISinger,
+    IStoreState
 } from 'store/stateTypes'
 import { Dispatch } from 'redux'
 
@@ -36,7 +37,8 @@ const HOT_NAME = '热门'
 
 interface singerProps{
     setSinger:Function,
-    history: any
+    history: any,
+    fullScreen: boolean
 }
 
 interface singerState{
@@ -131,7 +133,7 @@ class SingerBase extends Component<singerProps, singerState>{
         const {singers} = this.state
         return(
             <div className="singer">
-                <ListView data={singers} getItem={this.selectSinger}/>
+                <ListView data={singers} getItem={this.selectSinger} listClassName={{'list-view-with-player': !this.props.fullScreen}}/>
                 {/* <Route path="/singer/:id" component={SingerDetail}/> */}
             </div>
         )
@@ -146,7 +148,11 @@ const mapDispatchToProps = (dispatch:Dispatch, ownProps:any) => {
     }
 }
 
-const Singer = withRouter(connect(() => ({}), mapDispatchToProps)(SingerBase));
+const mapStateToProps = (state:IStoreState) => ({
+    fullScreen : state.fullScreen
+})
+
+const Singer = withRouter(connect(mapStateToProps, mapDispatchToProps)(SingerBase));
 
 export default Singer
 
