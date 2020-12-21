@@ -1,0 +1,14 @@
+{
+    "parserOptions": {
+        "parser": "babel-eslint"
+    },
+    "extends": [
+        "@ecomfe/eslint-config",
+        "@ecomfe/eslint-config/typescript",
+        "@ecomfe/eslint-config/react",
+        "plugin:jest/recommended"
+    ],
+    "rules": {
+        "comma-dangle": "off"
+    }
+}

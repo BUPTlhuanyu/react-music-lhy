@@ -1,133 +1,113 @@
-@font-face{
-  font-family: 'music-icon';
-  src: url('../fonts/music-icon.eot?2qevqt');
-  src: url('../fonts/music-icon.eot?2qevqt#iefix') format('embedded-opentype'),
-  url('../fonts/music-icon.ttf?2qevqt') format('truetype'),
-  url('../fonts/music-icon.woff?2qevqt') format('woff'),
-  url('../fonts/music-icon.svg?2qevqt#music-icon') format('svg');
-  font-weight: normal;
-  font-style: normal;
+@font-face {
+    font-family: 'music-icon';
+    src: url('../fonts/music-icon.eot?2qevqt');
+    src: url('../fonts/music-icon.eot?2qevqt#iefix') format('embedded-opentype'),
+        url('../fonts/music-icon.ttf?2qevqt') format('truetype'), url('../fonts/music-icon.woff?2qevqt') format('woff'),
+        url('../fonts/music-icon.svg?2qevqt#music-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
+[class^='icon-'],
+[class*=' icon-'] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'music-icon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'music-icon' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.icon-ok:before{
-  content: "\e900"
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-close:before{
-  content: "\e901"
+.icon-ok::before {
+    content: '\e900';
 }
 
-
-.icon-add:before{
-  content: "\e902"
+.icon-close::before {
+    content: '\e901';
 }
 
-.icon-play-mini:before{
-  content: "\e903"
+.icon-add::before {
+    content: '\e902';
 }
 
-
-.icon-playlist:before{
-  content: "\e904"
+.icon-play-mini::before {
+    content: '\e903';
 }
 
-
-.icon-music:before{
-  content: "\e905"
+.icon-playlist::before {
+    content: '\e904';
 }
 
-
-.icon-search:before{
-  content: "\e906"
+.icon-music::before {
+    content: '\e905';
 }
 
-
-.icon-clear:before{
-  content: "\e907"
+.icon-search::before {
+    content: '\e906';
 }
 
-
-.icon-delete:before{
-  content: "\e908"
+.icon-clear::before {
+    content: '\e907';
 }
 
-
-.icon-favorite:before{
-  content: "\e909"
+.icon-delete::before {
+    content: '\e908';
 }
 
-
-.icon-not-favorite:before{
-  content: "\e90a"
+.icon-favorite::before {
+    content: '\e909';
 }
 
-
-.icon-pause:before{
-  content: "\e90b"
+.icon-not-favorite::before {
+    content: '\e90a';
 }
 
-
-.icon-play:before{
-  content: "\e90c"
+.icon-pause::before {
+    content: '\e90b';
 }
 
-
-.icon-prev:before{
-  content: "\e90d"
+.icon-play::before {
+    content: '\e90c';
 }
 
-
-.icon-loop:before{
-  content: "\e90e"
+.icon-prev::before {
+    content: '\e90d';
 }
 
-
-.icon-sequence:before{
-  content: "\e90f"
+.icon-loop::before {
+    content: '\e90e';
 }
 
-
-.icon-random:before{
-  content: "\e910"
+.icon-sequence::before {
+    content: '\e90f';
 }
 
-
-.icon-back:before{
-  content: "\e911"
+.icon-random::before {
+    content: '\e910';
 }
 
-
-.icon-mine:before{
-  content: "\e912"
+.icon-back::before {
+    content: '\e911';
 }
 
-
-.icon-next:before{
-  content: "\e913"
+.icon-mine::before {
+    content: '\e912';
 }
 
-
-.icon-dismiss:before{
-  content: "\e914"
+.icon-next::before {
+    content: '\e913';
 }
 
-
-.icon-pause-mini:before{
-  content: "\e915"
+.icon-dismiss::before {
+    content: '\e914';
 }
 
+.icon-pause-mini::before {
+    content: '\e915';
+}

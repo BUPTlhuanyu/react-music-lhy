@@ -1,5 +1,5 @@
-import assign from 'lodash/assign'
-import originJsonp from 'jsonp'
+import assign from 'lodash/assign';
+import originJsonp from 'jsonp';
 
 // const getFormData = params => {
 //     for (let k in params) {
@@ -36,47 +36,47 @@ const urls = {
  */
 export async function handleResponse(response, customHandler) {
     // start to process response info
-    let isHandled = false,
-        code = response.code,
-        rt = null;
-    if(typeof customHandler === 'function') {
+    let isHandled = false;
+    let code = response.code;
+    let rt = null;
+    if (typeof customHandler === 'function') {
         isHandled = customHandler(response);
     }
-    if(!isHandled) {
+    if (!isHandled) {
         // 如果尚未处理,则进入通用处理逻辑
-        if(code === 0) {
+        if (code === 0) {
             rt = response.data;
-        } else if(code >= 400 && code <= 499) {
+        } else if (code >= 400 && code <= 499) {
             switch (code) {
-                case 401 :
+                case 401:
                     window.location.href = urls.notFound;
                     break;
-                case 403 :
+                case 403:
                     window.location.href = urls.signIn;
                     break;
-                case 404 :
+                case 404:
                     window.location.href = urls.notFound;
                     break;
                 default:
                     window.location.href = urls.internalServerError;
                     break;
             }
-        } else if((code >= 500 && code <= 599) || code < 0) {
+        } else if ((code >= 500 && code <= 599) || code < 0) {
             // window.location.href = urls.notFound;
         }
     } else {
-        rt = isHandled
+        rt = isHandled;
     }
     return rt;
 }
 
 export function parseQueryParams(data) {
-    let queryStr = "";
-    if(data) {
-        queryStr += "?";
-        for(let p in data) {
-            if(data[p] != null) {
-                queryStr += encodeURIComponent(p) + "=" + encodeURIComponent(data[p]) + "&";
+    let queryStr = '';
+    if (data) {
+        queryStr += '?';
+        for (let p in data) {
+            if (data[p] != null) {
+                queryStr += encodeURIComponent(p) + '=' + encodeURIComponent(data[p]) + '&';
             }
         }
     }
@@ -84,17 +84,15 @@ export function parseQueryParams(data) {
     return queryStr;
 }
 
-
 async function commonHandler(options) {
     let data = null;
     try {
         let response = await fetch(options.url, options);
-        if(response.ok) {
+        if (response.ok) {
             data = await response.json();
         } else {
             data = await response.text();
         }
-
     } catch (error) {
         // message.error(error.message);
         // throw new error(error.message)
@@ -103,59 +101,68 @@ async function commonHandler(options) {
 }
 
 async function wsGet(options) {
-    options.method = "GET";
-    options.credentials = "include";
+    options.method = 'GET';
+    options.credentials = 'include';
     options.mode = 'cors';
-    options.headers = assign({
-        "Content-Type": "application/json"
-    }, options.headers);
-    if(options.data) {
+    options.headers = assign(
+        {
+            'Content-Type': 'application/json'
+        },
+        options.headers
+    );
+    if (options.data) {
         options.url = options.url + parseQueryParams(options.data);
     }
     return await commonHandler(options);
 }
 
 async function wsPost(options) {
-    options.method = "POST";
-    options.credentials = "include";
+    options.method = 'POST';
+    options.credentials = 'include';
     options.mode = 'cors';
-    options.headers = assign({
-        "Content-Type": "application/json"
-    }, options.headers);
-    if(options.data) {
+    options.headers = assign(
+        {
+            'Content-Type': 'application/json'
+        },
+        options.headers
+    );
+    if (options.data) {
         options.body = JSON.stringify(options.data);
     }
     return await commonHandler(options);
 }
 
 async function wsDelete(options) {
-    options.method = "DELETE";
-    options.credentials = "include";
+    options.method = 'DELETE';
+    options.credentials = 'include';
     options.mode = 'cors';
-    options.headers = assign({
-        "Content-Type": "application/json"
-    }, options.headers);
+    options.headers = assign(
+        {
+            'Content-Type': 'application/json'
+        },
+        options.headers
+    );
     return await commonHandler(options);
 }
 
 export async function ws(method, options) {
     let result;
-    method = method ? method.toUpperCase() : "";
+    method = method ? method.toUpperCase() : '';
     switch (method) {
-        case "GET":
+        case 'GET':
             result = await wsGet(options);
             break;
-        case "POST":
+        case 'POST':
             result = await wsPost(options);
             break;
-        case "DELETE":
+        case 'DELETE':
             result = await wsDelete(options);
             break;
         default:
             result = null;
     }
-    if(result) {
-        if(options.handler) {
+    if (result) {
+        if (options.handler) {
             result = await handleResponse(result, options.handler);
         } else {
             result = await handleResponse(result);
@@ -165,15 +172,15 @@ export async function ws(method, options) {
 }
 
 export function jsonp(url, data, option) {
-    url += (url.indexOf('?')<0 ? '?' : '&') + parseQueryParams(data);
+    url += (url.indexOf('?') < 0 ? '?' : '&') + parseQueryParams(data);
 
-    return new Promise((resolve, reject)=> {
-      originJsonp(url, option, (err, data) => {
-        if(!err){
-          resolve(data)
-        }else{
-          reject(data)
-        }
-      })
-    })
+    return new Promise((resolve, reject) => {
+        originJsonp(url, option, (err, data) => {
+            if (!err) {
+                resolve(data);
+            } else {
+                reject(data);
+            }
+        });
+    });
 }
