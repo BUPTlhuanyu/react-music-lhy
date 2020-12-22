@@ -10,7 +10,7 @@
     "fastclick": "^1.0.6",
     "good-storage": "^1.1.0",
     "jsonp": "^0.2.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "lyric-parser": "^1.0.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^0.2.0",
