@@ -1,15 +1,11 @@
-import React, { ReactElement } from 'react'
+import React, {ReactElement} from 'react';
 
-const ReactLazyHOC = <T extends object>(WrapedComponent: any, fallback: ReactElement<any>) => {
-    return class extends React.Component<T> {
-        render() {
-            return (
-                <React.Suspense fallback={fallback}>
-                    <WrapedComponent {...this.props}/>
-                </React.Suspense>
-            )
-        }
-    }
-}
+const ReactLazyHOC = <T extends Record<string, any>>(WrapedComponent: any, fallback: ReactElement<any>) => (
+    props: T
+) => (
+    <React.Suspense fallback={fallback}>
+        <WrapedComponent {...props} />
+    </React.Suspense>
+);
 
-export default ReactLazyHOC
+export default ReactLazyHOC;

@@ -1,22 +1,22 @@
 .top-list-transition-appear {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 .top-list-transition-appear-active {
-  transform: translateX(0%);
-  transition: all 500ms ease-out;
+    transform: translateX(0%);
+    transition: all 500ms ease-out;
 }
 
 .top-list-transition-enter {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 .top-list-transition-enter-active {
-  transform: translateX(0%);
-  transition: all 500ms ease-out;
+    transform: translateX(0%);
+    transition: all 500ms ease-out;
 }
 .top-list-transition-exit {
-  transform: translateX(0%) scale(0.5);
+    transform: translateX(0%) scale(0.5);
 }
 .top-list-transition-exit-active {
-  transform: translateX(100%) scale(1);
-  transition: all 500ms ease-in;
+    transform: translateX(100%) scale(1);
+    transition: all 500ms ease-in;
 }

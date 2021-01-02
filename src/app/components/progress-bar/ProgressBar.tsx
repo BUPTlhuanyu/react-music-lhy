@@ -5,59 +5,64 @@
  *          注意 usecallback 不能滥用，引用比较与大量计算可以用，并且没有依赖的 usecallback 中的 state 是初始值。
  */
 
-import React, { Component, useRef, useState, useEffect, useCallback } from 'react'
-import {prefixStyle} from 'common/js/dom'
-import './ProgressBar.scss'
+import React, {useRef, useState, useEffect, useCallback} from 'react';
+import './ProgressBar.scss';
 
-import useDidMountAndWillUnmount from 'hooks/useDidMountAndWillUnmount'
+import useDidMountAndWillUnmount from 'hooks/useDidMountAndWillUnmount';
 
-interface ProgressBarPropType{
-    percent:number,
-    onProgressBarChange:Function
+interface ProgressBarPropType {
+    percent: number;
+    onProgressBarChange: (percent: number) => void;
 }
 
-interface ProgressBarStateType{
 
-}
-
-const progressBtnWidth = 16
-const transform = prefixStyle('transform')
+const progressBtnWidth = 16;
 
 let progressTotalWidth = 0;
 
-interface touch{
-    initiated:boolean,
-    prevX:number
+interface touch {
+    initiated: boolean;
+    prevX: number;
 }
 
 function ProgressBar(props: ProgressBarPropType) {
     const progressBar: React.RefObject<HTMLDivElement> = useRef(null);
-    const touch: React.MutableRefObject<touch> = useRef({initiated: false, prevX: 0})
+    const touch: React.MutableRefObject<touch> = useRef({initiated: false, prevX: 0});
 
-    const [innerWidth, setInnerWidth] = useState<number>(() => {return progressTotalWidth * props.percent})
+    const [innerWidth, setInnerWidth] = useState<number>(() => {
+        return progressTotalWidth * props.percent;
+    });
 
     // 计算进度条的总长度
     useDidMountAndWillUnmount(() => {
         progressTotalWidth = progressBar.current!.clientWidth - 16;
-    })
+    });
 
     // props 传入的百分比变化的时候需要更新进度条的视图，游标位置，显示已完成的进度条
-    useEffect(() => {
-        if(touch.current.initiated) return
-        let newInnerWidth = progressTotalWidth * props.percent
-        // 更新进度条宽度
-        setInnerWidth(newInnerWidth)
-    }, [props.percent])
+    useEffect(
+        () => {
+            if (touch.current.initiated) {
+                return;
+            }
+            let newInnerWidth = progressTotalWidth * props.percent;
+            // 更新进度条宽度
+            setInnerWidth(newInnerWidth);
+        },
+        [props.percent]
+    );
 
     // 点击进度条的时候，需要更新进度条，并通知外面
-    const progressClick = useCallback((e: React.MouseEvent) => {
-        let newInnerWidth = e.pageX - (progressBar.current as HTMLDivElement).getBoundingClientRect().left
-        // 更新进度条宽度
-        setInnerWidth(newInnerWidth)
-        // 通知外面
-        const percent = newInnerWidth / progressTotalWidth
-        props.onProgressBarChange(percent)        
-    }, [progressBar, props.onProgressBarChange, setInnerWidth])
+    const progressClick = useCallback(
+        (e: React.MouseEvent) => {
+            let newInnerWidth = e.pageX - (progressBar.current as HTMLDivElement).getBoundingClientRect().left;
+            // 更新进度条宽度
+            setInnerWidth(newInnerWidth);
+            // 通知外面
+            const percent = newInnerWidth / progressTotalWidth;
+            props.onProgressBarChange(percent);
+        },
+        [progressBar, props.onProgressBarChange, setInnerWidth]
+    );
 
     /**
      * 以下没有必要用 useCallBack 来缓存事件处理函数，因为 div 上的 style 会频繁更新，所以事件处理函数是否是新的函数已经没有意义了
@@ -68,50 +73,55 @@ function ProgressBar(props: ProgressBarPropType) {
         touch.current = {
             initiated: true,
             prevX: e.touches[0].pageX
-        }
-    }
+        };
+    };
 
     // 触摸点移动的时候实时更新进度条，并记录当前触摸点的位置
     const progressTouchMove = (e: React.TouchEvent) => {
-        if(!touch.current.initiated) return;
+        if (!touch.current.initiated) {
+            return;
+        }
 
-        const deltaX = e.touches[0].pageX - touch.current.prevX
-        const newInnerWidth = Math.min(progressTotalWidth - progressBtnWidth, Math.max(0, innerWidth + deltaX))
+        const deltaX = e.touches[0].pageX - touch.current.prevX;
+        const newInnerWidth = Math.min(progressTotalWidth - progressBtnWidth, Math.max(0, innerWidth + deltaX));
 
         // 更新进度条宽度
-        setInnerWidth(newInnerWidth)  
+        setInnerWidth(newInnerWidth);
 
-        touch.current.prevX = e.touches[0].pageX
-    }
-    
-    const progressTouchEnd= (e: React.TouchEvent)=> {
+        touch.current.prevX = e.touches[0].pageX;
+    };
+
+    const progressTouchEnd = (e: React.TouchEvent) => {
         e.preventDefault();
 
-        if(!touch.current.initiated) return;
-        
-        // 通知外面
-        const percent = innerWidth / progressTotalWidth
-        props.onProgressBarChange(percent)  
-        
-        // 重置 initiated 数据
-        touch.current.initiated = false
-    }
+        if (!touch.current.initiated) {
+            return;
+        }
 
+        // 通知外面
+        const percent = innerWidth / progressTotalWidth;
+        props.onProgressBarChange(percent);
+
+        // 重置 initiated 数据
+        touch.current.initiated = false;
+    };
 
     return (
         <div className="progress-bar" ref={progressBar} onClick={progressClick}>
             <div className="bar-inner">
-                <div className="progress" style = {{width: `${innerWidth}px`}}></div>
-                <div className="progress-btn-wrapper" style = {{transform: `translate3d(${innerWidth}px,0,0)`}}
+                <div className="progress" style={{width: `${innerWidth}px`}} />
+                <div
+                    className="progress-btn-wrapper"
+                    style={{transform: `translate3d(${innerWidth}px,0,0)`}}
                     onTouchStart={progressTouchStart}
                     onTouchMove={progressTouchMove}
                     onTouchEnd={progressTouchEnd}
                 >
-                    <div className="progress-btn"></div>
+                    <div className="progress-btn" />
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 // class ProgressBar extends Component<ProgressBarPropType, ProgressBarStateType>{
@@ -218,4 +228,4 @@ function ProgressBar(props: ProgressBarPropType) {
 //     }
 // }
 
-export default ProgressBar
+export default ProgressBar;

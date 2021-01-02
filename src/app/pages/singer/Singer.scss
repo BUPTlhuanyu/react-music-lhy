@@ -1,11 +1,11 @@
-.singer{
-  position: fixed;
-  top: 88px;
-  bottom: 0;
-  width: 100%;
-  .list-view-with-player {
-    & > ul {
-      padding-bottom: 60px;
+.singer {
+    position: fixed;
+    top: 88px;
+    bottom: 0;
+    width: 100%;
+    .list-view-with-player {
+        & > ul {
+            padding-bottom: 60px;
+        }
     }
-  }
 }

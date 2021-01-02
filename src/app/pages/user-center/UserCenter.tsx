@@ -1,83 +1,75 @@
-import React,{ Component } from 'react'
-import './UserCenter.scss'
-import UserDetails from './components/user-details/UserDetails'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
-import { IUserName } from 'store/stateTypes'
-import LogIn from 'src/app/components/login/LogIn'
-import {
-    setUserName,
-} from 'actions/user'
-import { Dispatch } from 'redux'
+import React, {Component} from 'react';
+import './UserCenter.scss';
+import UserDetails from './components/user-details/UserDetails';
+import {withRouter} from 'react-router';
+import {connect} from 'react-redux';
+import {IUserName, IActionCreator} from 'store/stateTypes';
+import LogIn from 'src/app/components/login/LogIn';
+import {setUserName} from 'actions/user';
+import {Dispatch} from 'redux';
 
-interface UserCenterProps{
-    history:any,
-    location:any,
-    match:any,
-    userName:IUserName,
-    setUserName:Function
+interface UserCenterProps {
+    history: any;
+    location: any;
+    match: any;
+    userName: IUserName;
+    setUserName: IActionCreator;
 }
 
-interface UserCenterState{
+interface UserCenterState {}
 
-}
-
-
-
-class UserCenter extends Component<UserCenterProps,UserCenterState>{
-    constructor(props:UserCenterProps){
+class UserCenter extends Component<UserCenterProps, UserCenterState> {
+    constructor(props: UserCenterProps) {
         super(props);
-        this.state={
-
-        }
+        this.state = {};
     }
 
     back = () => {
         this.props.history.goBack();
-    }
+    };
 
     logout = () => {
-        if(this.props.userName){
-            this.props.setUserName('')
+        if (this.props.userName) {
+            this.props.setUserName('');
         }
-    }
+    };
 
-    render(){
+    render() {
         const userName = this.props.userName;
-        return(
+        return (
             <div className="user-center">
                 <div className="back" onClick={this.back}>
-                    <i className="icon-back"/>
+                    <i className="icon-back" />
                 </div>
                 <div className="logout" onClick={this.logout}>
                     <span>logout</span>
                 </div>
-                {
-                    !userName ?
-                        <LogIn/>
-                     :
-                        <div className="user-details-wrapper" >
-                            <UserDetails />
-                        </div>
-                }
+                {!userName ? (
+                    <LogIn />
+                ) : (
+                    <div className="user-details-wrapper">
+                        <UserDetails />
+                    </div>
+                )}
             </div>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state : {userName : IUserName}, ownProps : any) => (
-    {
-        userName : state.userName,
-        ...ownProps
-    }
-)
-const mapDispatchToProps = (dispatch:Dispatch,ownProps:any) => {
+const mapStateToProps = (state: {userName: IUserName}, ownProps: any) => ({
+    userName: state.userName,
+    ...ownProps
+});
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => {
     return {
-        setUserName: (userName:IUserName) => (
-            dispatch(setUserName(userName))
-        ),
+        setUserName: (userName: IUserName) => dispatch(setUserName(userName)),
         ...ownProps
-    }
-}
+    };
+};
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(UserCenter))
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(UserCenter)
+);

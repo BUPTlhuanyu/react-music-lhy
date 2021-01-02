@@ -1,38 +1,40 @@
-import React,{ Component } from 'react'
-import './SearchList.scss'
+import React from 'react';
+import './SearchList.scss';
 
-interface SearchListProps{
-    searches:Array<string>,
-    selectItem:Function,
-    deleteItem:Function
+interface SearchListProps {
+    searches: string[];
+    selectItem: (item: string) => void;
+    deleteItem: (item: string) => void;
 }
 
-
-
-const SearchList : React.SFC<SearchListProps> = ({searches,selectItem,deleteItem}) => {
-    return(
-        <div className="search-list" style={{display:searches.length?"":"none"}}>
+const SearchList: React.SFC<SearchListProps> = ({searches, selectItem, deleteItem}) => {
+    return (
+        <div className="search-list" style={{display: searches.length ? '' : 'none'}}>
             <ul>
-                {
-                    !!searches.length && searches.map((item, index)=>(
-                        <li key={index}
+                {!!searches.length
+                    && searches.map((item, index) => (
+                        <li
+                            key={index}
                             className="search-item"
-                            onClick={()=>{selectItem(item)}}
+                            onClick={() => {
+                                selectItem(item);
+                            }}
                         >
                             <span className="text">{item}</span>
-                            <span className="icon"
-                                  onClick={(e) => {
-                                     e.stopPropagation()
-                                     deleteItem(item)
-                                  }}>
-                                <i className="icon-delete"/>
+                            <span
+                                className="icon"
+                                onClick={e => {
+                                    e.stopPropagation();
+                                    deleteItem(item);
+                                }}
+                            >
+                                <i className="icon-delete" />
                             </span>
                         </li>
-                    ))
-                }
+                    ))}
             </ul>
         </div>
-    )
-}
+    );
+};
 
-export default SearchList
+export default SearchList;

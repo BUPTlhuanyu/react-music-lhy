@@ -1,9 +1,9 @@
 .disc-transition-appear {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 .disc-transition-appear-active {
-  transform: translateX(0%);
-  transition: all 500ms ease-out;
+    transform: translateX(0%);
+    transition: all 500ms ease-out;
 }
 
 //.disc-transition-enter {
@@ -14,11 +14,10 @@
 //  transition: all 500ms ease-out;
 //}
 
-
 .disc-transition-exit {
-  transform: translateX(0%) scale(0.5);
+    transform: translateX(0%) scale(0.5);
 }
 .disc-transition-exit-active {
-  transform: translateX(100%) scale(1);
-  transition: all 500ms ease-in;
+    transform: translateX(100%) scale(1);
+    transition: all 500ms ease-in;
 }

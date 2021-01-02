@@ -3,19 +3,16 @@
  *                  scrollHandler获取滑动位置
  * @author: liaohuanyu
  * @date 2019/2/1
-*/
-import BScroll, { BsOption, Position } from 'better-scroll'
+ */
+import BScroll, {BsOption} from 'better-scroll';
 
-function initScroller(ref: Element, options: Partial<BsOption>): BScroll{
-    const {
-        probeType = 2,
-        click
-    } = options
+function initScroller(ref: Element, options: Partial<BsOption>): BScroll {
+    const {probeType = 2, click} = options;
     let wrapperBs = new BScroll(ref, {
         probeType,
         click
-    })
-    return wrapperBs
+    });
+    return wrapperBs;
 }
 
-export default initScroller
+export default initScroller;

@@ -1,23 +1,22 @@
-
 .singer-detail-transition-appear {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 .singer-detail-transition-appear-active {
-  transform: translateX(0%);
-  transition: all 500ms ease-out;
+    transform: translateX(0%);
+    transition: all 500ms ease-out;
 }
 
 .singer-detail-transition-enter {
-  transform: translateX(100%);
+    transform: translateX(100%);
 }
 .singer-detail-transition-enter-active {
-  transform: translateX(0%);
-  transition: all 500ms ease-out;
+    transform: translateX(0%);
+    transition: all 500ms ease-out;
 }
 .singer-detail-transition-exit {
-  transform: translateX(0%) scale(0.5);
+    transform: translateX(0%) scale(0.5);
 }
 .singer-detail-transition-exit-active {
-  transform: translateX(100%) scale(1);
-  transition: all 500ms ease-in;
+    transform: translateX(100%) scale(1);
+    transition: all 500ms ease-in;
 }

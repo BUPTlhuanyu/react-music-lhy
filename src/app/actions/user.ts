@@ -1,9 +1,9 @@
-import * as types from './actionsTypes'
-import { IUserName, IActionCreator } from 'store/stateTypes'
+import * as types from './actionsTypes';
+import {IUserName, IActionCreator} from 'store/stateTypes';
 
-export const setUserName : IActionCreator = (userName : IUserName) => {
+export const setUserName: IActionCreator = (userName: IUserName) => {
     return {
-        type : types.SET_USERNAME,
+        type: types.SET_USERNAME,
         userName
-    }
-}
+    };
+};

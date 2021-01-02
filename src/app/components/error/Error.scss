@@ -1,39 +1,44 @@
-@import "common/style/variable.scss";
+@import 'common/style/variable.scss';
 
-.error{
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 998;
-  background-color: $color-background-2d;
-  .error-wrapper{
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 999;
-    .error-content{
-      width: 270px;
-      border-radius: 13px;
-      background: $color-highlight-background;
-      .text{
-        padding: 19px 15px;
-        line-height: 22px;
-        text-align: center;
-        font-size: $font-size-small;
-        color: $color-text-l;
-      }
-      .icon{
+.error {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 998;
+    background-color: $color-background-2d;
+
+    .error-wrapper {
         position: absolute;
-        top:3px;
-        right:6px;
-        .icon-delete{
-          font-size: $font-size-small;
-          color: $color-text-d;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+
+        .error-content {
+            width: 270px;
+            border-radius: 13px;
+            background: $color-highlight-background;
+
+            .text {
+                padding: 19px 15px;
+                line-height: 22px;
+                text-align: center;
+                font-size: $font-size-small;
+                color: $color-text-l;
+            }
+
+            .icon {
+                position: absolute;
+                top: 3px;
+                right: 6px;
+
+                .icon-delete {
+                    font-size: $font-size-small;
+                    color: $color-text-d;
+                }
+            }
         }
-      }
     }
-  }
 }

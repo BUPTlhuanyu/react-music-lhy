@@ -1,17 +1,13 @@
-import * as types from 'actions/actionsTypes'
-import {
-    ISearchHistory,
-    defaultState,
-    IAction
-} from 'store/stateTypes'
+import * as types from 'actions/actionsTypes';
+import {ISearchHistory, defaultState, IAction} from 'store/stateTypes';
 
-const searchHistory = (state:ISearchHistory = defaultState.searchHistory, action:IAction) => {
-    switch(action.type){
+const searchHistory = (state: ISearchHistory = defaultState.searchHistory, action: IAction) => {
+    switch (action.type) {
         case types.SET_SEARCH_HISTORY:
-            return action.searchHistory
+            return action.searchHistory;
         default:
-            return state
+            return state;
     }
-}
+};
 
-export default searchHistory
+export default searchHistory;
