@@ -14,7 +14,7 @@
     "lyric-parser": "^1.0.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^0.2.0",
-    "react-dev-utils": "^7.0.1",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.13.1",
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
