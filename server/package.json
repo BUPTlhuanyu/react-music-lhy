@@ -19,7 +19,7 @@
     "koa-session-minimal": "^3.0.4",
     "koa2-cors": "^2.0.6",
     "mysql": "^2.16.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
